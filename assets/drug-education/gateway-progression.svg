@@ -1,0 +1,451 @@
+<svg
+  xmlns="http://www.w3.org/2000/svg"
+  viewBox="0 0 1200 680"
+  role="img"
+  aria-labelledby="title desc"
+>
+  <title id="title">Detailed gateway theory progression</title>
+  <desc id="desc">
+    Research sequence from beer to cigarettes to liquor to marijuana, followed
+    by several possible later substances. Inhalants span the age range. Exit
+    ramps show progression is not inevitable.
+  </desc>
+  <defs>
+    <linearGradient id="bg" x1="0" x2="1">
+      <stop stop-color="#eef8f7" />
+      <stop offset="1" stop-color="#eef4fb" />
+    </linearGradient>
+    <marker
+      id="arrow"
+      markerWidth="12"
+      markerHeight="12"
+      refX="10"
+      refY="6"
+      orient="auto"
+    >
+      <path d="M0 0L12 6L0 12Z" fill="#087f78" />
+    </marker>
+    <marker
+      id="dashArrow"
+      markerWidth="10"
+      markerHeight="10"
+      refX="8"
+      refY="5"
+      orient="auto"
+    >
+      <path d="M0 0L10 5L0 10Z" fill="#657788" />
+    </marker>
+    <filter id="shadow">
+      <feDropShadow
+        dx="0"
+        dy="5"
+        stdDeviation="5"
+        flood-color="#173b57"
+        flood-opacity=".15"
+      />
+    </filter>
+  </defs>
+  <rect width="1200" height="680" rx="26" fill="url(#bg)" />
+  <text
+    x="60"
+    y="52"
+    font-family="system-ui,sans-serif"
+    font-size="28"
+    font-weight="800"
+    fill="#173b57"
+  >
+    Gateway stages first described by Kandel in 1975
+  </text>
+  <text
+    x="60"
+    y="82"
+    font-family="system-ui,sans-serif"
+    font-size="17"
+    fill="#526272"
+  >
+    A common ordering—not an inevitable path and not proof that one substance
+    chemically causes the next.
+  </text>
+  <rect
+    x="60"
+    y="108"
+    width="1080"
+    height="86"
+    rx="18"
+    fill="#fff7df"
+    stroke="#d8a63c"
+    stroke-width="2"
+  />
+  <text
+    x="86"
+    y="141"
+    font-family="system-ui,sans-serif"
+    font-size="19"
+    font-weight="800"
+    fill="#7a5711"
+  >
+    INHALANTS: AGE-SPANNING OUTLIER
+  </text>
+  <text
+    x="86"
+    y="171"
+    font-family="system-ui,sans-serif"
+    font-size="17"
+    fill="#493f2b"
+  >
+    Observed across age groups rather than at one fixed stage; prevention should
+    therefore appear across grades.
+  </text>
+  <path
+    d="M150 194V224M370 194V224M590 194V224M810 194V224M1040 194V224"
+    stroke="#a8842d"
+    stroke-width="3"
+    stroke-dasharray="7 7"
+  />
+  <g filter="url(#shadow)" font-family="system-ui,sans-serif">
+    <rect
+      x="45"
+      y="242"
+      width="170"
+      height="125"
+      rx="20"
+      fill="#fff"
+      stroke="#2f739e"
+      stroke-width="3"
+    />
+    <circle cx="70" cy="274" r="16" fill="#2f739e" />
+    <text
+      x="70"
+      y="280"
+      text-anchor="middle"
+      font-size="20"
+      font-weight="900"
+      fill="#fff"
+    >
+      1
+    </text>
+    <text
+      x="137"
+      y="286"
+      text-anchor="middle"
+      font-size="24"
+      font-weight="850"
+      fill="#173b57"
+    >
+      Beer
+    </text>
+    <text x="130" y="321" text-anchor="middle" font-size="15" fill="#526272">
+      often earliest
+    </text>
+    <text x="130" y="344" text-anchor="middle" font-size="15" fill="#526272">
+      access/experiment
+    </text>
+    <rect
+      x="270"
+      y="242"
+      width="170"
+      height="125"
+      rx="20"
+      fill="#fff"
+      stroke="#657788"
+      stroke-width="3"
+    />
+    <circle cx="295" cy="274" r="16" fill="#657788" />
+    <text
+      x="295"
+      y="280"
+      text-anchor="middle"
+      font-size="20"
+      font-weight="900"
+      fill="#fff"
+    >
+      2
+    </text>
+    <text
+      x="370"
+      y="286"
+      text-anchor="middle"
+      font-size="23"
+      font-weight="850"
+      fill="#173b57"
+    >
+      Cigarettes
+    </text>
+    <text x="355" y="321" text-anchor="middle" font-size="15" fill="#526272">
+      nicotine and
+    </text>
+    <text x="355" y="344" text-anchor="middle" font-size="15" fill="#526272">
+      peer routines
+    </text>
+    <rect
+      x="495"
+      y="242"
+      width="170"
+      height="125"
+      rx="20"
+      fill="#fff"
+      stroke="#8d5d2b"
+      stroke-width="3"
+    />
+    <circle cx="520" cy="274" r="16" fill="#8d5d2b" />
+    <text
+      x="520"
+      y="280"
+      text-anchor="middle"
+      font-size="20"
+      font-weight="900"
+      fill="#fff"
+    >
+      3
+    </text>
+    <text
+      x="602"
+      y="286"
+      text-anchor="middle"
+      font-size="24"
+      font-weight="850"
+      fill="#173b57"
+    >
+      Liquor
+    </text>
+    <text x="580" y="321" text-anchor="middle" font-size="15" fill="#526272">
+      higher-strength
+    </text>
+    <text x="580" y="344" text-anchor="middle" font-size="15" fill="#526272">
+      alcohol
+    </text>
+    <rect
+      x="720"
+      y="242"
+      width="170"
+      height="125"
+      rx="20"
+      fill="#fff"
+      stroke="#28724b"
+      stroke-width="3"
+    />
+    <circle cx="745" cy="274" r="16" fill="#28724b" />
+    <text
+      x="745"
+      y="280"
+      text-anchor="middle"
+      font-size="20"
+      font-weight="900"
+      fill="#fff"
+    >
+      4
+    </text>
+    <text
+      x="823"
+      y="286"
+      text-anchor="middle"
+      font-size="23"
+      font-weight="850"
+      fill="#173b57"
+    >
+      Marijuana
+    </text>
+    <text x="805" y="321" text-anchor="middle" font-size="15" fill="#526272">
+      later gateway
+    </text>
+    <text x="805" y="344" text-anchor="middle" font-size="15" fill="#526272">
+      stage
+    </text>
+    <rect x="945" y="224" width="210" height="160" rx="20" fill="#173b57" />
+    <circle cx="970" cy="251" r="16" fill="#f2a900" />
+    <text
+      x="970"
+      y="257"
+      text-anchor="middle"
+      font-size="20"
+      font-weight="900"
+      fill="#173b57"
+    >
+      5
+    </text>
+    <text
+      x="1065"
+      y="259"
+      text-anchor="middle"
+      font-size="20"
+      font-weight="850"
+      fill="#fff"
+    >
+      Possible later
+    </text>
+    <text x="1050" y="291" text-anchor="middle" font-size="18" fill="#fff">
+      Cocaine
+    </text>
+    <text x="1050" y="317" text-anchor="middle" font-size="18" fill="#fff">
+      Crystal meth
+    </text>
+    <text x="1050" y="343" text-anchor="middle" font-size="18" fill="#fff">
+      LSD or other drugs
+    </text>
+    <text x="1050" y="369" text-anchor="middle" font-size="14" fill="#ffe19a">
+      branches—not one endpoint
+    </text>
+  </g>
+  <path
+    d="M215 304H250M440 304H475M665 304H690M890 304H925"
+    stroke="#087f78"
+    stroke-width="5"
+    marker-end="url(#arrow)"
+  />
+  <text
+    x="600"
+    y="414"
+    text-anchor="middle"
+    font-family="system-ui,sans-serif"
+    font-size="20"
+    font-weight="800"
+    fill="#173b57"
+  >
+    At every stage, several outcomes remain possible
+  </text>
+  <g font-family="system-ui,sans-serif">
+    <rect
+      x="70"
+      y="450"
+      width="225"
+      height="95"
+      rx="18"
+      fill="#e9f7ee"
+      stroke="#2f8352"
+      stroke-width="2"
+    />
+    <text
+      x="182"
+      y="484"
+      text-anchor="middle"
+      font-size="19"
+      font-weight="800"
+      fill="#1d6840"
+    >
+      Stop or do not progress
+    </text>
+    <text x="182" y="513" text-anchor="middle" font-size="15" fill="#405548">
+      Most early users do not
+    </text>
+    <text x="182" y="534" text-anchor="middle" font-size="15" fill="#405548">
+      complete every stage.
+    </text>
+    <rect
+      x="330"
+      y="450"
+      width="225"
+      height="95"
+      rx="18"
+      fill="#eef7ff"
+      stroke="#2f739e"
+      stroke-width="2"
+    />
+    <text
+      x="442"
+      y="484"
+      text-anchor="middle"
+      font-size="19"
+      font-weight="800"
+      fill="#245c7e"
+    >
+      Remain at one stage
+    </text>
+    <text x="442" y="513" text-anchor="middle" font-size="15" fill="#405568">
+      Use may continue without
+    </text>
+    <text x="442" y="534" text-anchor="middle" font-size="15" fill="#405568">
+      moving to another drug.
+    </text>
+    <rect
+      x="590"
+      y="450"
+      width="225"
+      height="95"
+      rx="18"
+      fill="#fff7df"
+      stroke="#d8a63c"
+      stroke-width="2"
+    />
+    <text
+      x="702"
+      y="484"
+      text-anchor="middle"
+      font-size="19"
+      font-weight="800"
+      fill="#7a5711"
+    >
+      Prevention interrupts
+    </text>
+    <text x="702" y="513" text-anchor="middle" font-size="15" fill="#594b2a">
+      Skills, bonds, opportunity,
+    </text>
+    <text x="702" y="534" text-anchor="middle" font-size="15" fill="#594b2a">
+      and accurate education.
+    </text>
+    <rect
+      x="850"
+      y="450"
+      width="280"
+      height="95"
+      rx="18"
+      fill="#f4efff"
+      stroke="#7655a3"
+      stroke-width="2"
+    />
+    <text
+      x="990"
+      y="484"
+      text-anchor="middle"
+      font-size="19"
+      font-weight="800"
+      fill="#5a3e80"
+    >
+      Treatment and harm reduction
+    </text>
+    <text x="990" y="513" text-anchor="middle" font-size="15" fill="#514660">
+      Support can reduce risk, interrupt
+    </text>
+    <text x="990" y="534" text-anchor="middle" font-size="15" fill="#514660">
+      escalation, or help end use.
+    </text>
+  </g>
+  <path
+    d="M805 367C805 414 700 420 700 440M580 367C580 414 442 420 442 440M355 367C355 414 182 420 182 440M1050 384C1050 415 990 421 990 440"
+    fill="none"
+    stroke="#657788"
+    stroke-width="3"
+    stroke-dasharray="8 7"
+    marker-end="url(#dashArrow)"
+  />
+  <rect
+    x="60"
+    y="584"
+    width="1080"
+    height="56"
+    rx="14"
+    fill="#fff"
+    stroke="#b8cbd5"
+  />
+  <text
+    x="600"
+    y="608"
+    text-anchor="middle"
+    font-family="system-ui,sans-serif"
+    font-size="16"
+    font-weight="750"
+    fill="#173b57"
+  >
+    Interpretation rule
+  </text>
+  <text
+    x="600"
+    y="631"
+    text-anchor="middle"
+    font-family="system-ui,sans-serif"
+    font-size="15"
+    fill="#526272"
+  >
+    Ordering shows association and timing; causal claims require evidence about
+    people, settings, access, and mechanisms.
+  </text>
+</svg>
