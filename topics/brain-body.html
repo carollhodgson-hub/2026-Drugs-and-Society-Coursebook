@@ -1,0 +1,2244 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>SOC-245 Section 5 | Brain and Body</title>
+    <style>
+      :root {
+        --ink: #17283b;
+        --navy: #153b58;
+        --teal: #087f78;
+        --gold: #f2a900;
+        --red: #a33a3a;
+        --line: #c9d8df;
+        --soft: #edf7f6;
+      }
+      * {
+        box-sizing: border-box;
+      }
+      html {
+        scroll-behavior: smooth;
+      }
+      body {
+        margin: 0;
+        background: #edf4f6;
+        color: var(--ink);
+        font:
+          17px/1.58 system-ui,
+          sans-serif;
+      }
+      button,
+      a {
+        font: inherit;
+      }
+      header {
+        background: linear-gradient(125deg, #102f49, #087f78);
+        color: #fff;
+        padding: 2rem 1.2rem;
+      }
+      header > div,
+      main {
+        max-width: 1120px;
+        margin: auto;
+      }
+      .eyebrow,
+      .eyebrow a {
+        color: #ffe39a;
+        font-weight: 800;
+      }
+      h1 {
+        font-size: clamp(2rem, 5.5vw, 3.7rem);
+        line-height: 1.06;
+        margin: 0.35rem 0;
+      }
+      .lead {
+        font-size: 1.12rem;
+        max-width: 850px;
+      }
+      .sticky {
+        position: sticky;
+        top: 0;
+        background: #fff;
+        border-bottom: 1px solid var(--line);
+        z-index: 8;
+      }
+      .nav {
+        max-width: 1120px;
+        margin: auto;
+        display: flex;
+        overflow: auto;
+        gap: 0.3rem;
+        padding: 0.5rem 1rem;
+      }
+      .nav a {
+        white-space: nowrap;
+        text-decoration: none;
+        color: var(--navy);
+        font-weight: 750;
+        padding: 0.38rem 0.65rem;
+        border-radius: 999px;
+      }
+      main {
+        padding: 1.2rem;
+      }
+      section {
+        background: #fff;
+        border-radius: 18px;
+        padding: clamp(1.1rem, 3vw, 2rem);
+        margin: 1.1rem 0;
+        box-shadow: 0 8px 25px #173b5718;
+        scroll-margin-top: 68px;
+      }
+      h2 {
+        color: var(--navy);
+        font-size: clamp(1.55rem, 4vw, 2.25rem);
+        line-height: 1.16;
+        margin: 0.1rem 0 0.7rem;
+      }
+      h3 {
+        color: var(--teal);
+        margin: 0.35rem 0;
+      }
+      .controls {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.55rem;
+        margin: 0.8rem 0;
+      }
+      .controls button,
+      .playbar button {
+        border: 2px solid var(--line);
+        background: #fff;
+        color: var(--navy);
+        border-radius: 999px;
+        padding: 0.62rem 0.9rem;
+        font-weight: 800;
+        cursor: pointer;
+        min-height: 44px;
+      }
+      .controls button[aria-pressed="true"] {
+        background: var(--navy);
+        border-color: var(--navy);
+        color: #fff;
+      }
+      .brain-layout {
+        display: grid;
+        grid-template-columns: minmax(0, 1.45fr) minmax(275px, 0.75fr);
+        gap: 1rem;
+        align-items: start;
+      }
+      .diagram-wrap,
+      .body-stage {
+        background: linear-gradient(180deg, #f7fbfc, #e7f3f3);
+        border: 1px solid var(--line);
+        border-radius: 18px;
+        padding: 0.6rem;
+        touch-action: none;
+        user-select: none;
+      }
+      .brain-svg,
+      .body-svg {
+        width: 100%;
+        height: auto;
+        display: block;
+      }
+      .brain-shape {
+        fill: #e0ecef;
+        stroke: #567788;
+        stroke-width: 3;
+      }
+      .lobe {
+        fill: none;
+        stroke: #9ab2bd;
+        stroke-width: 2;
+      }
+      .route {
+        fill: none;
+        stroke: #b9cbd3;
+        stroke-width: 14;
+        stroke-linecap: round;
+      }
+      .progress {
+        fill: none;
+        stroke: var(--teal);
+        stroke-width: 8;
+        stroke-linecap: round;
+      }
+      .node {
+        fill: #fff;
+        stroke: var(--navy);
+        stroke-width: 2;
+      }
+      .node.active {
+        fill: var(--gold);
+        stroke: #8a5e00;
+        stroke-width: 4;
+      }
+      .node-label {
+        font-size: 15px;
+        font-weight: 800;
+        fill: var(--navy);
+        text-anchor: middle;
+      }
+      .peg {
+        fill: var(--gold);
+        stroke: #704d00;
+        stroke-width: 4;
+        filter: drop-shadow(0 3px 3px #153b5860);
+        cursor: grab;
+      }
+      .halo {
+        fill: #f2a90033;
+        stroke: #f2a90066;
+        stroke-width: 2;
+        pointer-events: none;
+      }
+      .stage-panel {
+        background: var(--soft);
+        border-left: 7px solid var(--teal);
+        border-radius: 6px 15px 15px 6px;
+        padding: 1rem;
+        min-height: 315px;
+      }
+      .count {
+        color: #526575;
+        font-weight: 800;
+        text-transform: uppercase;
+        letter-spacing: 0.06em;
+        font-size: 0.82rem;
+      }
+      .mechanism {
+        background: #fff;
+        border: 1px solid var(--line);
+        border-radius: 11px;
+        padding: 0.75rem;
+        margin-top: 0.75rem;
+      }
+      .mechanism strong {
+        display: block;
+        color: var(--navy);
+      }
+      .playbar {
+        display: flex;
+        align-items: center;
+        gap: 0.55rem;
+        flex-wrap: wrap;
+        margin-top: 0.75rem;
+      }
+      .playbar #play {
+        background: var(--gold);
+        border-color: var(--gold);
+      }
+      .playbar output {
+        font-weight: 800;
+        color: var(--teal);
+      }
+      .callout {
+        background: #fff8df;
+        border-left: 7px solid var(--gold);
+        padding: 1rem;
+        border-radius: 6px 14px 14px 6px;
+        margin-top: 1rem;
+      }
+      .body-layout {
+        display: grid;
+        grid-template-columns: minmax(300px, 0.85fr) 1.15fr;
+        gap: 1.2rem;
+        align-items: start;
+      }
+      .person {
+        fill: #dce9ed;
+        stroke: #527487;
+        stroke-width: 3;
+      }
+      .organ {
+        stroke: #fff;
+        stroke-width: 3;
+      }
+      .heart {
+        fill: #b84040;
+        transform-box: fill-box;
+        transform-origin: center;
+      }
+      .lung {
+        fill: #6fa9c5;
+        transform-box: fill-box;
+        transform-origin: center;
+      }
+      .nerve {
+        fill: none;
+        stroke: #e49b00;
+        stroke-width: 5;
+        stroke-linecap: round;
+      }
+      .flow {
+        fill: none;
+        stroke: #2d799f;
+        stroke-width: 4;
+        stroke-dasharray: 8 7;
+      }
+      .body-stage.stimulant .heart {
+        animation: beat 0.62s infinite;
+      }
+      .body-stage.stimulant .lung {
+        animation: breathe 1.4s infinite;
+      }
+      .body-stage.stimulant .flow {
+        animation: flow 0.55s linear infinite;
+      }
+      .body-stage.depressant .heart {
+        animation: beat 1.3s infinite;
+      }
+      .body-stage.depressant .lung {
+        animation: breathe 3.2s infinite;
+      }
+      .body-stage.depressant .flow {
+        animation: flow 1.5s linear infinite;
+      }
+      .paused * {
+        animation-play-state: paused !important;
+      }
+      @keyframes beat {
+        0%,
+        100% {
+          transform: scale(1);
+        }
+        20% {
+          transform: scale(1.16);
+        }
+        38% {
+          transform: scale(1);
+        }
+      }
+      @keyframes breathe {
+        0%,
+        100% {
+          transform: scale(0.95);
+        }
+        50% {
+          transform: scale(1.07);
+        }
+      }
+      @keyframes flow {
+        to {
+          stroke-dashoffset: -30;
+        }
+      }
+      .readouts {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 0.7rem;
+      }
+      .readout {
+        border: 1px solid var(--line);
+        border-radius: 13px;
+        padding: 0.8rem;
+        background: #fff;
+      }
+      .readout strong {
+        display: block;
+        color: var(--navy);
+      }
+      .meter {
+        height: 10px;
+        background: #dce6ea;
+        border-radius: 999px;
+        overflow: hidden;
+        margin: 0.55rem 0;
+      }
+      .meter span {
+        display: block;
+        height: 100%;
+        background: var(--teal);
+        transition: width 0.5s;
+      }
+      .term {
+        color: var(--teal);
+        font-weight: 800;
+      }
+      .warning {
+        background: #fff0f0;
+        border-left: 7px solid var(--red);
+        padding: 1rem;
+        border-radius: 6px 14px 14px 6px;
+        margin-top: 1rem;
+      }
+      .dopamine-view {
+        margin-top: 1rem;
+        background: #f8fbfc;
+        border: 1px solid var(--line);
+        border-radius: 14px;
+        padding: 0.85rem;
+      }
+      .dopamine-view h3 {
+        margin: 0.1rem 0;
+      }
+      .synapse {
+        width: 100%;
+        height: auto;
+        display: block;
+      }
+      .terminal {
+        fill: #dce9ed;
+        stroke: #527487;
+        stroke-width: 3;
+      }
+      .cleft {
+        fill: #eaf5f6;
+      }
+      .dopamine {
+        fill: #f2a900;
+        stroke: #795300;
+        stroke-width: 2;
+      }
+      .dopamine-view.active .dopamine {
+        animation: dopamineDrift 1.6s ease-in-out infinite alternate;
+      }
+      .dopamine-view.cocaine .dopamine {
+        animation-duration: 0.75s;
+      }
+      .dopamine-view.meth .dopamine {
+        animation-duration: 0.45s;
+      }
+      .transporter {
+        fill: #087f78;
+      }
+      .blocked {
+        stroke: #a33a3a;
+        stroke-width: 5;
+      }
+      .dopamine-note {
+        font-weight: 750;
+        color: var(--navy);
+      }
+      @keyframes dopamineDrift {
+        to {
+          transform: translateY(18px);
+        }
+      }
+      @media (max-width: 850px) {
+        .brain-layout,
+        .body-layout {
+          grid-template-columns: 1fr;
+        }
+        .stage-panel {
+          min-height: 0;
+        }
+      }
+      @media (max-width: 520px) {
+        .readouts {
+          grid-template-columns: 1fr;
+        }
+        .node-label {
+          font-size: 13px;
+        }
+      }
+      @media (prefers-reduced-motion: reduce) {
+        html {
+          scroll-behavior: auto;
+        }
+        .heart,
+        .lung,
+        .flow {
+          animation: none !important;
+        }
+      }
+    </style>
+    <style>
+      .ss-picker {
+        margin: 1.25rem 0;
+      }
+      .visual-grid {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 0.8rem;
+      }
+      .visual-choice {
+        border: 3px solid transparent;
+        background: #fff;
+        border-radius: 15px;
+        padding: 0.45rem;
+        color: var(--navy);
+        font-weight: 800;
+        cursor: pointer;
+        text-align: left;
+        box-shadow: 0 3px 12px #153b5818;
+      }
+      .visual-choice img {
+        width: 100%;
+        aspect-ratio: 1;
+        display: block;
+        object-fit: cover;
+        border-radius: 10px;
+        margin-bottom: 0.45rem;
+      }
+      .visual-choice[aria-pressed="true"] {
+        border-color: var(--teal);
+        background: var(--soft);
+        box-shadow: 0 0 0 3px #087f7826;
+      }
+      .scenario {
+        margin-top: 1.2rem;
+        border: 2px solid var(--teal);
+        border-radius: 16px;
+        padding: 1.1rem;
+        background: linear-gradient(135deg, #f2fbfa, #fff);
+      }
+      .scenario h3 {
+        font-size: 1.35rem;
+      }
+      .factor-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 0.75rem;
+        margin-top: 1rem;
+      }
+      .factor {
+        background: #fff;
+        border: 1px solid var(--line);
+        border-radius: 12px;
+        padding: 0.8rem;
+      }
+      .signal-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.55rem;
+        margin: 0.9rem 0;
+      }
+      .signal {
+        border-radius: 999px;
+        padding: 0.4rem 0.7rem;
+        font-weight: 800;
+        background: #dce9ed;
+        color: var(--navy);
+      }
+      .signal.higher {
+        background: #ffe0dc;
+        color: #7e2727;
+      }
+      .signal.lower {
+        background: #dff2e6;
+        color: #23633a;
+      }
+      .dose-boundary {
+        background: #eef5ff;
+        border-left: 7px solid #426e9b;
+        padding: 1rem;
+        border-radius: 6px 14px 14px 6px;
+        margin-top: 1rem;
+      }
+      @media (max-width: 850px) {
+        .visual-grid {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+        .factor-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+      @media (max-width: 520px) {
+        .visual-grid {
+          grid-template-columns: 1fr 1fr;
+        }
+        .visual-choice {
+          font-size: 0.9rem;
+        }
+      }
+      .story {
+        background: linear-gradient(145deg, #fffdf5, #f1f8f7);
+        border: 1px solid #d8ca98;
+      }
+      .kicker {
+        display: inline-block;
+        border-radius: 999px;
+        background: var(--navy);
+        color: #fff;
+        padding: 0.25rem 0.75rem;
+        font-weight: 850;
+      }
+      .story-visual {
+        margin: 1rem 0;
+        border: 1px solid var(--line);
+        border-radius: 16px;
+        overflow: hidden;
+      }
+      .story-visual img {
+        display: block;
+        width: 100%;
+        aspect-ratio: 16/9;
+        object-fit: cover;
+      }
+      .story-visual figcaption {
+        padding: 0.9rem;
+        background: #fff;
+      }
+      .evidence-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 0.8rem;
+        margin: 1rem 0;
+      }
+      .evidence-grid article {
+        border: 1px solid var(--line);
+        border-top: 6px solid var(--teal);
+        border-radius: 14px;
+        padding: 1rem;
+        background: #f8fbfc;
+      }
+      .evidence-grid h3 {
+        margin-top: 0;
+      }
+      .construction-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 0.8rem;
+      }
+      .construction-grid article {
+        background: #fff8df;
+        border-radius: 14px;
+        padding: 1rem;
+      }
+      .construction-grid b {
+        display: block;
+        color: var(--navy);
+        margin-bottom: 0.3rem;
+      }
+      .bac-visual {
+        margin: 1rem 0;
+        border: 1px solid var(--line);
+        border-radius: 16px;
+        overflow: hidden;
+        background: #fff;
+      }
+      .bac-visual img {
+        display: block;
+        width: 100%;
+        height: auto;
+      }
+      .bac-visual figcaption {
+        padding: 0.9rem 1rem;
+        color: #465f70;
+      }
+      .table-scroll {
+        overflow-x: auto;
+        margin: 1rem 0;
+        border: 1px solid var(--line);
+        border-radius: 14px;
+      }
+      .table-scroll table {
+        width: 100%;
+        min-width: 720px;
+        border-collapse: collapse;
+        background: #fff;
+      }
+      .table-scroll th,
+      .table-scroll td {
+        padding: 0.8rem;
+        text-align: left;
+        vertical-align: top;
+        border: 1px solid var(--line);
+      }
+      .table-scroll th {
+        background: var(--navy);
+        color: #fff;
+      }
+      .table-scroll tbody tr:nth-child(even) {
+        background: #f2f8f8;
+      }
+      .bac-level {
+        white-space: nowrap;
+        font-weight: 850;
+        color: var(--navy);
+      }
+      .factor-strip {
+        display: grid;
+        grid-template-columns: repeat(5, 1fr);
+        gap: 0.65rem;
+        margin: 1rem 0;
+      }
+      .factor-strip article {
+        padding: 0.85rem;
+        border-radius: 12px;
+        background: #edf7f6;
+        border-top: 5px solid var(--teal);
+      }
+      .factor-strip strong {
+        display: block;
+        color: var(--navy);
+        margin-bottom: 0.25rem;
+      }
+      @media (max-width: 760px) {
+        .evidence-grid,
+        .construction-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+      @media (max-width: 850px) {
+        .factor-strip {
+          grid-template-columns: 1fr 1fr;
+        }
+      }
+      @media (max-width: 520px) {
+        .factor-strip {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+    <link rel="stylesheet" href="../assets/references.css" />
+  </head>
+  <body>
+    <header>
+      <div>
+        <div class="eyebrow">
+          SOC-245 · Unit One · <a href="./">All Sections</a>
+        </div>
+        <h1>Section 5: Drugs, the Brain, and the Body</h1>
+        <p class="lead">
+          Move a drug marker through a simplified brain pathway, or let it
+          travel automatically. Then compare how broad stimulant and depressant
+          patterns change activity throughout the body.
+        </p>
+      </div>
+    </header>
+    <div class="sticky">
+      <nav class="nav">
+        <a href="#faces-of-meth">Opening story</a
+        ><a href="#brain">Brain pathway</a><a href="#body">Body comparison</a
+        ><a href="#bac">Alcohol &amp; BAC</a
+        ><a href="#set-setting">Set &amp; setting</a
+        ><a href="#amotivation">Cannabis &amp; motivation</a
+        ><a href="#limits">Limits</a>
+      </nav>
+    </div>
+    <main>
+      <section id="faces-of-meth" class="story">
+        <span class="kicker">Opening story · The Faces of Meth project</span>
+        <h2>
+          <span class="section-number">5.1</span> What Can—and Cannot—Be Read
+          From a Face?
+        </h2>
+        <figure class="story-visual">
+          <img
+            src="../assets/story-openings/faces-of-meth-composite.webp"
+            alt="Three pairs of fictional adult portraits suggesting possible changes over time during severe methamphetamine use and social instability"
+          />
+          <figcaption>
+            These are fictional composite portraits, not people from the
+            original campaign. A face can prompt questions about health, but it
+            cannot establish which drug someone used or what caused every
+            visible change.
+          </figcaption>
+        </figure>
+        <p>
+          The <em>Faces of Meth</em> public-education project assembled
+          sequential booking photographs of people arrested more than once in
+          Multnomah County, Oregon. The startling comparisons were designed to
+          make methamphetamine’s physical toll immediately visible. Their
+          emotional power helped the campaign travel far beyond one county—but
+          the same power can tempt viewers to treat a photograph as complete
+          medical and social evidence.
+        </p>
+        <p>
+          Heavy methamphetamine use can contribute to sleep deprivation,
+          appetite suppression and weight loss, cardiovascular problems,
+          anxiety, paranoia, and compulsive skin picking. Severe dental
+          disease—often called “meth mouth”—has multiple pathways, including dry
+          mouth, grinding, diet, hygiene, frequency of use, and limited access
+          to dental care. Illicit production also creates hazards from
+          corrosive, flammable, and toxic chemicals; however, a street product’s
+          precise contents and residues cannot be inferred from a person’s
+          appearance.
+        </p>
+        <div class="warning">
+          <strong>The missing comparison group matters.</strong> Time between
+          photographs may also include aging, trauma, unstable housing, poverty,
+          violence, incarceration, poor nutrition, untreated illness, and
+          reduced access to healthcare. The photographs document change, but
+          they do not scientifically isolate how much change was caused by
+          methamphetamine, illegal-market conditions, punishment, or other
+          disadvantages.
+        </div>
+        <p>
+          The project therefore teaches two lessons at once: methamphetamine can
+          cause serious biological harm, and drug education becomes stigmatizing
+          when visible suffering is used to reduce a whole person to a
+          frightening “after” image. Effective public health must explain
+          mechanisms, conditions, and paths to recovery—not simply invite
+          disgust.
+        </p>
+        <p>
+          <strong>Carry this question through Section 5:</strong> What happens
+          inside the brain and body, and how do dose, route, product
+          uncertainty, social conditions, and access to care shape what becomes
+          visible?
+        </p>
+      </section>
+      <section id="brain">
+        <h2>
+          <span class="section-number">5.2</span> Interactive brain pathway
+        </h2>
+        <p>
+          Choose a drug, then press <strong>Play pathway</strong> or drag the
+          gold marker along the track with a mouse or finger. The explanation
+          changes at each stage.
+        </p>
+        <div class="controls" id="drugControls">
+          <button aria-pressed="true" data-drug="opioid">
+            Opioids / opiates</button
+          ><button aria-pressed="false" data-drug="cocaine">Cocaine</button
+          ><button aria-pressed="false" data-drug="meth">
+            Methamphetamine
+          </button>
+        </div>
+        <div class="brain-layout">
+          <div>
+            <div class="diagram-wrap" id="board">
+              <svg
+                class="brain-svg"
+                viewBox="0 0 760 500"
+                role="img"
+                aria-labelledby="brainTitle brainDesc"
+              >
+                <title id="brainTitle">
+                  Simplified drug pathway through the brain
+                </title>
+                <desc id="brainDesc">
+                  A draggable gold marker follows five stages from the
+                  bloodstream into brain signaling and effects.
+                </desc>
+                <image
+                  href="../assets/brain-sideview-original.png"
+                  x="52"
+                  y="18"
+                  width="590"
+                  height="440"
+                  preserveAspectRatio="xMidYMid meet"
+                  opacity=".92"
+                />
+                <path
+                  id="route"
+                  class="route"
+                  d="M94 420 C145 389 168 340 210 306 C257 268 291 301 333 251 C379 197 414 214 461 180 C510 144 559 160 638 101"
+                />
+                <path
+                  id="routeProgress"
+                  class="progress"
+                  d="M94 420 C145 389 168 340 210 306 C257 268 291 301 333 251 C379 197 414 214 461 180 C510 144 559 160 638 101"
+                />
+                <g id="nodes"></g>
+                <circle id="halo" class="halo" r="23" cx="94" cy="420" />
+                <circle
+                  id="peg"
+                  class="peg"
+                  r="14"
+                  cx="94"
+                  cy="420"
+                  role="slider"
+                  tabindex="0"
+                  aria-label="Drug pathway position"
+                  aria-valuemin="1"
+                  aria-valuemax="5"
+                  aria-valuenow="1"
+                />
+              </svg>
+            </div>
+            <div class="playbar">
+              <button id="play">▶ Play pathway</button
+              ><button id="back">← Previous</button
+              ><button id="next">Next →</button
+              ><output id="position">Stage 1 of 5</output>
+            </div>
+            <div class="dopamine-view active opioid" id="dopamineView">
+              <h3>Dopamine close-up</h3>
+              <svg
+                class="synapse"
+                viewBox="0 0 620 190"
+                role="img"
+                aria-labelledby="dopamineTitle dopamineDesc"
+              >
+                <title id="dopamineTitle">Dopamine activity at a synapse</title>
+                <desc id="dopamineDesc">
+                  Gold dopamine molecules move between two nerve cells. The
+                  pattern changes for opioids, cocaine, and methamphetamine.
+                </desc>
+                <path class="terminal" d="M35 18h550v54c-86 34-464 34-550 0z" />
+                <rect class="cleft" x="35" y="74" width="550" height="58" />
+                <path class="terminal" d="M35 132c86-34 464-34 550 0v40H35z" />
+                <g id="dopamineDots">
+                  <circle class="dopamine" cx="155" cy="88" r="8" />
+                  <circle class="dopamine" cx="230" cy="104" r="8" />
+                  <circle class="dopamine" cx="307" cy="86" r="8" />
+                  <circle class="dopamine" cx="381" cy="108" r="8" />
+                  <circle class="dopamine" cx="455" cy="90" r="8" />
+                </g>
+                <path
+                  class="transporter"
+                  d="M492 54h32v38h-10V70h-12v22h-10z"
+                />
+                <g id="blockMark" hidden>
+                  <path class="blocked" d="M484 52l48 48m0-48-48 48" />
+                </g>
+                <text
+                  x="50"
+                  y="42"
+                  font-size="15"
+                  font-weight="800"
+                  fill="#153b58"
+                >
+                  Sending neuron
+                </text>
+                <text
+                  x="50"
+                  y="162"
+                  font-size="15"
+                  font-weight="800"
+                  fill="#153b58"
+                >
+                  Receiving neuron
+                </text>
+                <text
+                  x="530"
+                  y="112"
+                  font-size="13"
+                  text-anchor="middle"
+                  fill="#153b58"
+                >
+                  DAT
+                </text>
+              </svg>
+              <p class="dopamine-note" id="dopamineNote"></p>
+              <p id="dopamineMeaning">
+                <strong>Dopamine is not simply a “pleasure chemical.”</strong>
+                It helps signal reward, motivation, salience, learning, and
+                movement. A rapid rise in reward circuits can contribute to an
+                intense rush and reinforce cues and behaviors.
+              </p>
+            </div>
+          </div>
+          <article class="stage-panel" aria-live="polite">
+            <div class="count" id="stageCount"></div>
+            <h3 id="stageTitle"></h3>
+            <p id="stageText"></p>
+            <div class="mechanism">
+              <strong id="mechanismLabel"></strong
+              ><span id="mechanismText"></span>
+            </div>
+            <div class="mechanism">
+              <strong>What students should notice</strong
+              ><span id="noticeText"></span>
+            </div>
+          </article>
+        </div>
+        <div class="callout">
+          <strong
+            >This is a conceptual pathway—not a literal map of one
+            molecule.</strong
+          >
+          A real dose contains enormous numbers of molecules distributed
+          throughout the body. The track slows the process down so we can
+          connect delivery, receptors or transporters, brain circuits, and
+          effects.
+        </div>
+      </section>
+      <section id="body">
+        <h2>
+          <span class="section-number">5.3</span> Animated stimulant and
+          depressant body comparison
+        </h2>
+        <p>
+          Switch patterns to see changes in the animation and vocabulary. The
+          motion represents broad tendencies—not exact vital-sign measurements.
+        </p>
+        <div class="controls" id="bodyControls">
+          <button aria-pressed="true" data-mode="stimulant">
+            Stimulant pattern</button
+          ><button aria-pressed="false" data-mode="depressant">
+            Depressant pattern</button
+          ><button aria-pressed="false" id="motion">Pause motion</button>
+        </div>
+        <div class="body-layout">
+          <div class="body-stage stimulant" id="bodyStage">
+            <svg
+              class="body-svg"
+              viewBox="0 0 430 650"
+              role="img"
+              aria-labelledby="bodyTitle bodyDesc"
+            >
+              <title id="bodyTitle">Animated stimulant body pattern</title>
+              <desc id="bodyDesc">
+                A centered human outline shows a beating heart, expanding lungs,
+                nervous system activity, and circulation.
+              </desc>
+              <image
+                href="../assets/body-outline-reference.png"
+                x="95"
+                y="10"
+                width="240"
+                height="605"
+                preserveAspectRatio="xMidYMid meet"
+              />
+              <g>
+                <path
+                  class="nerve"
+                  d="M215 103v219m0-128-52 66m52-66 52 66m-52 61-42 119m42-119 42 119"
+                />
+                <path
+                  class="flow"
+                  d="M198 316c-29 72-30 164-23 238M232 316c29 72 30 164 23 238"
+                />
+                <ellipse class="organ lung" cx="186" cy="213" rx="27" ry="53" />
+                <ellipse class="organ lung" cx="244" cy="213" rx="27" ry="53" />
+                <path
+                  class="organ heart"
+                  d="M215 280c-42-31-55-61-35-77 16-12 32-2 35 11 3-13 19-23 35-11 20 16 7 46-35 77z"
+                />
+              </g>
+              <text
+                x="215"
+                y="632"
+                text-anchor="middle"
+                font-size="16"
+                font-weight="800"
+                fill="#153b58"
+                id="bodyCaption"
+              ></text>
+            </svg>
+          </div>
+          <div>
+            <p id="bodySummary" class="term" aria-live="polite"></p>
+            <div class="readouts" id="readouts"></div>
+          </div>
+        </div>
+        <div class="warning">
+          <strong>Opposite-looking effects do not “cancel out.”</strong> A
+          stimulant may make someone feel less sleepy while an opioid, alcohol,
+          or another depressant continues to suppress breathing or impair
+          judgment. Cardiovascular strain may be increasing at the same time.
+        </div>
+      </section>
+      <section id="bac">
+        <h2>
+          <span class="section-number">5.4</span> Alcohol, Intoxication, and
+          Blood Alcohol Concentration
+        </h2>
+        <p>
+          <strong>Intoxication</strong> is a temporary change in mental and
+          physical functioning after a substance enters the body. With alcohol,
+          increasing exposure can affect attention, judgment, inhibition,
+          coordination, reaction time, memory, and—at dangerous levels—the brain
+          systems that support breathing and other vital functions.
+        </p>
+        <p>
+          <strong>Blood alcohol concentration (BAC)</strong> expresses the
+          weight of alcohol in a specified volume of blood, commonly grams per
+          deciliter (g/dL). BAC is related to impairment, but it is not a
+          complete description of how a particular person will look, feel, or
+          behave.
+        </p>
+        <figure class="bac-visual">
+          <img
+            src="../assets/brain-body/bac-intoxication.svg"
+            alt="Blood alcohol concentration diagram showing alcohol entering the bloodstream, an impairment scale from zero to point fifteen, the point zero eight legal threshold in most states, and factors including amount, pace, body weight and water, food, and individual characteristics"
+          />
+          <figcaption>
+            Alcohol-related impairment can begin below the legal driving limit.
+            A BAC threshold defines a legal boundary; it does not guarantee safe
+            driving below that number.
+          </figcaption>
+        </figure>
+        <h3>From beverage percentage to net alcohol</h3>
+        <p>
+          Beverage size can be misleading. The useful comparison is the amount
+          of <em>pure alcohol</em>: beverage volume multiplied by alcohol by
+          volume (ABV). In the United States, one standard drink contains about
+          0.6 fluid ounces, or 14 grams, of pure alcohol.
+        </p>
+        <div
+          class="table-scroll"
+          role="region"
+          aria-label="Standard drink and net alcohol comparison"
+          tabindex="0"
+        >
+          <table>
+            <thead>
+              <tr>
+                <th scope="col">Beverage and serving</th>
+                <th scope="col">Typical ABV</th>
+                <th scope="col">Net pure alcohol</th>
+                <th scope="col">Approximate standard drinks</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Regular beer, 12 fl oz</td>
+                <td>5%</td>
+                <td>12 × .05 = 0.60 fl oz</td>
+                <td>1</td>
+              </tr>
+              <tr>
+                <td>Table wine, 5 fl oz</td>
+                <td>12%</td>
+                <td>5 × .12 = 0.60 fl oz</td>
+                <td>1</td>
+              </tr>
+              <tr>
+                <td>Distilled spirits, 1.5 fl oz</td>
+                <td>40% (80 proof)</td>
+                <td>1.5 × .40 = 0.60 fl oz</td>
+                <td>1</td>
+              </tr>
+              <tr>
+                <td>Strong beer, 16 fl oz</td>
+                <td>8%</td>
+                <td>16 × .08 = 1.28 fl oz</td>
+                <td>About 2.1</td>
+              </tr>
+              <tr>
+                <td>Wine, 9 fl oz</td>
+                <td>14%</td>
+                <td>9 × .14 = 1.26 fl oz</td>
+                <td>About 2.1</td>
+              </tr>
+              <tr>
+                <td>Mixed drink</td>
+                <td>Varies by recipe</td>
+                <td>Must total every pour</td>
+                <td>May contain 1, 2, or more</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <h3>What different BAC levels commonly do</h3>
+        <div
+          class="table-scroll"
+          role="region"
+          aria-label="Typical effects of blood alcohol concentration"
+          tabindex="0"
+        >
+          <table>
+            <thead>
+              <tr>
+                <th scope="col">BAC (g/dL)</th>
+                <th scope="col">Typical effects</th>
+                <th scope="col">Effects important for driving</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="bac-level">.02</td>
+                <td>
+                  Some loss of judgment; relaxation, warmth, or altered mood may
+                  occur.
+                </td>
+                <td>
+                  Declines in visual tracking and divided attention can begin.
+                </td>
+              </tr>
+              <tr>
+                <td class="bac-level">.05</td>
+                <td>
+                  Judgment and alertness decline; inhibition may decrease;
+                  small-muscle control can be affected.
+                </td>
+                <td>
+                  Reduced coordination and tracking; steering and emergency
+                  responses become more difficult.
+                </td>
+              </tr>
+              <tr>
+                <td class="bac-level">.08</td>
+                <td>
+                  Balance, speech, vision, reaction time, reasoning,
+                  self-control, and memory can be impaired.
+                </td>
+                <td>
+                  Reduced concentration, speed control, information processing,
+                  visual search, and hazard perception. This is the limit for
+                  most adult drivers in most states—not a safety threshold.
+                </td>
+              </tr>
+              <tr>
+                <td class="bac-level">.10</td>
+                <td>
+                  Clear deterioration in reaction time and control; slurred
+                  speech, poor coordination, and slowed thinking may occur.
+                </td>
+                <td>
+                  Lane control and appropriate braking are substantially
+                  reduced.
+                </td>
+              </tr>
+              <tr>
+                <td class="bac-level">.15</td>
+                <td>
+                  Major loss of balance and muscle control; vomiting may occur.
+                  Tolerance may change visible signs without removing danger.
+                </td>
+                <td>
+                  Vehicle control, attention, and visual and auditory processing
+                  are substantially impaired.
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <h3>Why the same number of drinks can produce different results</h3>
+        <div class="factor-strip">
+          <article>
+            <strong>Amount</strong>More net alcohol generally produces a higher
+            BAC.
+          </article>
+          <article>
+            <strong>Pace and time</strong>Rapid consumption can raise the peak
+            before metabolism catches up.
+          </article>
+          <article>
+            <strong>Weight and body water</strong>Body size and composition
+            influence alcohol distribution; height alone is not a dependable
+            correction.
+          </article>
+          <article>
+            <strong>Food</strong>Food can slow absorption and reduce the peak,
+            but it does not neutralize alcohol already consumed.
+          </article>
+          <article>
+            <strong>Person and context</strong>Sex-related body-water
+            differences, health, medications, fatigue, tolerance, and other
+            drugs affect risk and visible impairment.
+          </article>
+        </div>
+        <div class="warning">
+          <strong
+            >Never use a chart or online estimate to decide whether to
+            drive.</strong
+          >
+          People cannot reliably judge their own BAC or impairment, and consumer
+          breath-testing devices vary in accuracy. If drinking, arrange a sober
+          ride rather than calculating a “safe” number.
+        </div>
+        <div class="callout">
+          <strong>Later application:</strong> Section 15 can turn these
+          variables into a carefully labeled BAC-estimation activity alongside
+          breath, blood, and other drug-testing tools. Its result should be
+          presented as an uncertain educational range—not a clearance to drive.
+        </div>
+      </section>
+      <section id="set-setting">
+        <h2>
+          <span class="section-number">5.5</span> Set + setting experience
+          explorer
+        </h2>
+        <p>
+          <strong>Set</strong> is what a person brings to an experience—their
+          mood, expectations, health, and prior experience.
+          <strong>Setting</strong> is the physical and social environment.
+          Choose a substance, mindset, environment, and tolerance level to see
+          how the same exposure may be experienced differently.
+        </p>
+        <div class="ss-picker">
+          <h3>1. Substance</h3>
+          <div class="controls" id="ssDrug">
+            <button data-value="alcohol" aria-pressed="true">Alcohol</button
+            ><button data-value="psychedelic" aria-pressed="false">
+              LSD or psilocybin
+            </button>
+          </div>
+        </div>
+        <div class="ss-picker">
+          <h3>2. Set: mood before use</h3>
+          <div class="visual-grid" id="ssSet">
+            <button
+              class="visual-choice"
+              data-value="happy"
+              aria-pressed="true"
+            >
+              <img
+                src="../assets/set-setting/set-happy.png"
+                alt="Upbeat person in warm daylight"
+              />Happy / upbeat
+            </button>
+            <button class="visual-choice" data-value="sad" aria-pressed="false">
+              <img
+                src="../assets/set-setting/set-sad.png"
+                alt="Sad person sitting quietly"
+              />Sad / depressed
+            </button>
+            <button
+              class="visual-choice"
+              data-value="anxious"
+              aria-pressed="false"
+            >
+              <img
+                src="../assets/set-setting/set-anxious.png"
+                alt="Nervous person showing tension"
+              />Anxious / nervous
+            </button>
+            <button
+              class="visual-choice"
+              data-value="angry"
+              aria-pressed="false"
+            >
+              <img
+                src="../assets/set-setting/set-angry.png"
+                alt="Angry person with tense posture"
+              />Angry / agitated
+            </button>
+          </div>
+        </div>
+        <div class="ss-picker">
+          <h3>3. Setting: place and people</h3>
+          <div class="visual-grid" id="ssSetting">
+            <button class="visual-choice" data-value="club" aria-pressed="true">
+              <img
+                src="../assets/set-setting/setting-club.png"
+                alt="Friends at a lively music venue"
+              />Lively club, bar, or concert with friends
+            </button>
+            <button
+              class="visual-choice"
+              data-value="alone"
+              aria-pressed="false"
+            >
+              <img
+                src="../assets/set-setting/setting-alone.png"
+                alt="Person alone in a dim quiet room"
+              />Alone in a quiet place
+            </button>
+            <button
+              class="visual-choice"
+              data-value="crowd"
+              aria-pressed="false"
+            >
+              <img
+                src="../assets/set-setting/setting-crowd.png"
+                alt="Crowded unfamiliar dance party"
+              />Crowded party or rave with unfamiliar people
+            </button>
+            <button
+              class="visual-choice"
+              data-value="familiar"
+              aria-pressed="false"
+            >
+              <img
+                src="../assets/set-setting/setting-familiar.png"
+                alt="Small calm gathering of trusted people"
+              />Calm, familiar place with trusted people
+            </button>
+          </div>
+        </div>
+        <div class="ss-picker">
+          <h3>4. Previous tolerance</h3>
+          <div class="controls" id="ssTolerance">
+            <button data-value="low" aria-pressed="true">None / low</button
+            ><button data-value="some" aria-pressed="false">Some</button
+            ><button data-value="high" aria-pressed="false">High</button>
+          </div>
+        </div>
+        <article class="scenario" aria-live="polite">
+          <div class="count">Scenario interpretation</div>
+          <h3 id="ssHeadline">Excitement can mask alcohol impairment</h3>
+          <p id="ssSummary"></p>
+          <div class="signal-row" id="ssSignals"></div>
+          <div class="factor-grid">
+            <div class="factor">
+              <strong>Set contributes</strong>
+              <div id="ssSetText"></div>
+            </div>
+            <div class="factor">
+              <strong>Setting contributes</strong>
+              <div id="ssSettingText"></div>
+            </div>
+            <div class="factor">
+              <strong>Tolerance contributes</strong>
+              <div id="ssToleranceText"></div>
+            </div>
+          </div>
+        </article>
+        <div class="dose-boundary">
+          <strong>This is not a dose calculator.</strong> Set and setting can
+          change perceived intensity, interpretation, choices, and access to
+          help. They do not create a safe amount or reliably determine that
+          someone “needs more” or “needs less.” Amount, strength, timing, food,
+          body characteristics, metabolism, health, medications, interactions,
+          and product uncertainty also matter.
+        </div>
+      </section>
+      <section id="amotivation">
+        <h2>
+          <span class="section-number">5.6</span> Cannabis and the
+          “Amotivational Syndrome”
+        </h2>
+        <figure class="story-visual">
+          <img
+            src="../assets/brain-body/amotivational-stereotype-v2.png"
+            alt="Split editorial illustration of the same fictional white man: one side repeats the couch-bound marijuana-user stereotype while the other shows him working, exercising, and participating in relationships"
+          />
+          <figcaption>
+            The left side makes the familiar “lazy stoner” stereotype visible;
+            the right side rejects the idea that one behavior or identity can
+            predict a whole life. Neither scene diagnoses the person.
+          </figcaption>
+        </figure>
+        <p>
+          <strong>Amotivational syndrome</strong> is the disputed idea that
+          sustained cannabis use produces a lasting pattern of apathy, reduced
+          ambition, and diminished goal-directed behavior. Cannabis can acutely
+          affect attention, memory, time perception, and willingness to begin or
+          persist at a task. Very frequent or problematic use can also consume
+          time and may accompany difficulties in school or work. Those
+          possibilities do not establish a distinct, universal personality
+          syndrome.
+        </p>
+        <div class="evidence-grid">
+          <article>
+            <h3>What some studies find</h3>
+            <p>
+              Some longitudinal research reports associations between cannabis
+              use and lower academic motivation or self-efficacy. Acute
+              intoxication may reduce effort on a particular task, and heavier
+              patterns may have different consequences than occasional use.
+            </p>
+          </article>
+          <article>
+            <h3>What other studies find</h3>
+            <p>
+              Recent controlled studies have found no greater apathy, anhedonia,
+              or reduced willingness to expend effort among non-acutely
+              intoxicated users. Reviews describe mixed measures, small samples,
+              and limited evidence for an enduring syndrome.
+            </p>
+          </article>
+          <article>
+            <h3>The direction problem</h3>
+            <p>
+              Low motivation, depression, trauma, exclusion, school difficulty,
+              or limited opportunity may precede cannabis use. Cannabis may
+              contribute, use may follow those conditions, or common causes may
+              influence both.
+            </p>
+          </article>
+          <article>
+            <h3>The person-and-context rule</h3>
+            <p>
+              Frequency, dose, THC concentration, age, sleep, mental health,
+              other substances, expectations, resources, and social setting
+              matter. “Uses marijuana” is not a measurement of motivation.
+            </p>
+          </article>
+        </div>
+        <h3>Why the stereotype often looks white, male, and middle class</h3>
+        <p>
+          Popular portrayals of the unmotivated cannabis user have often
+          centered a young white middle-class man withdrawing from school,
+          career, and breadwinner expectations. That image made a perceived loss
+          of conventional productivity especially visible because it violated
+          dominant class and gender ideals. It does <strong>not</strong> mean
+          cannabis-related impairment occurs only in that group, nor that
+          research has established a syndrome unique to white middle-class
+          males.
+        </p>
+        <div class="construction-grid">
+          <article>
+            <b>Possible drug effect</b
+            ><span
+              >Was the person currently intoxicated? What were dose, potency,
+              frequency, sleep, and other health factors?</span
+            >
+          </article>
+          <article>
+            <b>Social conditions</b
+            ><span
+              >Were depression, discrimination, caregiving, unemployment, weak
+              opportunity, trauma, or isolation already affecting effort?</span
+            >
+          </article>
+          <article>
+            <b>The label</b
+            ><span
+              >Whose reduced productivity is called a moral failure, whose is
+              treated medically, and whose structural barriers disappear from
+              the story?</span
+            >
+          </article>
+        </div>
+        <div class="callout">
+          <strong>The balanced conclusion:</strong> Cannabis may impair
+          motivation or performance for some people in some conditions. The
+          evidence does not justify turning that possibility into a fixed
+          identity or using a culturally narrow stereotype as a diagnosis.
+        </div>
+      </section>
+      <section id="limits">
+        <h2>
+          <span class="section-number">5.7</span> How to read these models
+          accurately
+        </h2>
+        <p>
+          <strong>Stimulant</strong> and <strong>depressant</strong> describe
+          broad patterns, not simple up/down switches for every organ. Cocaine
+          and methamphetamine act differently even though both are stimulants.
+          Opioids can slow breathing dramatically, while alcohol,
+          benzodiazepines, and other depressants have different receptor
+          actions.
+        </p>
+        <p>
+          Route, dose, formulation, tolerance, health, age, setting,
+          expectations, and drug interactions all influence what happens.
+          Sociology adds questions about access, authority, stigma, subcultures,
+          treatment, and law.
+        </p>
+        <h3>Authoritative starting points</h3>
+        <ul>
+          <li>
+            <a
+              href="https://nida.nih.gov/publications/drugs-brains-behavior-science-addiction/drugs-brain"
+              >NIDA: Drugs and the Brain</a
+            >
+          </li>
+          <li>
+            <a href="https://nida.nih.gov/research-topics/opioids"
+              >NIDA: Opioids</a
+            >
+          </li>
+          <li>
+            <a href="https://nida.nih.gov/research-topics/cocaine"
+              >NIDA: Cocaine</a
+            >
+          </li>
+          <li>
+            <a href="https://nida.nih.gov/research-topics/methamphetamine-meth"
+              >NIDA: Methamphetamine</a
+            >
+          </li>
+        </ul>
+        <p>
+          <a href="taxonomy-atlas.html"
+            >Previous: Section 4, Visual Drug Atlas</a
+          >
+          · <a href="./">Return to all sections</a>
+        </p>
+      </section>
+      <aside class="cite-this" aria-labelledby="cite-5">
+        <h2 id="cite-5">Cite This Section</h2>
+        <p>Use this APA 7 reference when you use material from this section:</p>
+        <p class="citation-copy">
+          Hodgson, C. (2026). <em>Drugs, the brain, and the body</em>. Beyond
+          the Substance: Understanding Drugs in Culture &amp; Society.
+          <a
+            href="https://soc245-what-is-a-drug.carollhodgson.chatgpt.site/topics/brain-body.html"
+            >https://soc245-what-is-a-drug.carollhodgson.chatgpt.site/topics/brain-body.html</a
+          >
+        </p>
+        <p>
+          <strong>In-text citation:</strong> (Hodgson, 2026). For a precise
+          location, include the numbered subsection—for example, (Hodgson, 2026,
+          Section 5.1).
+        </p>
+      </aside>
+      <section id="sources" class="sources">
+        <h2>References</h2>
+        <ul class="references">
+          <li>
+            American Dental Association. (2023, July 12).
+            <em>Methamphetamine</em>.
+            <a
+              href="https://www.ada.org/resources/ada-library/oral-health-topics/methamphetamine"
+              >https://www.ada.org/resources/ada-library/oral-health-topics/methamphetamine</a
+            >
+          </li>
+          <li class="foundational-reference">
+            Faupel, C. E., Weaver, G. S., &amp; Corzine, J. (2014).
+            <em>The sociology of American drug use</em> (3rd ed.). Oxford
+            University Press.
+          </li>
+          <li>
+            Lac, A., &amp; Luk, J. W. (2018). Testing the amotivational
+            syndrome: Marijuana use longitudinally predicts lower self-efficacy
+            even after controlling for demographics, personality, and alcohol
+            and cigarette use. <em>Prevention Science, 19</em>, 117–126.
+            <a href="https://doi.org/10.1007/s11121-017-0812-3"
+              >https://doi.org/10.1007/s11121-017-0812-3</a
+            >
+          </li>
+          <li>
+            Skumlien, M., Mokrysz, C., Freeman, T. P., Valton, V., Wall, M. B.,
+            Bloomfield, M. A. P., Lees, R., Hines, L. A., Morgan, C. J. A.,
+            Nutt, D. J., Curran, H. V., &amp; Lawn, W. (2023). Anhedonia,
+            apathy, pleasure, and effort-based decision-making in adult and
+            adolescent cannabis users and controls.
+            <em>International Journal of Neuropsychopharmacology, 26</em>(1),
+            9–19.
+            <a href="https://doi.org/10.1093/ijnp/pyac056"
+              >https://doi.org/10.1093/ijnp/pyac056</a
+            >
+          </li>
+          <li class="coursebook-reference">
+            Hodgson, C. (2026). <em>Drugs, the brain, and the body</em>. Beyond
+            the Substance: Understanding Drugs in Culture &amp; Society.
+            <a
+              href="https://soc245-what-is-a-drug.carollhodgson.chatgpt.site/topics/brain-body.html"
+              >https://soc245-what-is-a-drug.carollhodgson.chatgpt.site/topics/brain-body.html</a
+            >
+          </li>
+          <li>
+            National Institute on Drug Abuse. (n.d.). <em>Methamphetamine</em>.
+            <a href="https://nida.nih.gov/research-topics/methamphetamine-meth"
+              >https://nida.nih.gov/research-topics/methamphetamine-meth</a
+            >
+          </li>
+          <li>
+            National Institute on Alcohol Abuse and Alcoholism. (n.d.).
+            <em>What is a standard drink?</em> Rethinking Drinking.
+            <a href="https://rethinkingdrinking.niaaa.nih.gov/"
+              >https://rethinkingdrinking.niaaa.nih.gov/</a
+            >
+          </li>
+          <li>
+            National Highway Traffic Safety Administration. (n.d.).
+            <em>Drunk driving</em>. Retrieved September 15, 2026, from
+            <a href="https://www.nhtsa.gov/risky-driving/drunk-driving"
+              >https://www.nhtsa.gov/risky-driving/drunk-driving</a
+            >
+          </li>
+          <li>
+            PBS FRONTLINE. (2006, February 14). <em>Faces of meth</em>.
+            <a
+              href="https://www.pbs.org/wgbh/pages/frontline/meth/body/faces.html"
+              >https://www.pbs.org/wgbh/pages/frontline/meth/body/faces.html</a
+            >
+          </li>
+          <li>
+            Shetty, V., Mooney, L. J., Zigler, C. M., Belin, T. R., Murphy, D.,
+            &amp; Rawson, R. (2016). The relationship between methamphetamine
+            use and increased dental disease.
+            <em>Journal of the American Dental Association, 147</em>(11),
+            875–885.
+            <a href="https://doi.org/10.1016/j.adaj.2016.04.026"
+              >https://doi.org/10.1016/j.adaj.2016.04.026</a
+            >
+          </li>
+        </ul>
+        <p>
+          <strong>Content reviewed:</strong> September 2026. This educational
+          coursebook does not provide medical or legal advice.
+        </p>
+      </section>
+    </main>
+    <script>
+      const stageCount = document.querySelector("#stageCount"),
+        stageTitle = document.querySelector("#stageTitle"),
+        stageText = document.querySelector("#stageText"),
+        mechanismLabel = document.querySelector("#mechanismLabel"),
+        mechanismText = document.querySelector("#mechanismText"),
+        noticeText = document.querySelector("#noticeText"),
+        position = document.querySelector("#position"),
+        play = document.querySelector("#play"),
+        back = document.querySelector("#back"),
+        next = document.querySelector("#next"),
+        bodyStage = document.querySelector("#bodyStage"),
+        bodySummary = document.querySelector("#bodySummary"),
+        bodyCaption = document.querySelector("#bodyCaption"),
+        bodyTitle = document.querySelector("#bodyTitle"),
+        readouts = document.querySelector("#readouts"),
+        motion = document.querySelector("#motion"),
+        dopamineView = document.querySelector("#dopamineView"),
+        dopamineNote = document.querySelector("#dopamineNote"),
+        dopamineDots = document.querySelector("#dopamineDots"),
+        blockMark = document.querySelector("#blockMark");
+      const dopamineInfo = {
+        opioid:
+          "Opioids increase reward-circuit dopamine indirectly: mu-opioid receptors reduce inhibitory GABA signaling, which can disinhibit dopamine neurons.",
+        cocaine:
+          "Cocaine blocks the dopamine transporter (DAT). Reuptake slows, so dopamine accumulates in the synapse and the signal lasts longer.",
+        meth: "Methamphetamine increases dopamine release from nerve terminals and can reverse transporter direction, producing a large, longer-lasting signal.",
+      };
+      function updateDopamine() {
+        dopamineView.className =
+          "dopamine-view " + drug + (stage >= 2 ? " active" : "");
+        dopamineNote.textContent =
+          dopamineInfo[drug] +
+          (stage < 2
+            ? " Move to the Target or Circuit stage to animate this close-up."
+            : "");
+        blockMark.hidden = drug !== "cocaine";
+        let pts =
+          drug === "meth"
+            ? [
+                [110, 88],
+                [155, 110],
+                [200, 90],
+                [245, 112],
+                [290, 87],
+                [335, 108],
+                [380, 88],
+                [425, 111],
+                [470, 89],
+              ]
+            : drug === "cocaine"
+              ? [
+                  [135, 88],
+                  [180, 110],
+                  [225, 88],
+                  [270, 109],
+                  [315, 87],
+                  [360, 109],
+                  [405, 88],
+                  [450, 109],
+                ]
+              : [
+                  [155, 88],
+                  [230, 104],
+                  [307, 86],
+                  [381, 108],
+                  [455, 90],
+                ];
+        dopamineDots.innerHTML = pts
+          .map(function (p) {
+            return (
+              '<circle class="dopamine" cx="' +
+              p[0] +
+              '" cy="' +
+              p[1] +
+              '" r="8"/>'
+            );
+          })
+          .join("");
+      }
+      const pathways = {
+        opioid: [
+          [
+            "Bloodstream and delivery",
+            "Route and formulation affect how quickly an opioid reaches circulation and the brain.",
+            "Pharmacokinetics",
+            "Absorption and distribution begin before visible effects.",
+            "Faster delivery can increase intensity, but a slower route is not automatically safe.",
+          ],
+          [
+            "Crossing into the brain",
+            "Many opioids cross the blood–brain barrier and distribute to pain, reward, and breathing networks.",
+            "Blood–brain barrier",
+            "Molecular properties influence how readily a drug enters brain tissue.",
+            "The drug does not travel to only one destination.",
+          ],
+          [
+            "Opioid receptors",
+            "Opioids bind to opioid receptors. Mu-receptor activation is especially important for analgesia, reward, sedation, and respiratory depression.",
+            "Receptor agonism",
+            "The drug activates receptors also used by the body’s own opioid peptides.",
+            "Natural, semi-synthetic, and synthetic opioids share targets but differ in potency and duration.",
+          ],
+          [
+            "Reward and pain circuits",
+            "In the ventral tegmental area, mu-receptor activity can reduce inhibitory GABA signaling and indirectly increase dopamine toward the nucleus accumbens.",
+            "Disinhibition",
+            "Reducing an inhibitory signal can release another neuron’s activity.",
+            "Reward and pain relief involve connected circuits, not a single pleasure center.",
+          ],
+          [
+            "Brainstem and body effects",
+            "Sedation, pain relief, and euphoria may occur. Opioid action in brainstem breathing networks can reduce the drive to breathe.",
+            "Respiratory depression",
+            "Breathing may become slow, shallow, irregular, or stop; other depressants magnify danger.",
+            "Naloxone can temporarily displace opioids, but emergency help is still necessary.",
+          ],
+        ],
+        cocaine: [
+          [
+            "Bloodstream and delivery",
+            "Route affects how rapidly cocaine reaches circulation and how abruptly its effects are experienced.",
+            "Pharmacokinetics",
+            "Faster rises in brain concentration can intensify reinforcement and toxicity.",
+            "Powder and crack contain the same core drug; route changes the time course.",
+          ],
+          [
+            "Crossing into the brain",
+            "Cocaine crosses the blood–brain barrier and reaches reward, movement, attention, and stress circuits.",
+            "Distribution",
+            "The heart and blood vessels are exposed at the same time as the brain.",
+            "Feeling alert does not reveal cardiovascular strain.",
+          ],
+          [
+            "Transporter blockade",
+            "Cocaine blocks dopamine transporters and also affects norepinephrine and serotonin transporters.",
+            "Reuptake inhibition",
+            "Blockade leaves more neurotransmitter signal in the synapse.",
+            "Cocaine mainly blocks clearance—it does not work exactly like methamphetamine.",
+          ],
+          [
+            "Dopamine accumulates",
+            "Dopamine signaling increases in circuits connecting the ventral tegmental area, nucleus accumbens, and prefrontal cortex.",
+            "Synaptic accumulation",
+            "The signal remains active longer because reuptake is reduced.",
+            "Learning and cue associations can strengthen alongside the short-lived reward.",
+          ],
+          [
+            "Brain and body effects",
+            "Alertness may increase while heart rate, blood pressure, temperature, anxiety, and seizure risk also rise.",
+            "Sympathetic activation",
+            "Norepinephrine effects contribute to constricted vessels and cardiovascular stress.",
+            "Cocaine plus alcohol can form cocaethylene, adding an active chemical and cardiovascular concern.",
+          ],
+        ],
+        meth: [
+          [
+            "Bloodstream and delivery",
+            "Methamphetamine reaches circulation and can enter the brain efficiently; route and formulation change onset.",
+            "Pharmacokinetics",
+            "Its effects generally last longer than cocaine’s because the drugs act and are processed differently.",
+            "Longer duration can extend sleep loss and cardiovascular strain.",
+          ],
+          [
+            "Crossing into the brain",
+            "Methamphetamine crosses the blood–brain barrier and reaches dopamine and norepinephrine neurons.",
+            "Distribution",
+            "Brain exposure occurs alongside effects on the heart, vessels, and temperature.",
+            "The pathway is widespread rather than confined to one reward region.",
+          ],
+          [
+            "Entering nerve terminals",
+            "Methamphetamine can enter neurons through transporters and alter vesicular storage through VMAT2-related processes.",
+            "Transporter and vesicle action",
+            "Neurotransmitter is shifted out of storage vesicles into the cell interior.",
+            "This differs from cocaine’s primary reuptake-blocking action.",
+          ],
+          [
+            "Release and reverse transport",
+            "Dopamine and norepinephrine release increases, and transporters can move neurotransmitter outward.",
+            "Reverse transport",
+            "Large signals reach the synapse through increased release and altered transporter direction.",
+            "Repeated high exposure can disrupt sleep, cognition, mood, and movement.",
+          ],
+          [
+            "Brain and body effects",
+            "Wakefulness may rise, but overheating, agitation, psychosis, seizure, stroke, or cardiac emergencies may occur.",
+            "Prolonged stimulation",
+            "Neurotransmitters, sleep deprivation, dose, and context interact.",
+            "A strong effect is not evidence of purity.",
+          ],
+        ],
+      };
+
+      const F = [0, 0.25, 0.5, 0.75, 1],
+        L = ["Blood", "Barrier", "Target", "Circuit", "Effects"],
+        route = document.querySelector("#route"),
+        prog = document.querySelector("#routeProgress"),
+        peg = document.querySelector("#peg"),
+        halo = document.querySelector("#halo"),
+        nodes = document.querySelector("#nodes"),
+        board = document.querySelector("#board"),
+        len = route.getTotalLength();
+      let drug = "opioid",
+        stage = 0,
+        playing = false,
+        raf,
+        t0,
+        startF;
+      prog.style.strokeDasharray = len;
+      F.forEach(function (f, i) {
+        let p = route.getPointAtLength(len * f);
+        nodes.insertAdjacentHTML(
+          "beforeend",
+          '<g><circle class="node" data-node="' +
+            i +
+            '" cx="' +
+            p.x +
+            '" cy="' +
+            p.y +
+            '" r="11"/><text class="node-label" x="' +
+            p.x +
+            '" y="' +
+            (p.y - 22) +
+            '">' +
+            L[i] +
+            "</text></g>",
+        );
+      });
+      function show() {
+        let d = pathways[drug][stage];
+        stageCount.textContent = "Stage " + (stage + 1) + " of 5";
+        stageTitle.textContent = d[0];
+        stageText.textContent = d[1];
+        mechanismLabel.textContent = d[2];
+        mechanismText.textContent = d[3];
+        noticeText.textContent = d[4];
+        position.textContent = "Stage " + (stage + 1) + " of 5";
+        peg.setAttribute("aria-valuenow", stage + 1);
+        peg.setAttribute(
+          "aria-valuetext",
+          "Stage " + (stage + 1) + ": " + d[0],
+        );
+        updateDopamine();
+        document.querySelectorAll(".node").forEach(function (n, i) {
+          n.classList.toggle("active", i === stage);
+        });
+      }
+      function at(f, announce) {
+        f = Math.max(0, Math.min(1, f));
+        let p = route.getPointAtLength(len * f);
+        [peg, halo].forEach(function (x) {
+          x.setAttribute("cx", p.x);
+          x.setAttribute("cy", p.y);
+        });
+        prog.style.strokeDashoffset = len * (1 - f);
+        let s = Math.min(4, Math.round(f * 4));
+        if (s !== stage || announce !== false) {
+          stage = s;
+          show();
+        }
+      }
+      function stop() {
+        playing = false;
+        cancelAnimationFrame(raf);
+        play.textContent = "▶ Play pathway";
+      }
+      function run() {
+        if (playing) {
+          stop();
+          return;
+        }
+        if (stage === 4) at(0);
+        playing = true;
+        startF = stage / 4;
+        t0 = performance.now();
+        play.textContent = "❚❚ Pause";
+        function frame(now) {
+          let f = Math.min(1, startF + (now - t0) / 6500);
+          at(f, false);
+          if (f < 1 && playing) raf = requestAnimationFrame(frame);
+          else stop();
+        }
+        raf = requestAnimationFrame(frame);
+      }
+      function nearest(x, y) {
+        let svg = board.querySelector("svg"),
+          pt = svg.createSVGPoint();
+        pt.x = x;
+        pt.y = y;
+        let q = pt.matrixTransform(svg.getScreenCTM().inverse()),
+          best = 0,
+          dist = Infinity;
+        for (let i = 0; i <= 160; i++) {
+          let p = route.getPointAtLength((len * i) / 160),
+            d = (p.x - q.x) ** 2 + (p.y - q.y) ** 2;
+          if (d < dist) {
+            dist = d;
+            best = i / 160;
+          }
+        }
+        return best;
+      }
+      let drag = false;
+      peg.onpointerdown = function (e) {
+        stop();
+        drag = true;
+        peg.setPointerCapture(e.pointerId);
+        at(nearest(e.clientX, e.clientY));
+      };
+      peg.onpointermove = function (e) {
+        if (drag) at(nearest(e.clientX, e.clientY), false);
+      };
+      peg.onpointerup = function (e) {
+        drag = false;
+        peg.releasePointerCapture(e.pointerId);
+        show();
+      };
+      peg.onkeydown = function (e) {
+        if (["ArrowRight", "ArrowUp"].includes(e.key)) {
+          e.preventDefault();
+          stop();
+          at((stage + 1) / 4);
+        }
+        if (["ArrowLeft", "ArrowDown"].includes(e.key)) {
+          e.preventDefault();
+          stop();
+          at((stage - 1) / 4);
+        }
+      };
+      document.querySelectorAll("#drugControls button").forEach(function (b) {
+        b.onclick = function () {
+          stop();
+          drug = b.dataset.drug;
+          document
+            .querySelectorAll("#drugControls button")
+            .forEach(function (x) {
+              x.setAttribute("aria-pressed", x === b);
+            });
+          at(0);
+        };
+      });
+      play.onclick = run;
+      back.onclick = function () {
+        stop();
+        at((stage - 1) / 4);
+      };
+      next.onclick = function () {
+        stop();
+        at((stage + 1) / 4);
+      };
+      at(0);
+
+      const BD = {
+        stimulant: {
+          summary:
+            "Stimulants increase activity in selected brain and sympathetic nervous-system pathways.",
+          caption: "Faster signaling and visible activity",
+          rows: [
+            [
+              "Brain / CNS",
+              "Increased arousal and alertness",
+              "82%",
+              "Agitation, anxiety, insomnia, or seizures may occur.",
+            ],
+            [
+              "Heart",
+              "Heart rate and blood pressure often rise",
+              "86%",
+              "The terms are tachycardia and hypertension.",
+            ],
+            [
+              "Lungs",
+              "Breathing rate may increase",
+              "76%",
+              "The term is tachypnea; severe toxicity can disrupt breathing.",
+            ],
+            [
+              "Temperature",
+              "Heat production and temperature may rise",
+              "79%",
+              "Hyperthermia can become an emergency.",
+            ],
+            [
+              "Pupils and muscles",
+              "Pupils may dilate; muscles may tense",
+              "72%",
+              "Sympathetic activation prepares the body for action.",
+            ],
+            [
+              "Appetite and sleep",
+              "Appetite and sleep drive often decrease",
+              "26%",
+              "Long wakefulness adds cognitive and emotional strain.",
+            ],
+          ],
+        },
+        depressant: {
+          summary:
+            "Depressants reduce selected central nervous-system activity; opioids and sedatives can suppress the drive to breathe.",
+          caption: "Slower signaling and visible activity",
+          rows: [
+            [
+              "Brain / CNS",
+              "Arousal, reaction time, and coordination decrease",
+              "28%",
+              "Sedation may progress to coma.",
+            ],
+            [
+              "Breathing",
+              "Rate and depth may fall—especially with opioids",
+              "18%",
+              "Respiratory depression can cause hypoxia and death.",
+            ],
+            [
+              "Heart and circulation",
+              "Rate or pressure may fall or become unstable",
+              "36%",
+              "The pattern varies by drug; alcohol does not simply slow every system.",
+            ],
+            [
+              "Reflexes and movement",
+              "Responses and coordination become slower",
+              "24%",
+              "Ataxia means impaired coordination or balance.",
+            ],
+            [
+              "Temperature",
+              "Temperature regulation may be impaired",
+              "34%",
+              "Severe exposure can contribute to hypothermia.",
+            ],
+            [
+              "Protective reflexes",
+              "Coughing and gag reflexes may weaken",
+              "20%",
+              "Vomiting plus reduced consciousness raises aspiration risk.",
+            ],
+          ],
+        },
+      };
+      function bodyShow(mode) {
+        let d = BD[mode];
+        bodyStage.classList.toggle("stimulant", mode === "stimulant");
+        bodyStage.classList.toggle("depressant", mode === "depressant");
+        bodySummary.textContent = d.summary;
+        bodyCaption.textContent = d.caption;
+        bodyTitle.textContent = "Animated " + mode + " body pattern";
+        readouts.innerHTML = d.rows
+          .map(function (x) {
+            return (
+              '<div class="readout"><strong>' +
+              x[0] +
+              '</strong><span class="term">' +
+              x[1] +
+              '</span><div class="meter" aria-hidden="true"><span style="width:' +
+              x[2] +
+              '"></span></div><span>' +
+              x[3] +
+              "</span></div>"
+            );
+          })
+          .join("");
+      }
+      document.querySelectorAll("[data-mode]").forEach(function (b) {
+        b.onclick = function () {
+          document.querySelectorAll("[data-mode]").forEach(function (x) {
+            x.setAttribute("aria-pressed", x === b);
+          });
+          bodyShow(b.dataset.mode);
+        };
+      });
+      let paused = false;
+      motion.onclick = function () {
+        paused = !paused;
+        bodyStage.classList.toggle("paused", paused);
+        motion.setAttribute("aria-pressed", paused);
+        motion.textContent = paused ? "Resume motion" : "Pause motion";
+      };
+      bodyShow("stimulant");
+      const ssState = {
+        drug: "alcohol",
+        set: "happy",
+        setting: "club",
+        tolerance: "low",
+      };
+      const ssSetInfo = {
+        happy:
+          "Positive expectations and excitement may make early effects feel rewarding or stimulating and may reduce attention to emerging impairment.",
+        sad: "Low mood can shape the reason for use toward coping or numbing. Continuing to use may feel tempting even when impairment is increasing.",
+        anxious:
+          "Worry and body vigilance can make unfamiliar sensations feel more intense or threatening.",
+        angry:
+          "Anger and arousal can combine with impaired judgment or disinhibition, changing behavior without making aggression inevitable.",
+      };
+      const ssSettingInfo = {
+        club: "Music, excitement, social cues, and easy availability may encourage faster use. Noise and activity can make impairment harder to notice.",
+        alone:
+          "There is less social feedback and no immediate observer to notice worsening impairment, panic, loss of consciousness, or a medical emergency.",
+        crowd:
+          "Intense sensory input, unfamiliar people, crowding, and limited control can increase stress; help may be present but hard to identify or reach.",
+        familiar:
+          "A predictable place and trusted people may reduce contextual stress and improve access to reassurance or help, but cannot guarantee safety.",
+      };
+      const ssToleranceInfo = {
+        alcohol: {
+          low: "With little tolerance, noticeable impairment may occur at a lower exposure. Individual response still varies.",
+          some: "Repeated exposure can reduce some felt effects, but coordination, judgment, and reaction time may still be impaired.",
+          high: "High tolerance can mask subjective intoxication and encourage greater consumption. It does not protect against alcohol poisoning, organ harm, or interactions.",
+        },
+        psychedelic: {
+          low: "With little prior exposure, perceptual and emotional changes may feel especially unfamiliar or difficult to interpret.",
+          some: "Prior experience may provide familiarity, but it does not make potency, reactions, or context predictable.",
+          high: "Tolerance to classic psychedelics can develop quickly and cross-tolerance can occur. It is not protection from panic, impaired judgment, or an unexpectedly potent product.",
+        },
+      };
+      function ssHeadline() {
+        let s = ssState;
+        if (
+          s.drug === "psychedelic" &&
+          s.set === "anxious" &&
+          (s.setting === "club" || s.setting === "crowd")
+        )
+          return "Anxiety plus overstimulation can contribute to a frightening trip";
+        if (
+          s.drug === "psychedelic" &&
+          s.setting === "familiar" &&
+          s.set !== "anxious" &&
+          s.set !== "angry"
+        )
+          return "A supportive context may reduce distress—but cannot guarantee a good trip";
+        if (
+          s.drug === "alcohol" &&
+          s.set === "angry" &&
+          (s.setting === "club" || s.setting === "crowd")
+        )
+          return "Alcohol disinhibition may amplify conflict in a provocative setting";
+        if (s.drug === "alcohol" && s.set === "sad" && s.setting === "alone")
+          return "Isolation can reduce feedback and delay help while drinking";
+        if (s.drug === "alcohol" && s.set === "happy" && s.setting === "club")
+          return "Excitement can mask alcohol impairment";
+        return "The same drug exposure can be interpreted differently in a different context";
+      }
+      function ssRender() {
+        let s = ssState,
+          psy = s.drug === "psychedelic",
+          stress =
+            (s.set === "anxious" || s.set === "angry") &&
+            (s.setting === "club" || s.setting === "crowd"),
+          support =
+            s.setting === "familiar"
+              ? "more visible"
+              : s.setting === "alone"
+                ? "limited"
+                : "uncertain",
+          felt =
+            s.tolerance === "low"
+              ? "may feel stronger"
+              : s.tolerance === "high"
+                ? "may feel muted"
+                : "variable";
+        document.querySelector("#ssHeadline").textContent = ssHeadline();
+        document.querySelector("#ssSummary").textContent = psy
+          ? "LSD and psilocybin can alter perception, emotion, and sense of time. Mindset and surroundings can strongly shape how those changes are interpreted, especially when anxiety and intense stimulation combine."
+          : "Alcohol concentration is not lowered by a happy mood or raised by a sad one. Mood and surroundings instead influence expectations, pace of drinking, perceived stimulation, judgment, and behavior.";
+        document.querySelector("#ssSetText").textContent = ssSetInfo[s.set];
+        document.querySelector("#ssSettingText").textContent =
+          ssSettingInfo[s.setting];
+        document.querySelector("#ssToleranceText").textContent =
+          ssToleranceInfo[s.drug][s.tolerance];
+        document.querySelector("#ssSignals").innerHTML =
+          '<span class="signal ' +
+          (s.tolerance === "low"
+            ? "higher"
+            : s.tolerance === "high"
+              ? "lower"
+              : "") +
+          '">Felt intensity: ' +
+          felt +
+          '</span><span class="signal ' +
+          (stress ? "higher" : "") +
+          '">Contextual stress: ' +
+          (stress ? "higher" : "variable") +
+          '</span><span class="signal ' +
+          (support === "limited"
+            ? "higher"
+            : support === "more visible"
+              ? "lower"
+              : "") +
+          '">Support: ' +
+          support +
+          "</span>";
+      }
+      ["ssDrug", "ssSet", "ssSetting", "ssTolerance"].forEach(function (id) {
+        document.querySelectorAll("#" + id + " button").forEach(function (b) {
+          b.onclick = function () {
+            document
+              .querySelectorAll("#" + id + " button")
+              .forEach(function (x) {
+                x.setAttribute("aria-pressed", x === b);
+              });
+            ssState[
+              id === "ssDrug"
+                ? "drug"
+                : id === "ssSet"
+                  ? "set"
+                  : id === "ssSetting"
+                    ? "setting"
+                    : "tolerance"
+            ] = b.dataset.value;
+            ssRender();
+          };
+        });
+      });
+      ssRender();
+    </script>
+  <script src="../assets/course-nav.js"></script></body>
+</html>

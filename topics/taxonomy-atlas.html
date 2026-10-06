@@ -1,0 +1,1592 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>
+      SOC-245 Section 4 | Pharmacological Taxonomy and Visual Drug Atlas
+    </title>
+    <style>
+      :root {
+        --ink: #17283b;
+        --navy: #173b57;
+        --blue: #316b91;
+        --teal: #087f78;
+        --green: #39734b;
+        --gold: #f2a900;
+        --paper: #fff;
+        --line: #cbd8df;
+        --cream: #fff8df;
+        --red: #9b3030;
+        --muted: #526272;
+      }
+      * {
+        box-sizing: border-box;
+      }
+      html {
+        scroll-behavior: smooth;
+      }
+      body {
+        margin: 0;
+        background: #edf4f6;
+        color: var(--ink);
+        font:
+          17px/1.62 system-ui,
+          -apple-system,
+          "Segoe UI",
+          sans-serif;
+      }
+      button,
+      a {
+        font: inherit;
+      }
+      .skip {
+        position: absolute;
+        left: -9999px;
+      }
+      .skip:focus {
+        left: 1rem;
+        top: 1rem;
+        background: #fff;
+        padding: 0.8rem;
+        z-index: 20;
+      }
+      header {
+        background: linear-gradient(125deg, #102f49, #087f78);
+        color: #fff;
+        padding: 2.25rem 1.2rem;
+      }
+      header > div,
+      main {
+        max-width: 1120px;
+        margin: auto;
+      }
+      .eyebrow,
+      .eyebrow a {
+        color: #ffe39a;
+        font-weight: 800;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        font-size: 0.88rem;
+      }
+      h1 {
+        font-size: clamp(2rem, 5.7vw, 3.7rem);
+        line-height: 1.06;
+        margin: 0.35rem 0;
+      }
+      .lead {
+        font-size: 1.15rem;
+        max-width: 850px;
+      }
+      .sticky {
+        position: sticky;
+        top: 0;
+        background: #fff;
+        border-bottom: 1px solid var(--line);
+        z-index: 8;
+      }
+      .progress {
+        height: 7px;
+        width: 0;
+        background: linear-gradient(90deg, var(--gold), var(--teal));
+      }
+      .nav {
+        max-width: 1120px;
+        margin: auto;
+        display: flex;
+        overflow: auto;
+        gap: 0.3rem;
+        padding: 0.5rem 1rem;
+      }
+      .nav a {
+        white-space: nowrap;
+        text-decoration: none;
+        color: var(--navy);
+        font-weight: 750;
+        padding: 0.38rem 0.65rem;
+        border-radius: 999px;
+      }
+      .nav a:hover,
+      .nav a:focus {
+        background: #e2f3f1;
+      }
+      main {
+        padding: 1.2rem;
+      }
+      section {
+        background: #fff;
+        border-radius: 18px;
+        padding: clamp(1.1rem, 3vw, 2rem);
+        margin: 1.1rem 0;
+        box-shadow: 0 8px 25px #173b5718;
+        scroll-margin-top: 70px;
+      }
+      h2 {
+        color: var(--navy);
+        font-size: clamp(1.55rem, 4vw, 2.3rem);
+        line-height: 1.15;
+        margin: 0.1rem 0 0.75rem;
+      }
+      h3 {
+        color: var(--teal);
+      }
+      .callout {
+        background: var(--cream);
+        border-left: 7px solid var(--gold);
+        padding: 1rem;
+        border-radius: 5px 12px 12px 5px;
+      }
+      .warning {
+        background: #fff0f0;
+        border-left: 7px solid var(--red);
+        padding: 1rem;
+        border-radius: 5px 12px 12px 5px;
+      }
+      .tabs {
+        display: flex;
+        gap: 0.65rem;
+        flex-wrap: wrap;
+        margin: 1rem 0;
+      }
+      .tabs button {
+        border: 2px solid var(--line);
+        background: #fff;
+        color: var(--navy);
+        font-weight: 850;
+        padding: 0.7rem 1rem;
+        border-radius: 999px;
+        cursor: pointer;
+      }
+      .tabs button[aria-selected="true"] {
+        background: var(--navy);
+        border-color: var(--navy);
+        color: #fff;
+      }
+      .collection[hidden] {
+        display: none;
+      }
+      .path {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+        gap: 0.85rem;
+      }
+      .tile {
+        display: flex;
+        flex-direction: column;
+        border: 2px solid var(--line);
+        background: #fff;
+        border-radius: 16px;
+        padding: 0;
+        overflow: hidden;
+        text-align: left;
+        color: var(--ink);
+        cursor: pointer;
+        min-width: 0;
+      }
+      .tile:hover,
+      .tile:focus,
+      .tile[aria-pressed="true"] {
+        border-color: var(--teal);
+        box-shadow: 0 0 0 3px #087f7830;
+        transform: translateY(-2px);
+      }
+      .tile img {
+        width: 100%;
+        aspect-ratio: 1;
+        object-fit: cover;
+        background: #f7f4ed;
+      }
+      .tile span {
+        padding: 0.78rem;
+      }
+      .tile strong {
+        display: block;
+        color: var(--navy);
+        font-size: 1.05rem;
+      }
+      .tile small {
+        color: var(--muted);
+        font-size: 0.85rem;
+      }
+      .arrow {
+        align-self: center;
+        color: var(--blue);
+        font-weight: 900;
+      }
+      .detail {
+        display: grid;
+        grid-template-columns: minmax(240px, 0.8fr) 1.2fr;
+        gap: 1.3rem;
+        margin-top: 1rem;
+        background: #f1f8f7;
+        border-radius: 16px;
+        padding: 1rem;
+      }
+      .detail img {
+        width: 100%;
+        border-radius: 12px;
+        aspect-ratio: 1;
+        object-fit: cover;
+      }
+      .detail h3 {
+        font-size: 1.45rem;
+        margin: 0.1rem 0;
+      }
+      .badges {
+        display: flex;
+        gap: 0.4rem;
+        flex-wrap: wrap;
+        margin: 0.55rem 0;
+      }
+      .badge {
+        background: #dbece9;
+        color: #075d57;
+        border-radius: 999px;
+        padding: 0.22rem 0.6rem;
+        font-size: 0.85rem;
+        font-weight: 800;
+      }
+      .facts {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 0.6rem;
+        margin-top: 0.8rem;
+      }
+      .fact {
+        background: #fff;
+        border: 1px solid var(--line);
+        border-radius: 10px;
+        padding: 0.7rem;
+      }
+      .fact strong {
+        display: block;
+        color: var(--navy);
+      }
+      .compare {
+        overflow: auto;
+      }
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        min-width: 760px;
+      }
+      th,
+      td {
+        text-align: left;
+        vertical-align: top;
+        border: 1px solid var(--line);
+        padding: 0.75rem;
+      }
+      th {
+        background: var(--navy);
+        color: #fff;
+      }
+      tr:nth-child(even) {
+        background: #f3f8f9;
+      }
+      .quiz button {
+        display: block;
+        width: 100%;
+        text-align: left;
+        border: 2px solid var(--line);
+        background: #fff;
+        border-radius: 12px;
+        padding: 0.8rem;
+        margin: 0.5rem 0;
+        cursor: pointer;
+      }
+      .quiz button:hover,
+      .quiz button:focus {
+        border-color: var(--teal);
+      }
+      .feedback {
+        background: #eaf4fb;
+        border-left: 7px solid var(--blue);
+        padding: 1rem;
+        border-radius: 5px 12px 12px 5px;
+        min-height: 78px;
+        margin-top: 0.8rem;
+      }
+      .sources a {
+        color: #075f87;
+      }
+      .next {
+        background: linear-gradient(125deg, #173b57, #087f78);
+        color: #fff;
+      }
+      .next h2,
+      .next a {
+        color: #fff;
+      }
+      @media (max-width: 850px) {
+        .path {
+          grid-template-columns: 1fr 1fr;
+        }
+        .detail {
+          grid-template-columns: 1fr;
+        }
+        .detail img {
+          max-width: 360px;
+        }
+      }
+      @media (max-width: 540px) {
+        .path,
+        .facts {
+          grid-template-columns: 1fr;
+        }
+        .tile {
+          display: grid;
+          grid-template-columns: 120px 1fr;
+        }
+        .tile img {
+          height: 100%;
+          aspect-ratio: 1;
+        }
+        .arrow {
+          display: none;
+        }
+      }
+      @media (prefers-reduced-motion: reduce) {
+        html {
+          scroll-behavior: auto;
+        }
+        .tile {
+          transform: none !important;
+        }
+      }
+      @media print {
+        .sticky,
+        .tabs,
+        .quiz button {
+          display: none;
+        }
+        body {
+          background: #fff;
+          font-size: 11pt;
+        }
+        section {
+          box-shadow: none;
+          border: 1px solid #bbb;
+        }
+        .collection[hidden] {
+          display: block;
+        }
+      }
+      .interaction-types {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 0.75rem;
+        margin: 1rem 0;
+      }
+      .interaction-type {
+        border: 2px solid var(--line);
+        border-top: 7px solid var(--blue);
+        border-radius: 14px;
+        padding: 1rem;
+      }
+      .interaction-type strong {
+        display: block;
+        color: var(--navy);
+        font-size: 1.08rem;
+      }
+      .mix-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 0.75rem;
+      }
+      .mix-button {
+        border: 2px solid var(--line);
+        background: #fff;
+        border-radius: 13px;
+        padding: 0.9rem;
+        text-align: left;
+        cursor: pointer;
+        color: var(--ink);
+      }
+      .mix-button:hover,
+      .mix-button:focus,
+      .mix-button[aria-pressed="true"] {
+        border-color: var(--teal);
+        box-shadow: 0 0 0 3px #087f7830;
+      }
+      .mix-button strong {
+        display: block;
+        color: var(--navy);
+      }
+      .interaction-result {
+        margin-top: 1rem;
+        background: #eef7fb;
+        border-left: 7px solid var(--blue);
+        padding: 1rem;
+        border-radius: 5px 14px 14px 5px;
+        min-height: 150px;
+      }
+      .interaction-result h3 {
+        margin: 0.1rem 0;
+      }
+      .evidence-ledger { display:grid; grid-template-columns:1fr 1fr; gap:1rem; margin:1rem 0; }
+      .evidence-column { border:1px solid var(--line); border-radius:16px; overflow:hidden; background:#fff; }
+      .evidence-column h3 { margin:0; padding:1rem; color:#fff; background:var(--navy); }
+      .evidence-column.community h3 { background:var(--teal); }
+      .source-card { padding:.9rem 1rem; border-top:1px solid var(--line); }
+      .source-card strong { display:block; color:var(--navy); }
+      .source-card span { display:block; margin-top:.3rem; color:var(--muted); }
+      .triage-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:.75rem; margin:1rem 0; }
+      .triage-card { border-radius:14px; padding:1rem; background:#edf6fb; border-top:6px solid var(--blue); }
+      .triage-card:nth-child(2) { background:#fff5d8; border-color:var(--gold); }
+      .triage-card:nth-child(3) { background:#fde9e7; border-color:#b4382f; }
+      .triage-card strong { display:block; color:var(--navy); margin-bottom:.35rem; }
+      .full-tool {
+        display: grid;
+        grid-template-columns: 1fr auto;
+        gap: 1rem;
+        align-items: center;
+        margin-top: 1rem;
+        padding: 1.1rem;
+        border-radius: 14px;
+        background: linear-gradient(125deg, var(--navy), var(--teal));
+        color: #fff;
+      }
+      .full-tool strong {
+        display: block;
+        font-size: 1.2rem;
+      }
+      .full-tool p {
+        margin: 0.25rem 0 0;
+      }
+      .full-tool a {
+        display: inline-block;
+        padding: 0.75rem 1rem;
+        border-radius: 999px;
+        background: var(--gold);
+        color: #17283b;
+        font-weight: 900;
+        text-decoration: none;
+        white-space: nowrap;
+      }
+      .full-tool a:hover,
+      .full-tool a:focus {
+        background: #ffd56a;
+        outline: 3px solid #fff;
+      }
+      .result-label {
+        display: inline-block;
+        background: var(--navy);
+        color: #fff;
+        font-size: 0.82rem;
+        font-weight: 850;
+        border-radius: 999px;
+        padding: 0.2rem 0.62rem;
+        margin-bottom: 0.5rem;
+      }
+      .equation {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.7rem;
+        flex-wrap: wrap;
+        margin: 0.8rem 0;
+        font-size: 1.08rem;
+        font-weight: 850;
+      }
+      .equation span {
+        background: #fff;
+        border: 2px solid var(--line);
+        padding: 0.55rem 0.75rem;
+        border-radius: 10px;
+      }
+      .equation b {
+        color: var(--teal);
+        font-size: 1.35rem;
+      }
+      @media (max-width: 850px) {
+        .interaction-types,
+        .evidence-ledger,
+        .triage-grid {
+          grid-template-columns: 1fr 1fr;
+        }
+      }
+      @media (max-width: 540px) {
+        .interaction-types,
+        .evidence-ledger,
+        .triage-grid,
+        .mix-grid {
+          grid-template-columns: 1fr;
+        }
+        .full-tool {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+    <link rel="stylesheet" href="../assets/policy-cost/human-story.css" />
+  <link rel="stylesheet" href="../assets/references.css"></head>
+  <body>
+    <a class="skip" href="#main">Skip to section content</a>
+    <header>
+      <div>
+        <div class="eyebrow">SOC-245 · Unit One · <a href="./">All Sections</a></div>
+        <h1>Section 4: Pharmacological Taxonomy and Visual Drug Atlas</h1>
+        <p class="lead">
+          Classification helps us compare drugs, but no single system tells the
+          whole story. Explore how botanical sources become contemporary
+          products, then connect appearance to pharmacology, medicine, law, and
+          social meaning.
+        </p>
+      </div>
+    </header>
+    <div class="sticky">
+      <div class="progress" id="progress"></div>
+      <nav class="nav" aria-label="Topic sections">
+        <a href="#go-ask-alice">Opening case</a><a href="#atlas">Visual atlas</a><a href="#taxonomy">Taxonomy</a
+        ><a href="#evidence">How we know</a
+        ><a href="#interactions">Drug interactions</a
+        ><a href="#compare">Compare</a><a href="#designer-mixtures">Emerging mixtures</a
+        ><a href="#name-chart">Name chart</a><a href="#check">Check yourself</a
+        ><a href="#sources">References</a>
+      </nav>
+    </div>
+    <main id="main">
+      <section class="human-story" id="go-ask-alice">
+        <span class="story-note">Opening case · Stories versus pharmacology</span>
+        <h2><span class="section-number">4.1</span> <em>Go Ask Alice</em>: when a frightening story is mistaken for drug evidence</h2><figure class="story-visual"><img src="../assets/story-openings/white-rabbit-classification.png" alt="Original psychedelic white rabbit entering a tunnel of medicine cards, clocks, mushrooms, and laboratory glassware"><figcaption>An original white-rabbit visual connects storytelling, altered perception, and the classification of drugs without reproducing a movie character.</figcaption></figure>
+        <p><strong>Section 4 question:</strong> What happens when legal classification is influenced by a compelling social story before researchers can establish the typical pharmacological pattern?</p>
+        <p><strong>Content note:</strong> This story discusses adolescent drug use, rape, sexual coercion, exploitation, and death.</p>
+        <blockquote>
+          In 1971, readers were told they were opening the private diary of an unnamed fifteen-year-old girl. After unknowingly consuming LSD, the narrator rapidly descends into repeated drug use, running away, sexual victimization, and an eventual death described as a possible overdose. The apparent testimony of a dead teenager made the warning feel more authoritative than ordinary fiction.
+        </blockquote>
+        <p>
+          <em>Go Ask Alice</em> was marketed as “A Real Diary” by an anonymous teenager. It is now widely understood as a fictional or heavily fabricated work created by Beatrice Sparks, who presented herself as its editor. The story became a bestseller, entered schools, and helped popularize an anti-drug narrative in which one exposure could propel an otherwise ordinary teenager almost immediately from LSD to addiction, social “degradation,” and death.
+        </p>
+        <div class="callout">
+          <strong>The classification timeline corrects an important claim:</strong> the federal Controlled Substances Act was signed on October 27, 1970; <em>Go Ask Alice</em> was published on September 14, 1971. The book therefore did <strong>not</strong> cause Congress to create the five schedules. It did, however, arrive as the new system was taking hold and gave moral entrepreneurs a vivid, emotionally persuasive story that could reinforce public support for punitive drug control even when the story itself was not reliable evidence.
+        </div>
+        <h3>What was fabricated—and what danger was real?</h3>
+        <div class="life-course" aria-label="Comparison between the fictional causal story and documented exploitation">
+          <div>
+            <strong>The constructed drug story</strong><br />
+            The book compresses a dramatic sequence: involuntary LSD exposure → rapid escalation across drugs → loss of identity and control → sexual victimization → death. Presenting this fictional chain as a diary encouraged readers to mistake a frightening narrative for research about how drug use normally develops.
+          </div>
+          <div class="story-arrow" aria-hidden="true">↔</div>
+          <div>
+            <strong>The documented exploitation</strong><br />
+            Drugs can be used to incapacitate people for sexual assault. Traffickers may also exploit addiction and threaten withdrawal to control victims. Those harms are real, serious, and likely underreported—but they result from perpetrators, unequal power, vulnerability, and market conditions, not from an automatic pharmacological path experienced by every person who uses a drug.
+          </div>
+        </div>
+        <h3>The conflict hidden inside the story</h3>
+        <p>
+          A false diary can still contain recognizable social dangers. The book’s narrator is raped while intoxicated and later pressured to exchange sexual access for drugs. The mistake is not taking those harms seriously; it is treating the drug alone as the complete explanation. A conflict perspective asks who gains control when dependence exists. In an illegal market, an exploiter can control supply, price, debt, secrecy, and the threat of withdrawal while a victim may fear arrest or distrust authorities. When evidence-based treatment and regulated medical access are unavailable, that power can remain with people who use drugs as leverage.
+        </p>
+        <p>
+          Regulation is not permission for exploitation. A health-centered system moves dependence treatment, dosage, purity, and withdrawal management toward accountable medical professionals, while criminal law concentrates on rape, coercion, trafficking, sales to minors, violence, and unlicensed supply. It cannot eliminate abuse, but it can reduce one tool of control: an exploiter’s monopoly over the substance a person’s body has come to need.
+        </p>
+        <div class="story-questions">
+          <div><strong>Symbolic interactionism</strong><br />How did the label “real diary” change the meaning and credibility of this fictional story?</div>
+          <div><strong>Conflict theory</strong><br />Who gained authority from the drug panic—and who gains leverage when access is controlled by an illegal supplier?</div>
+          <div><strong>Structural functionalism</strong><br />Did the classification system improve safety, or did weak evidence and punitive responses create latent dysfunctions?</div>
+        </div>
+        <p class="care-note">
+          <strong>Evidence trail:</strong>
+          <a href="https://www.simonandschuster.com/books/Go-Ask-Alice/Anonymous/Anonymous-Diaries/9780671664589">publisher record and publication date</a> ·
+          <a href="https://www.newyorker.com/magazine/2022/08/01/how-a-mormon-housewife-turned-a-fake-diary-into-an-enormous-best-seller">investigation of the book’s authorship and marketing</a> ·
+          <a href="https://www.dea.gov/drug-information/csa">DEA explanation of the Controlled Substances Act</a> ·
+          <a href="https://www.justice.gov/archive/ndic/pubs8/8872/index.htm">DOJ overview of drug-facilitated sexual assault</a> ·
+          <a href="https://www.justice.gov/d9/pages/attachments/2017/11/06/human_trafficking_final.pdf">DOJ discussion of drug-based coercion in trafficking cases</a>
+        </p>
+      </section>
+      <section>
+        <h2><span class="section-number">4.2</span> One substance can belong to several categories</h2>
+        <p>
+          A <strong>pharmacological taxonomy</strong> groups substances by
+          features such as their primary action in the body, chemical origin,
+          medical use, or legal status. These systems overlap. Cannabis, for
+          example, has its own cannabinoid category and may produce relaxation,
+          altered perception, impaired coordination, or anxiety. Calling it only
+          a “depressant” or only a “hallucinogen” hides that complexity.
+        </p>
+        <div class="warning">
+          <strong
+            >Images are educational examples—not a method of
+            identification.</strong
+          >
+          Appearance cannot confirm a drug’s identity, dose, potency, purity, or
+          contamination. Products that look alike can contain very different
+          substances.
+        </div>
+      </section>
+      <section id="atlas">
+        <h2><span class="section-number">4.3</span> Explore the source-to-form pathways</h2>
+        <p>
+          Select a collection, then choose any image tile. The explanation below
+          the pathway changes with your selection.
+        </p>
+        <div
+          class="tabs"
+          role="tablist"
+          aria-label="Visual drug atlas collections"
+        >
+          <button
+            id="tab-cannabis"
+            role="tab"
+            aria-selected="true"
+            aria-controls="cannabis"
+            data-group="cannabis"
+          >
+            Cannabis: plant to products</button
+          ><button
+            id="tab-opioids"
+            role="tab"
+            aria-selected="false"
+            aria-controls="opioids"
+            data-group="opioids"
+          >
+            Opioids: natural to synthetic
+          </button><button id="tab-stimulants" role="tab" aria-selected="false" aria-controls="stimulants" data-group="stimulants">
+            Stimulants
+          </button><button id="tab-depressants" role="tab" aria-selected="false" aria-controls="depressants" data-group="depressants">
+            Depressants &amp; sedatives
+          </button><button id="tab-psychedelics" role="tab" aria-selected="false" aria-controls="psychedelics" data-group="psychedelics">
+            Psychedelics &amp; MDMA
+          </button><button id="tab-dissociatives" role="tab" aria-selected="false" aria-controls="dissociatives" data-group="dissociatives">
+            Dissociatives
+          </button><button id="tab-other" role="tab" aria-selected="false" aria-controls="other" data-group="other">
+            Inhalants, OTC &amp; steroids
+          </button>
+        </div>
+        <div
+          class="collection"
+          id="cannabis"
+          role="tabpanel"
+          aria-labelledby="tab-cannabis"
+        >
+          <div class="path" id="cannabisPath"></div>
+        </div>
+        <div
+          class="collection"
+          id="opioids"
+          role="tabpanel"
+          aria-labelledby="tab-opioids"
+          hidden
+        >
+          <div class="path" id="opioidsPath"></div>
+        </div>
+        <div class="collection" id="stimulants" role="tabpanel" aria-labelledby="tab-stimulants" hidden>
+          <div class="path" id="stimulantsPath"></div>
+        </div>
+        <div class="collection" id="depressants" role="tabpanel" aria-labelledby="tab-depressants" hidden>
+          <div class="path" id="depressantsPath"></div>
+        </div>
+        <div class="collection" id="psychedelics" role="tabpanel" aria-labelledby="tab-psychedelics" hidden>
+          <div class="path" id="psychedelicsPath"></div>
+        </div>
+        <div class="collection" id="dissociatives" role="tabpanel" aria-labelledby="tab-dissociatives" hidden>
+          <div class="path" id="dissociativesPath"></div>
+        </div>
+        <div class="collection" id="other" role="tabpanel" aria-labelledby="tab-other" hidden>
+          <div class="path" id="otherPath"></div>
+        </div>
+        <article class="detail" id="detail" aria-live="polite">
+          <img
+            id="detailImage"
+            src="../assets/drug-atlas/cannabis-plant.png"
+            alt="Cannabis plant botanical specimen"
+          />
+          <div>
+            <h3 id="detailTitle">Cannabis plant</h3>
+            <div class="badges" id="detailBadges"></div>
+            <p id="detailText"></p>
+            <div class="facts">
+              <div class="fact">
+                <strong>What changes?</strong><span id="detailChange"></span>
+              </div>
+              <div class="fact">
+                <strong>Why it matters</strong><span id="detailRisk"></span>
+              </div>
+            </div>
+          </div>
+        </article>
+      </section>
+      <section id="taxonomy">
+        <h2><span class="section-number">4.4</span> How this atlas uses taxonomy</h2>
+        <div class="compare">
+          <table>
+            <thead>
+              <tr>
+                <th>Classification question</th>
+                <th>Cannabis</th>
+                <th>Opioids</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Primary pharmacological family</strong></td>
+                <td>
+                  Cannabinoids; THC acts mainly through the endocannabinoid
+                  system.
+                </td>
+                <td>
+                  Opioids; these substances act at opioid receptors in the
+                  brain, spinal cord, and other parts of the body.
+                </td>
+              </tr>
+              <tr>
+                <td><strong>Origin</strong></td>
+                <td>
+                  Plant material, extracted concentrates, or manufactured
+                  cannabinoid products.
+                </td>
+                <td>
+                  Natural opiates from poppy material, semi-synthetic opioids
+                  made by modifying natural compounds, or fully synthetic
+                  opioids made in laboratories.
+                </td>
+              </tr>
+              <tr>
+                <td><strong>Medical context</strong></td>
+                <td>
+                  Some cannabinoid-containing medicines have FDA-approved uses.
+                  State medical-cannabis laws are not the same as FDA approval
+                  of every cannabis product.
+                </td>
+                <td>
+                  Several opioids are prescribed for pain or other medical
+                  purposes. Methadone and buprenorphine also have roles in
+                  treating opioid use disorder.
+                </td>
+              </tr>
+              <tr>
+                <td><strong>Major safety distinction</strong></td>
+                <td>
+                  Route, THC concentration, dose, delayed onset of edibles, and
+                  individual vulnerability affect risk.
+                </td>
+                <td>
+                  Respiratory depression is the central overdose danger.
+                  Illicitly manufactured fentanyl may be present without a
+                  person knowing it.
+                </td>
+              </tr>
+              <tr>
+                <td><strong>Legal classification</strong></td>
+                <td>
+                  Federal and state definitions may conflict and change over
+                  time.
+                </td>
+                <td>
+                  Legal status differs by substance and authorized medical use;
+                  heroin remains federally Schedule I, while several medical
+                  opioids are available under controlled conditions.
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="callout">
+          <strong>Opiate versus opioid:</strong> <em>Opiate</em> is the narrower
+          term for naturally occurring substances derived from opium, such as
+          morphine and codeine. <em>Opioid</em> is the broader category that
+          includes natural, semi-synthetic, and synthetic substances.
+        </div>
+        <h3>A modern working map of the major families</h3>
+        <div class="compare">
+          <table>
+            <thead><tr><th>Family</th><th>Primary organizing idea</th><th>Examples in this atlas</th><th>Important complication</th></tr></thead>
+            <tbody>
+              <tr><td><strong>Stimulants</strong></td><td>Increase activity in selected central and sympathetic nervous-system pathways.</td><td>Caffeine, nicotine, cocaine, prescription stimulants, methamphetamine</td><td>They act through different receptors and transporters; legal status does not define pharmacology.</td></tr>
+              <tr><td><strong>Depressants and sedatives</strong></td><td>Reduce selected central nervous-system activity and may impair arousal, coordination, or breathing.</td><td>Alcohol, benzodiazepines, barbiturates, sleep medicines, GHB</td><td>Early disinhibition can feel stimulating; combining depressants can magnify overdose risk.</td></tr>
+              <tr><td><strong>Classic psychedelics</strong></td><td>Alter perception and cognition, commonly through serotonin 5-HT2A signaling.</td><td>Psilocybin, mescaline, DMT, LSD</td><td>Clinical research is not the same as FDA approval or unsupervised safety.</td></tr>
+              <tr><td><strong>Empathogens</strong></td><td>Produce social-emotional openness alongside stimulant and perceptual effects.</td><td>MDMA</td><td>Mixed effects resist a one-box classification, and illicit tablets may contain other substances.</td></tr>
+              <tr><td><strong>Dissociatives</strong></td><td>Can disrupt integration of perception, memory, and bodily awareness; many act at NMDA receptors.</td><td>Ketamine, esketamine, PCP, DXM</td><td>Approved medical use belongs to a specific drug, formulation, indication, and monitoring system.</td></tr>
+              <tr><td><strong>Inhalants</strong></td><td>Grouped by route and product type rather than one receptor action.</td><td>Volatile solvents, aerosols, gases, nitrites</td><td>Different chemicals can create very different toxicities, including sudden death.</td></tr>
+              <tr><td><strong>Hormonal/performance drugs</strong></td><td>Alter endocrine signaling rather than producing a classic intoxication.</td><td>Anabolic-androgenic steroids</td><td>A drug need not cause a “high” to produce dependence patterns or serious harm.</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="callout">
+          <strong>Why the older “CNS stabilizer” box was revised:</strong>
+          antidepressants, lithium, and methylphenidate do not form one pharmacological family.
+          Methylphenidate is a stimulant; antidepressants span several mechanisms; lithium is a
+          mood-stabilizing medicine. Therapeutic purpose is one classification lens, not a receptor-level taxonomy.
+        </div>
+      </section>
+      <section id="compare">
+        <h2><span class="section-number">4.5</span> What a visual pathway can—and cannot—show</h2>
+        <div class="facts">
+          <div class="fact">
+            <strong>It can show transformation</strong>Students can trace a
+            botanical source into plant material, extracts, medicines, or
+            illicit market forms.
+          </div>
+          <div class="fact">
+            <strong>It can reveal category errors</strong>Heroin is derived from
+            morphine but is semi-synthetic; fentanyl does not come from the
+            poppy and is fully synthetic.
+          </div>
+          <div class="fact">
+            <strong>It can connect route and onset</strong>Smoking or
+            inhalation, swallowing, nasal use, transdermal delivery, and
+            injection can produce different onset and risk patterns. This page
+            describes routes without teaching preparation.
+          </div>
+          <div class="fact">
+            <strong>It cannot verify a sample</strong>Color, shape, packaging,
+            or texture cannot establish chemical contents. Only appropriate
+            testing can provide evidence about composition.
+          </div>
+        </div>
+      </section>
+      <section id="evidence">
+        <h2><span class="section-number">4.6</span> How do we know? Official and non-administrative evidence</h2>
+        <p>
+          Drug knowledge is built from records created for different purposes. <strong>Official data</strong>
+          are produced or maintained by public institutions such as law enforcement, courts, public-health
+          agencies, hospitals, and medical examiners. <strong>Non-administrative data</strong> are often produced
+          by universities, community organizations, or participants themselves. “Official” does not mean
+          complete or unbiased, and “unofficial” does not mean unscientific. The strongest conclusions compare
+          sources and ask what each system could see, record, or miss.
+        </p>
+        <div class="evidence-ledger" aria-label="Comparison of official and non-administrative drug data sources">
+          <article class="evidence-column">
+            <h3>Official and administrative sources</h3>
+            <div class="source-card"><strong>UCR / Crime Data Explorer</strong><span>Local agencies report offenses and arrests to the FBI. Drug arrests measure enforcement and reporting—not the prevalence of drug use.</span></div>
+            <div class="source-card"><strong>DAWN</strong><span>The Drug Abuse Warning Network monitors drug-related emergency-department visits. It captures treated events, not harms for which no emergency care was sought.</span></div>
+            <div class="source-card"><strong>N-SUMHSS and TEDS</strong><span>SAMHSA’s current service survey and treatment episode data describe facilities, services, and admissions. An admission is not a unique person, and access, funding, and reporting rules affect the counts.</span></div>
+            <div class="source-card"><strong>SUDORS and DOSE</strong><span>CDC combines death certificates, medical-examiner or coroner reports, toxicology, and scene evidence in SUDORS; DOSE tracks suspected nonfatal overdoses in emergency departments.</span></div>
+            <div class="source-card"><strong>PDMP, seizure, and laboratory data</strong><span>Prescription monitoring and submitted drug samples reveal parts of legal and illegal supply, but they cannot show every medicine dispensed, substance used, or product never seized.</span></div>
+          </article>
+          <article class="evidence-column community">
+            <h3>Academic, community, and self-reported sources</h3>
+            <div class="source-card"><strong>Monitoring the Future (MTF)</strong><span>A University of Michigan study begun in 1975 surveys students and follows selected cohorts over time. School absence, dropout, recall, and honest disclosure affect estimates.</span></div>
+            <div class="source-card"><strong>Youth Risk Behavior Survey (YRBS)</strong><span>CDC’s school-based survey monitors health behaviors and experiences among high-school students; it does not represent adolescents who are not enrolled or present.</span></div>
+            <div class="source-card"><strong>National Survey on Drug Use and Health (NSDUH)</strong><span>SAMHSA’s national household survey uses confidential self-report. It is federally sponsored but belongs here methodologically because it was designed to estimate otherwise hidden behavior.</span></div>
+            <div class="source-card"><strong>National Drug Early Warning System (NDEWS)</strong><span>NDEWS combines sentinel sites, community expertise, 911 data, web monitoring, wastewater, and other signals to detect emerging patterns rapidly.</span></div>
+            <div class="source-card"><strong>Interviews, ethnography, and self-monitoring</strong><span>Focus groups, observation, apps, and journals explain motives, meanings, sequences, and settings that administrative databases cannot.</span></div>
+            <div class="source-card"><strong>Community drug checking and wastewater</strong><span>These can reveal changing supply or population-level signals, but tested samples are selective and wastewater usually cannot establish who used a drug or why.</span></div>
+          </article>
+        </div>
+        <div class="callout"><strong>Historical terminology:</strong> Older readings may name ADAM or ADAM II, DASIS, N-SSATS, Pulse Check, and CEWG. Those programs remain useful for historical analysis, but the main chart uses active systems. N-SUMHSS incorporates the former N-SSATS, and NDEWS expanded the earlier CEWG model.</div>
+        <div class="callout"><strong>Triangulation:</strong> If toxicology, emergency visits, anonymous surveys, interviews, and drug-checking results point in the same direction, confidence increases. When they disagree, the disagreement is a research finding—not a reason to select whichever number supports a preferred policy.</div>
+      </section>
+      <section id="interactions">
+        <h2><span class="section-number">4.7</span> Drug Interaction Lab: when substances meet inside the body</h2>
+        <p>
+          <strong>Polysubstance use</strong> means that two or more drugs are
+          taken together or within a short period, intentionally or
+          unintentionally. An interaction can change what a drug does, how
+          strongly it acts, how long it remains active, or how the body
+          processes it. Interactions also occur among prescriptions,
+          over-the-counter medicines, alcohol, caffeine, nicotine, supplements,
+          and illegal drugs.
+        </p>
+        <div class="interaction-types">
+          <div class="interaction-type">
+            <strong>Additive</strong>The combined effect is approximately the
+            sum of each drug’s effect: 1 + 1 ≈ 2.
+          </div>
+          <div class="interaction-type">
+            <strong>Synergistic</strong>The combined effect is greater than a
+            simple sum: 1 + 1 &gt; 2. This is sometimes called potentiation.
+          </div>
+          <div class="interaction-type">
+            <strong>Antagonistic</strong>One drug reduces or blocks a particular
+            effect of another. This does not necessarily remove every effect or
+            danger.
+          </div>
+          <div class="interaction-type">
+            <strong>Metabolic or idiosyncratic</strong>One substance changes the
+            absorption, metabolism, or elimination of another—or the combination
+            produces an unusual, individual, or unexpected response.
+          </div>
+        </div>
+        <h3>Choose a combination to investigate</h3>
+        <div class="mix-grid" id="mixGrid">
+          <button
+            class="mix-button"
+            data-mix="opioid-benzo"
+            aria-pressed="true"
+          >
+            <strong>Opioid + benzodiazepine</strong>Two central nervous system
+            depressants
+          </button>
+          <button class="mix-button" data-mix="naloxone" aria-pressed="false">
+            <strong>Opioid + naloxone</strong>A receptor-level antagonist
+          </button>
+          <button
+            class="mix-button"
+            data-mix="cocaine-alcohol"
+            aria-pressed="false"
+          >
+            <strong>Cocaine + alcohol</strong>A new active metabolite may form
+          </button>
+          <button
+            class="mix-button"
+            data-mix="stimulant-depressant"
+            aria-pressed="false"
+          >
+            <strong>Stimulant + depressant</strong>Opposing sensations, not
+            canceled toxicity
+          </button>
+        </div>
+        <article
+          class="interaction-result"
+          id="interactionResult"
+          aria-live="polite"
+        >
+          <span class="result-label" id="interactionLabel"
+            >Synergistic danger</span
+          >
+          <h3 id="interactionTitle">Opioid + benzodiazepine</h3>
+          <div
+            class="equation"
+            id="interactionEquation"
+            aria-hidden="true"
+          ></div>
+          <p id="interactionText"></p>
+          <p>
+            <strong>What students should remember:</strong>
+            <span id="interactionTakeaway"></span>
+          </p>
+        </article>
+        <div class="warning">
+          <strong>“They cancel each other out” is a dangerous myth.</strong> A
+          person may feel less sleepy after adding a stimulant or less
+          stimulated after adding a depressant, but masking a sensation does not
+          stop respiratory depression, cardiac strain, overheating, impaired
+          judgment, or overdose. The body is managing both drugs and their
+          interactions at the same time.
+        </div>
+        <h3>“Syndrome X” or mixed-drug toxicity?</h3>
+        <p>
+          <strong>Syndrome X is not the standard medical or forensic name for a death caused by mixing medicines.</strong>
+          In medicine, that label has been used for other conditions, especially metabolic syndrome. When several
+          substances contribute to poisoning or death, records more often use terms such as <em>mixed-drug toxicity</em>,
+          <em>combined drug intoxication</em>, or <em>polysubstance overdose</em>. A toxicology result must be interpreted
+          with dose, timing, tolerance, medical history, scene evidence, and the way the substances interact; detection
+          alone does not prove that each substance caused the death.
+        </p>
+        <div class="triage-grid" aria-label="Three levels of drug interaction checking">
+          <div class="triage-card"><strong>Known medicines</strong>Enter every prescription, over-the-counter medicine, vitamin, and supplement in the course Interaction Tool; read the official label or MedlinePlus entry; then confirm important findings with a pharmacist or prescriber.</div>
+          <div class="triage-card"><strong>Unknown or illicit contents</strong>No online interaction checker can identify an unknown powder or counterfeit pill. Appearance is not evidence of contents. Local drug checking, where available, can reduce uncertainty but cannot make use risk-free.</div>
+          <div class="triage-card"><strong>Possible poisoning now</strong>Do not use a classroom checker to diagnose an emergency. In the United States, use webPOISONCONTROL or call 1-800-222-1222. If a person collapses, has a seizure, has trouble breathing, or cannot be awakened, call 911.</div>
+        </div>
+        <div class="full-tool">
+          <div>
+            <strong>Continue with the full Drug Interaction Tool</strong>
+            <p>
+              The examples above introduce the interaction types. Use our full
+              course tool to compare additional substances and examine how
+              combinations can alter effects and risks.
+            </p>
+          </div>
+          <a
+            href="https://carollhodgson-hub.github.io/drug-interaction-tool/"
+            target="_blank"
+            rel="noopener"
+            >Open Interaction Tool <span aria-hidden="true">↗</span></a
+          >
+        </div>
+        <div class="full-tool">
+          <div><strong>Look up a prescription or supplement</strong><p>MedlinePlus provides patient information about uses, precautions, and known interactions. A database cannot replace a pharmacist who can review the complete medication list, doses, health conditions, and timing.</p></div>
+          <a href="https://medlineplus.gov/druginformation.html" target="_blank" rel="noopener">Search MedlinePlus <span aria-hidden="true">↗</span></a>
+        </div>
+        <div class="full-tool">
+          <div><strong>Get immediate poison guidance</strong><p>webPOISONCONTROL gives case-specific triage for many exposures; expert help is also available by phone at 1-800-222-1222 in the United States.</p></div>
+          <a href="https://www.poison.org/" target="_blank" rel="noopener">Open Poison Control <span aria-hidden="true">↗</span></a>
+        </div>
+      </section>
+      <section id="check" class="quiz">
+        <h2><span class="section-number">4.8</span> Check your classification</h2>
+        <p>Which statement is most accurate?</p>
+        <button data-answer="natural">
+          A. All opioids come directly from the opium poppy.</button
+        ><button data-answer="semi">
+          B. Heroin is a natural opiate because its history begins with the
+          poppy.</button
+        ><button data-answer="correct">
+          C. Morphine is natural, heroin is semi-synthetic, and fentanyl is
+          synthetic.
+        </button>
+        <div class="feedback" id="feedback" aria-live="polite">
+          Choose an answer, then use the atlas pathway to check your reasoning.
+        </div>
+      </section>
+      <section id="designer-mixtures">
+        <h2><span class="section-number">4.9</span> Designer drugs, branded mixtures, and uncertain contents</h2>
+        <figure class="story-visual"><img src="../assets/new-sections/designer-mixtures.webp" alt="Pink powder, a purple drink, a tablet, and a laboratory testing instrument"><figcaption>A market name, color, or logo can advertise an identity without establishing what chemicals are present. Original educational illustration.</figcaption></figure>
+        <p>A <strong>designer drug</strong> is generally a deliberately synthesized or modified compound. A <strong>street product</strong> is sold under a market name that may remain stable while its ingredients change. A <strong>mixture</strong> contains more than one active substance. One product can fit more than one category.</p>
+        <div class="compare"><table><thead><tr><th>Market term</th><th>Taxonomy correction</th><th>Central risk</th></tr></thead><tbody>
+          <tr><td><strong>Tusi</strong> (“pink cocaine”)</td><td>Not one pharmaceutical identity. DEA samples have contained changing mixtures such as ketamine, MDMA, methamphetamine, cocaine, fentanyl, or xylazine. It rarely contains 2C-B and may contain no cocaine.</td><td>Color and name cannot predict dose, interactions, or contents.</td></tr>
+          <tr><td><strong>Molly / ecstasy</strong></td><td>MDMA is a molecule; Molly and ecstasy are sales labels. Products may contain MDMA, another stimulant, or a mixture.</td><td>A familiar label or logo is not chemical confirmation.</td></tr>
+          <tr><td><strong>Lean / purple drank</strong></td><td>Usually a mixture involving codeine and promethazine, not a novel designer molecule.</td><td>Other depressants can intensify respiratory depression.</td></tr>
+          <tr><td><strong>K2 / Spice</strong></td><td>A changing group of synthetic cannabinoid-receptor agonists—not cannabis and not one drug.</td><td>Batches may differ sharply.</td></tr>
+          <tr><td><strong>Bath salts</strong></td><td>An umbrella market label for various synthetic cathinones.</td><td>The label does not identify the compound or dose.</td></tr>
+        </tbody></table></div>
+        <div class="callout"><strong>Taxonomy rule:</strong> appearance and slang are clues about social meaning—not reliable chemical identification.</div>
+      </section>
+      <section id="name-chart">
+        <h2><span class="section-number">4.10</span> Drug names: formal identity, brands, and slang</h2>
+        <p>One substance may have a generic name, a pharmaceutical brand, and several street names. One street name may also be applied to different substances. Slang changes by place, generation, and market.</p>
+        <div class="compare"><table><thead><tr><th>Formal / generic identity</th><th>Selected brand examples</th><th>Selected slang / market names</th><th>Family</th><th>Identification caution</th></tr></thead><tbody>
+          <tr><td>Ethanol</td><td>Brands vary</td><td>Alcohol, booze, liquor</td><td>Depressant</td><td>Volume and percentage determine dose.</td></tr>
+          <tr><td>Cannabis; delta-9-THC</td><td>Marinol, Syndros</td><td>Marijuana, weed, pot, ganja</td><td>Cannabinoid</td><td>Plant, concentrate, edible, and prescribed products differ.</td></tr>
+          <tr><td>Cocaine hydrochloride / base</td><td>Goprel, Numbrino</td><td>Coke, snow; crack</td><td>Stimulant</td><td>Crack is a cocaine-base form, not a separate family.</td></tr>
+          <tr><td>Methamphetamine</td><td>Desoxyn</td><td>Meth, crystal, ice</td><td>Stimulant</td><td>Illicit purity is unpredictable.</td></tr>
+          <tr><td>Amphetamine salts</td><td>Adderall, Dexedrine</td><td>Speed, uppers</td><td>Stimulant</td><td>Counterfeit tablets can resemble prescriptions.</td></tr>
+          <tr><td>3,4-MDMA</td><td>No FDA-approved product</td><td>Ecstasy, Molly, X</td><td>Entactogen / stimulant</td><td>Market labels do not guarantee MDMA.</td></tr>
+          <tr><td>Tusi, a variable mixture</td><td>None</td><td>Pink cocaine, tusi</td><td>Polydrug product</td><td>Color does not establish any ingredient.</td></tr>
+          <tr><td>GHB; sodium oxybate</td><td>Xyrem, Xywav</td><td>G, liquid ecstasy</td><td>Depressant</td><td>Medical oxybate and illicit GHB require context.</td></tr>
+          <tr><td>Ketamine; esketamine</td><td>Ketalar; Spravato</td><td>K, Special K</td><td>Dissociative</td><td>Related but distinct medicines.</td></tr>
+          <tr><td>Flunitrazepam</td><td>Rohypnol outside U.S.; not FDA approved</td><td>Roofies, R2</td><td>Benzodiazepine</td><td>Slang is not toxicological proof.</td></tr>
+          <tr><td>Scopolamine</td><td>Transderm Scōp</td><td>Burundanga, “devil’s breath”</td><td>Anticholinergic</td><td>Sensational stories may overstate frequency.</td></tr>
+          <tr><td>Alprazolam / diazepam / clonazepam</td><td>Xanax, Valium, Klonopin</td><td>Benzos, bars</td><td>Depressants</td><td>Counterfeit “bars” may contain other drugs.</td></tr>
+          <tr><td>Codeine plus promethazine</td><td>Brands vary</td><td>Lean, purple drank, sizzurp</td><td>Opioid mixture</td><td>A mixture, not one designer molecule.</td></tr>
+          <tr><td>Oxycodone</td><td>OxyContin, Roxicodone; Percocet is a combination</td><td>Oxy, percs</td><td>Opioid</td><td>Counterfeit “percs” may contain no oxycodone.</td></tr>
+          <tr><td>Fentanyl</td><td>Duragesic, Sublimaze</td><td>Fent, dope</td><td>Synthetic opioid</td><td>Illicit fentanyl differs from medical products.</td></tr>
+          <tr><td>Heroin / diamorphine</td><td>No approved U.S. brand</td><td>Smack, horse, black tar</td><td>Opioid</td><td>Street products may contain fentanyl.</td></tr>
+          <tr><td>LSD</td><td>No approved brand</td><td>Acid, blotter</td><td>Psychedelic</td><td>Blotter is a form, not verified contents.</td></tr>
+          <tr><td>Psilocybin</td><td>No federally approved brand</td><td>Shrooms</td><td>Psychedelic</td><td>Preparations vary in potency.</td></tr>
+          <tr><td>Phencyclidine</td><td>No current human brand</td><td>PCP, angel dust</td><td>Dissociative</td><td>Street products may be misidentified.</td></tr>
+          <tr><td>Synthetic cannabinoid agonists</td><td>None consistently</td><td>K2, Spice</td><td>Synthetic cannabinoids</td><td>Not cannabis; batches differ.</td></tr>
+          <tr><td>Synthetic cathinones</td><td>None consistently</td><td>Bath salts, flakka</td><td>Stimulants</td><td>The name does not identify the compound.</td></tr>
+          <tr><td>Dextromethorphan</td><td>Delsym; some Robitussin products</td><td>DXM, robo, triple C</td><td>Cough suppressant / dissociative</td><td>Cold products may contain added ingredients.</td></tr>
+        </tbody></table></div>
+        <div class="callout"><strong>Ask:</strong> Is the name chemical, generic, branded, or slang? Is the product regulated or illicit? Was its content laboratory-confirmed? A name alone cannot establish dose, purity, consent, impairment, or cause of death.</div>
+      </section>
+      <aside class="cite-this" aria-labelledby="cite-4"><h2 id="cite-4">Cite This Section</h2><p>Use this APA 7 reference when you use material from this section:</p><p class="citation-copy">Hodgson, C. (2026). <em>Pharmacological taxonomy and visual drug atlas</em>. Beyond the Substance: Understanding Drugs in Culture &amp; Society. <a href="https://soc245-what-is-a-drug.carollhodgson.chatgpt.site/topics/taxonomy-atlas.html">https://soc245-what-is-a-drug.carollhodgson.chatgpt.site/topics/taxonomy-atlas.html</a></p><p><strong>In-text citation:</strong> (Hodgson, 2026). For a precise location, include the numbered subsection—for example, (Hodgson, 2026, Section 4.1).</p></aside><section id="sources" class="sources">
+        <h2>References</h2>
+        <ul>
+          <li>Centers for Disease Control and Prevention. (2024, April 2). <em>Polysubstance use facts</em>. <a href="https://www.cdc.gov/stop-overdose/caring/polysubstance-use.html">https://www.cdc.gov/stop-overdose/caring/polysubstance-use.html</a></li>
+          <li>Centers for Disease Control and Prevention. (2024, October 31). <em>Youth Risk Behavior Surveillance System (YRBSS) results</em>. <a href="https://www.cdc.gov/yrbs/results/index.html">https://www.cdc.gov/yrbs/results/index.html</a></li>
+          <li>Centers for Disease Control and Prevention. (2025, December 29). <em>Nonfatal Drug Overdose Surveillance and Epidemiology (DOSE) system</em>. <a href="https://www.cdc.gov/overdose-prevention/data-research/facts-stats/about-dose-system.html">https://www.cdc.gov/overdose-prevention/data-research/facts-stats/about-dose-system.html</a></li>
+          <li>Centers for Disease Control and Prevention. (2026, August 7). <em>SUDORS dashboard: Fatal drug overdose data</em>. <a href="https://www.cdc.gov/overdose-prevention/data-research/facts-stats/sudors-dashboard-fatal-overdose-data.html">https://www.cdc.gov/overdose-prevention/data-research/facts-stats/sudors-dashboard-fatal-overdose-data.html</a></li>
+          <li>Drug Enforcement Administration. (2025, January 21). <em>Drug fact sheets</em>. <a href="https://www.dea.gov/factsheets">https://www.dea.gov/factsheets</a></li>
+          <li>Drug Enforcement Administration. (n.d.). <em>Pink cocaine</em>. Retrieved September 19, 2026, from <a href="https://www.dea.gov/pink-cocaine">https://www.dea.gov/pink-cocaine</a></li>
+          <li>Drug Enforcement Administration. (2017). <em>Slang terms and code words: A reference for law enforcement personnel</em>. <a href="https://www.dea.gov/sites/default/files/2018-07/DIR-020-17%20Drug%20Slang%20Code%20Words.pdf">https://www.dea.gov/sites/default/files/2018-07/DIR-020-17%20Drug%20Slang%20Code%20Words.pdf</a></li>
+          <li class="foundational-reference">Faupel, C. E., Weaver, G. S., &amp; Corzine, J. (2014). <em>The sociology of American drug use</em> (3rd ed.). Oxford University Press.</li>
+          <li>Federal Bureau of Investigation. (n.d.). <em>Crime Data Explorer</em>. Retrieved September 15, 2026, from <a href="https://cde.ucr.cjis.gov/LATEST/webapp/">https://cde.ucr.cjis.gov/LATEST/webapp/</a></li>
+          <li>Food and Drug Administration. (2020, September 23). <em>FDA requiring boxed warning updated to improve safe use of benzodiazepine drug class</em>. <a href="https://www.fda.gov/drugs/drug-safety-and-availability/fda-requiring-boxed-warning-updated-improve-safe-use-benzodiazepine-drug-class">https://www.fda.gov/drugs/drug-safety-and-availability/fda-requiring-boxed-warning-updated-improve-safe-use-benzodiazepine-drug-class</a></li>
+          <li>Food and Drug Administration. (2025). <em>Spravato (esketamine) prescribing information</em>. <a href="https://www.accessdata.fda.gov/drugsatfda_docs/label/2025/211243s016lbl.pdf">https://www.accessdata.fda.gov/drugsatfda_docs/label/2025/211243s016lbl.pdf</a></li>
+          <li>Food and Drug Administration. (n.d.). <em>Psychedelic drugs</em>. Retrieved September 15, 2026, from <a href="https://www.fda.gov/drugs/resources-drugs/psychedelic-drugs">https://www.fda.gov/drugs/resources-drugs/psychedelic-drugs</a></li>
+          <li class="coursebook-reference">Hodgson, C. (2026). <em>Pharmacological taxonomy and visual drug atlas</em>. Beyond the Substance: Understanding Drugs in Culture &amp; Society. <a href="https://soc245-what-is-a-drug.carollhodgson.chatgpt.site/topics/taxonomy-atlas.html">https://soc245-what-is-a-drug.carollhodgson.chatgpt.site/topics/taxonomy-atlas.html</a></li>
+          <li>National Institute on Drug Abuse. (n.d.). <em>Cannabis (marijuana)</em>. Retrieved September 15, 2026, from <a href="https://nida.nih.gov/research-topics/cannabis-marijuana">https://nida.nih.gov/research-topics/cannabis-marijuana</a></li>
+          <li>National Institute on Drug Abuse. (n.d.). <em>Drug topics</em>. Retrieved September 15, 2026, from <a href="https://nida.nih.gov/drug-topics">https://nida.nih.gov/drug-topics</a></li>
+          <li>National Institute on Drug Abuse. (n.d.). <em>Opioids</em>. Retrieved September 15, 2026, from <a href="https://nida.nih.gov/research-topics/opioids">https://nida.nih.gov/research-topics/opioids</a></li>
+          <li>National Institute on Drug Abuse. (2025, August 26). <em>National Drug Early Warning System (NDEWS)</em>. <a href="https://nida.nih.gov/research-topics/trends-statistics/national-drug-early-warning-system-ndews">https://nida.nih.gov/research-topics/trends-statistics/national-drug-early-warning-system-ndews</a></li>
+          <li>National Library of Medicine. (n.d.). <em>Drugs, herbs and supplements</em>. MedlinePlus. Retrieved September 15, 2026, from <a href="https://medlineplus.gov/druginformation.html">https://medlineplus.gov/druginformation.html</a></li>
+          <li>Poison Control. (n.d.). <em>Need immediate assistance?</em> Retrieved September 15, 2026, from <a href="https://www.poison.org/need-immediate-assistance">https://www.poison.org/need-immediate-assistance</a></li>
+          <li>Substance Abuse and Mental Health Services Administration. (n.d.). <em>Data collections</em>. Retrieved September 15, 2026, from <a href="https://www.samhsa.gov/data/data-we-collect">https://www.samhsa.gov/data/data-we-collect</a></li>
+          <li>Substance Abuse and Mental Health Services Administration. (2025, February 13). <em>2022 National Survey on Drug Use and Health (NSDUH) releases</em>. <a href="https://www.samhsa.gov/data/release/2022-national-survey-drug-use-and-health-nsduh-releases">https://www.samhsa.gov/data/release/2022-national-survey-drug-use-and-health-nsduh-releases</a></li>
+          <li>University of Michigan, Institute for Social Research. (n.d.). <em>Monitoring the Future</em>. Retrieved September 15, 2026, from <a href="https://monitoringthefuture.org/">https://monitoringthefuture.org/</a></li>
+          <li>van Amsterdam, J., Gresnigt, F., &amp; van den Brink, W. (2024). Cardiovascular risks of simultaneous use of alcohol and cocaine—A systematic review. <em>Journal of Clinical Medicine, 13</em>(5), 1475. <a href="https://doi.org/10.3390/jcm13051475">https://doi.org/10.3390/jcm13051475</a></li>
+        </ul>
+        <p>
+          The atlas illustrations are original educational reconstructions
+          created for SOC-245. They may be reused elsewhere in this course.
+          Scientific and legal content reviewed September 11, 2026.
+        </p>
+      </section>
+      <section class="next">
+        <h2>Continue the course</h2>
+        <p>
+          <a href="drug-laws.html"
+            >Previous: Section 3, Drug Laws and Social Control</a
+          >
+          ·
+          <a href="brain-body.html"
+            >Next: Section 5, Drugs, the Brain, and the Body</a
+          >
+          · <a href="./">All sections</a>
+        </p>
+      </section>
+    </main>
+    <script>
+      const items = {
+        cannabis: [
+          {
+            title: "Cannabis plant",
+            image: "../assets/drug-atlas/cannabis-plant.png",
+            alt: "Cannabis plant botanical specimen",
+            badges: ["Botanical source", "Cannabinoid family"],
+            text: "Cannabis plants contain many chemical compounds called cannabinoids. Delta-9-tetrahydrocannabinol, or THC, is primarily responsible for intoxication; cannabidiol, or CBD, does not produce the same intoxicating effect.",
+            change:
+              "Cultivation and plant genetics influence the cannabinoid profile, but appearance alone does not reveal potency.",
+            risk: "Effects vary with THC concentration, dose, age, prior exposure, health, setting, and other substances.",
+          },
+          {
+            title: "Dried flower",
+            image: "../assets/drug-atlas/cannabis-flower.png",
+            alt: "Several dried cannabis flower buds",
+            badges: ["Plant material", "Common smoked form"],
+            text: "The flowering portions are harvested and dried. Dried flower may be smoked or vaporized, producing a faster onset than swallowed products.",
+            change:
+              "Water is removed and plant material is prepared for storage and use.",
+            risk: "Combustion produces smoke and respiratory irritants. Faster onset does not mean predictable potency.",
+          },
+          {
+            title: "Edible products",
+            image: "../assets/drug-atlas/cannabis-edibles.png",
+            alt: "Two generic gummies and a cookie representing edible cannabis products",
+            badges: ["Processed product", "Swallowed"],
+            text: "Cannabinoids can be incorporated into foods and candies. A familiar appearance can conceal psychoactive contents, and packaging or appearance cannot confirm dose.",
+            change:
+              "Cannabinoids are extracted or infused into a food product.",
+            risk: "Effects are delayed compared with inhalation and may last longer. Taking more before the first dose takes effect can increase risk.",
+          },
+          {
+            title: "Concentrate and vape form",
+            image: "../assets/drug-atlas/cannabis-concentrate-vape.png",
+            alt: "Generic jar of amber cannabis concentrate and unbranded vape cartridge",
+            badges: ["Extracted concentrate", "Potentially high THC"],
+            text: "Processing can concentrate cannabinoids into oils, waxes, or other extracts. Some extracts are placed in cartridges for aerosolization.",
+            change:
+              "Plant compounds are separated and concentrated, so the product may contain much more THC by weight than flower.",
+            risk: "High-THC exposure can intensify impairment and adverse reactions. Unregulated cartridges may contain unexpected ingredients.",
+          },
+        ],
+        opioids: [
+          {
+            title: "Opium poppy",
+            image: "../assets/drug-atlas/opium-poppy.png",
+            alt: "Flowering opium poppy botanical specimen with seed capsules",
+            badges: ["Botanical source", "Papaver somniferum"],
+            text: "The seed capsule of the opium poppy contains naturally occurring alkaloids. Morphine, codeine, opium, and thebaine are natural opioids commonly called opiates.",
+            change:
+              "This is the botanical starting point for natural opiates—not the source of fully synthetic opioids.",
+            risk: "A natural origin does not mean safe. Natural opioids can cause dependence and fatal respiratory depression.",
+          },
+          {
+            title: "Raw opium",
+            image: "../assets/drug-atlas/raw-opium.png",
+            alt: "Dried poppy capsule and dark raw opium resin displayed as specimens",
+            badges: ["Natural opiate material", "Plant-derived"],
+            text: "Opium is dried latex obtained from the poppy capsule. It contains several naturally occurring alkaloids, including morphine and codeine.",
+            change:
+              "Plant latex is collected and dried; later chemical processing can isolate particular compounds.",
+            risk: "Composition and potency are variable, and opioid overdose can suppress breathing.",
+          },
+          {
+            title: "Morphine and codeine",
+            image: "../assets/drug-atlas/morphine-medical.png",
+            alt: "Generic amber medical vial and plain tablet representing morphine or codeine medicines",
+            badges: ["Natural opiates", "Medical uses"],
+            text: "Morphine and codeine occur naturally in opium. Purified and manufactured medications may be used under medical supervision for pain or, in the case of codeine, certain other approved purposes.",
+            change:
+              "Specific natural alkaloids are isolated, purified, and manufactured into controlled medicines.",
+            risk: "Medical manufacture improves dose control; it does not remove dependence, interaction, or overdose risks.",
+          },
+          {
+            title: "Semi-synthetic opioids",
+            image:
+              "../assets/drug-atlas/semisynthetic-prescription-opioids.png",
+            alt: "Generic prescription bottle and plain tablets representing semi-synthetic opioid medicines",
+            badges: ["Chemically modified", "Examples: oxycodone, hydrocodone"],
+            text: "Semi-synthetic opioids are made by chemically modifying a natural opiate. This group includes prescription medicines such as oxycodone and hydrocodone.",
+            change:
+              "A naturally derived molecule is altered in a laboratory to create another opioid.",
+            risk: "Prescribed products can be beneficial when appropriately used but can still cause dependence and respiratory depression.",
+          },
+          {
+            title: "Heroin forms",
+            image: "../assets/drug-atlas/heroin-forms.png",
+            alt: "Contained brown powder and dark resin specimens representing heroin forms",
+            badges: ["Semi-synthetic opioid", "Federally Schedule I"],
+            text: "Heroin is made from morphine, making it semi-synthetic rather than a natural opiate. It may appear as white or brown powder or a dark sticky material, but appearance is not reliable identification.",
+            change: "Morphine is chemically processed into heroin.",
+            risk: "Heroin carries high overdose and dependence risks. Illicit samples may contain fentanyl or other unexpected substances.",
+          },
+          {
+            title: "Fully synthetic opioids",
+            image: "../assets/drug-atlas/synthetic-medical-opioids.png",
+            alt: "Generic sealed transdermal patch and closed medicine bottle representing synthetic medical opioids",
+            badges: ["Laboratory-made", "Examples: fentanyl, methadone"],
+            text: "Synthetic opioids are made entirely in laboratories rather than extracted from poppies. Some—including fentanyl and methadone—have important medical uses under controlled conditions.",
+            change:
+              "The active opioid molecule is synthesized without a natural opiate as its starting ingredient.",
+            risk: "Pharmaceutical fentanyl and illicitly manufactured fentanyl are different supply contexts. Illicit fentanyl may appear in other drugs without the user knowing.",
+          },
+        ],
+        stimulants: [
+          {
+            title: "Caffeine",
+            image: "../assets/drug-atlas/caffeine.png",
+            alt: "Coffee plant, roasted coffee beans, and a plain cup of coffee",
+            badges: ["Stimulant", "Adenosine antagonist", "Widely used"],
+            text: "Caffeine occurs in coffee, tea, cacao, and many manufactured products. By blocking adenosine receptors, it reduces the feeling of tiredness and can increase alertness.",
+            change: "A plant-derived chemical is concentrated into beverages, foods, tablets, or powders with very different amounts per serving.",
+            risk: "High exposure can produce anxiety, tremor, insomnia, and rapid heartbeat. Regular use can lead to tolerance and withdrawal headaches.",
+          },
+          {
+            title: "Nicotine and tobacco products",
+            image: "../assets/drug-atlas/nicotine-tobacco.png",
+            alt: "Green and dried tobacco leaves with generic cigarette and closed vape device",
+            badges: ["Stimulant effects", "Nicotinic receptor agonist", "Dependence"],
+            text: "Nicotine activates nicotinic acetylcholine receptors and can briefly increase attention, heart rate, and blood pressure. Cigarettes, smokeless tobacco, vapes, and nicotine medicines deliver it in different ways.",
+            change: "The delivery system changes speed, dose pattern, and exposure to other chemicals. Combustion creates many of tobacco smoking’s most serious harms.",
+            risk: "Nicotine is highly dependence-producing. A product being smoke-free does not make it harmless, and youth brain development is especially vulnerable.",
+          },
+          {
+            title: "Coca leaves",
+            image: "../assets/drug-atlas/coca-leaves.png",
+            alt: "Botanical specimen of coca leaves",
+            badges: ["Botanical source", "Contains cocaine alkaloid", "Cultural context"],
+            text: "Coca leaves contain naturally occurring alkaloids, including cocaine. Traditional Indigenous uses of the leaf are culturally and pharmacologically different from use of purified, concentrated cocaine.",
+            change: "Chemical extraction and purification greatly concentrate the active cocaine alkaloid compared with intact leaves.",
+            risk: "Natural origin does not determine safety or legality. Context, concentration, route, and dose matter.",
+          },
+          {
+            title: "Cocaine powder",
+            image: "../assets/drug-atlas/cocaine-powder.png",
+            alt: "Contained white crystalline powder and sealed generic specimen vial",
+            badges: ["Powerful stimulant", "Local anesthetic", "Monoamine reuptake blocker"],
+            text: "Cocaine increases signaling by dopamine, norepinephrine, and serotonin by blocking their reuptake. It also has legitimate limited medical use as a local anesthetic.",
+            change: "Purification separates and concentrates cocaine from coca plant material; illicit powder may contain other substances.",
+            risk: "Possible harms include arrhythmia, heart attack, stroke, seizure, overheating, and dependence. Appearance cannot establish identity or purity.",
+          },
+          {
+            title: "Crack cocaine",
+            image: "../assets/drug-atlas/crack-cocaine.png",
+            alt: "Irregular off-white rock-like specimens contained in a laboratory dish",
+            badges: ["Cocaine base", "Usually smoked", "Rapid onset"],
+            text: "Crack is a smokable base form of cocaine. It is not a different pharmacological drug from cocaine hydrochloride, but route and rapid delivery can change the intensity and pattern of effects.",
+            change: "The chemical salt form is converted to cocaine base, changing physical properties and typical route of administration.",
+            risk: "Rapid onset and short duration can support repeated use. Cardiovascular, neurological, pulmonary, and dependence risks remain substantial.",
+          },
+          {
+            title: "Prescription stimulants",
+            image: "../assets/drug-atlas/prescription-stimulants.png",
+            alt: "Closed generic pharmacy bottle with plain tablets and capsules",
+            badges: ["Examples: amphetamine, methylphenidate", "ADHD and narcolepsy", "Controlled medicines"],
+            text: "Prescription stimulants such as amphetamine products and methylphenidate can improve functioning for diagnosed conditions when properly prescribed and monitored.",
+            change: "Clinical formulation and dosing produce known amounts and release patterns; pills from an illicit source do not offer that assurance.",
+            risk: "Misuse can cause cardiovascular strain, anxiety, insomnia, psychosis, or a substance use disorder. Counterfeit pills may contain unexpected drugs.",
+          },
+          {
+            title: "Methamphetamine",
+            image: "../assets/drug-atlas/methamphetamine.png",
+            alt: "Clear crystalline specimens contained in a dish and sealed vial",
+            badges: ["Potent stimulant", "Synthetic", "Rare medical use"],
+            text: "Methamphetamine strongly affects dopamine and norepinephrine systems. A tightly controlled prescription form exists for limited indications, while most harms discussed publicly involve illicit supply and use.",
+            change: "Illicit products may be crystals, powder, or tablets, but form and appearance do not reveal composition or potency.",
+            risk: "Risks include hyperthermia, cardiovascular emergencies, severe sleep loss, psychosis, dental disease, and dependence.",
+          },
+        ],
+        depressants: [
+          {
+            title: "Alcohol",
+            image: "../assets/drug-atlas/alcohol.png",
+            alt: "Plain bottle and glass containing an amber alcoholic beverage",
+            badges: ["Central nervous system depressant", "Legal for adults", "Multiple organ effects"],
+            text: "Ethanol affects several signaling systems, including GABA and glutamate. It can initially feel stimulating because inhibition and judgment are impaired before deeper sedation becomes obvious.",
+            change: "Fermentation produces ethanol; distillation can increase concentration. A standard drink is a dose concept, not simply a container size.",
+            risk: "Impairment, injury, alcohol poisoning, cancer, liver and cardiovascular disease, and dependence are major concerns. Severe withdrawal can be medically dangerous.",
+          },
+          {
+            title: "Benzodiazepines",
+            image: "../assets/drug-atlas/benzodiazepines.png",
+            alt: "Closed generic medicine bottle with plain white tablets",
+            badges: ["Sedative-anxiolytic", "GABA-A positive modulator", "Prescription"],
+            text: "Benzodiazepines are used for selected anxiety, seizure, muscle-spasm, and procedural indications. They enhance inhibitory GABA signaling rather than simply switching the brain off.",
+            change: "Different agents vary in onset and duration, but all require attention to dose, other depressants, and gradual discontinuation when clinically appropriate.",
+            risk: "Sedation, falls, memory problems, tolerance, dependence, and withdrawal can occur. Combining them with opioids or alcohol greatly increases danger.",
+          },
+          {
+            title: "Barbiturates and sleep medicines",
+            image: "../assets/drug-atlas/sedative-hypnotics.png",
+            alt: "Two closed amber medicine bottles with plain tablets and capsules",
+            badges: ["Sedative-hypnotics", "Several mechanisms", "Medical use"],
+            text: "Barbiturates are older GABA-acting sedatives with a narrow safety margin. Newer sleep medicines, including so-called Z-drugs, are chemically different but can also impair alertness and behavior.",
+            change: "A shared outward effect—sedation—does not mean every drug has the same receptor action, duration, or overdose profile.",
+            risk: "Overdose, dependence, withdrawal, falls, and complex sleep behaviors are concerns. Other depressants can magnify harm.",
+          },
+          {
+            title: "GHB and sodium oxybate",
+            image: "../assets/drug-atlas/ghb-sodium-oxybate.png",
+            alt: "Sealed plain pharmaceutical liquid bottle and closed measuring cup",
+            badges: ["Central nervous system depressant", "Prescription form exists", "Narrow safety margin"],
+            text: "Gamma-hydroxybutyrate, or GHB, is a depressant. Sodium oxybate and related prescription products have approved medical uses for certain sleep disorders under controlled distribution.",
+            change: "A regulated prescription liquid has verified contents and dosing controls; an unknown clear liquid cannot be identified visually.",
+            risk: "Small dose differences can produce profound sedation, vomiting, seizures, slowed breathing, coma, or death—especially with alcohol or other depressants.",
+          },
+        ],
+        psychedelics: [
+          {
+            title: "Psilocybin-containing mushrooms",
+            image: "../assets/drug-atlas/psilocybin-mushrooms.png",
+            alt: "Brown-capped mushrooms growing from a small natural substrate specimen",
+            badges: ["Classic psychedelic", "Psilocybin → psilocin", "Investigational therapy"],
+            text: "Psilocybin is converted in the body to psilocin, which acts mainly at serotonin 5-HT2A receptors. Clinical research is testing carefully supervised therapeutic uses, but research participation is not the same as general FDA approval.",
+            change: "Species, growth conditions, storage, and preparation can produce large potency differences; photographs cannot safely identify a mushroom.",
+            risk: "Possible harms include panic, confusion, accidents, and worsening of some psychiatric conditions. Toxic look-alike mushrooms can cause organ failure or death.",
+          },
+          {
+            title: "Peyote and mescaline",
+            image: "../assets/drug-atlas/peyote.png",
+            alt: "Small rounded peyote cactus in a plain botanical pot",
+            badges: ["Classic psychedelic", "Mescaline", "Indigenous religious context"],
+            text: "Peyote contains mescaline, a serotonergic psychedelic. Its long-standing ceremonial use by Indigenous peoples must not be reduced to a generic story about recreational drug use.",
+            change: "The cactus is a biological source; purified or synthetic mescaline is a concentrated chemical form.",
+            risk: "Federal law generally controls mescaline and peyote while recognizing limited religious protections. Nausea, anxiety, impaired judgment, and psychiatric distress can occur.",
+          },
+          {
+            title: "DMT and ayahuasca botanicals",
+            image: "../assets/drug-atlas/ayahuasca-botanicals.png",
+            alt: "Vine sections, green leaves, and a sealed plain amber liquid bottle",
+            badges: ["Classic psychedelic", "Botanical combination", "Metabolic interaction"],
+            text: "Ayahuasca preparations traditionally combine DMT-containing plant material with plants containing monoamine oxidase inhibitors. The interaction allows orally consumed DMT to remain active longer.",
+            change: "This is a striking example of pharmacokinetics: one plant changes how the body metabolizes chemicals from another.",
+            risk: "Potency is variable, medication interactions may be dangerous, and legal religious exemptions are limited—not a general approval for use.",
+          },
+          {
+            title: "LSD",
+            image: "../assets/drug-atlas/lsd-forms.png",
+            alt: "Sealed clear dropper vial and blank pastel perforated blotter sheet",
+            badges: ["Classic psychedelic", "Very potent by mass", "Investigational"],
+            text: "Lysergic acid diethylamide, or LSD, is a synthetic serotonergic psychedelic often associated with liquid or blotter forms. Clinical investigation does not mean it is an approved treatment.",
+            change: "A very small quantity can be active, so size, color, or number of paper squares reveals nothing reliable about dose or identity.",
+            risk: "Effects can be long-lasting and may include panic, dangerous judgment, or persistent perceptual problems. Products sold as LSD may contain something else.",
+          },
+          {
+            title: "MDMA / ecstasy",
+            image: "../assets/drug-atlas/mdma-forms.png",
+            alt: "Contained tan crystals and plain colored pressed tablets without imprints",
+            badges: ["Empathogen-entactogen", "Stimulant properties", "Not FDA-approved"],
+            text: "MDMA increases serotonin, norepinephrine, and dopamine signaling and can produce emotional openness, stimulation, and altered perception. It is better described as an empathogen with mixed effects than as only a hallucinogen.",
+            change: "Powder, crystals, and pressed tablets may look similar while containing different doses, mixtures, or entirely different drugs.",
+            risk: "Overheating, dehydration or dangerous overhydration, low blood sodium, cardiovascular strain, serotonin toxicity, and adulteration are concerns. As of this page’s review date, MDMA is not FDA-approved for therapy.",
+          },
+        ],
+        dissociatives: [
+          {
+            title: "Ketamine and esketamine",
+            image: "../assets/drug-atlas/ketamine-esketamine.png",
+            alt: "Sealed generic clinical vial and plain nasal spray device",
+            badges: ["Dissociative", "NMDA antagonist", "Medical uses differ"],
+            text: "Ketamine is an FDA-approved anesthetic and is also used off-label in some psychiatric care. Esketamine nasal spray has FDA-approved depression indications under a monitored safety program.",
+            change: "Closely related molecules, routes, indications, and regulatory conditions should not be treated as interchangeable.",
+            risk: "Sedation, dissociation, increased blood pressure, impaired judgment, and misuse can occur; repeated heavy exposure has been associated with urinary tract injury.",
+          },
+          {
+            title: "PCP",
+            image: "../assets/drug-atlas/pcp-forms.png",
+            alt: "Sealed vial of clear liquid and contained pale crystalline specimen",
+            badges: ["Dissociative", "NMDA antagonist", "Variable illicit forms"],
+            text: "Phencyclidine, or PCP, was developed as an anesthetic but was abandoned for human medical use because of severe adverse reactions. It can produce dissociation, numbness, agitation, or psychosis-like effects.",
+            change: "It may be encountered as powder, liquid, or material applied to another product; none can be identified safely by sight.",
+            risk: "Confusion, injury, dangerous behavior, high blood pressure, seizures, coma, and prolonged psychiatric symptoms can occur.",
+          },
+          {
+            title: "Dextromethorphan (DXM)",
+            image: "../assets/drug-atlas/dxm-otc.png",
+            alt: "Generic cough medicine bottle, dosing cup, and plain gelcaps",
+            badges: ["OTC cough suppressant", "Dissociative at high exposure", "Interaction risk"],
+            text: "Dextromethorphan is an over-the-counter cough suppressant. At exposures far above labeled directions it can produce dissociation and other serious effects.",
+            change: "OTC products may combine DXM with acetaminophen, antihistamines, or decongestants, adding toxicities that are easy to overlook.",
+            risk: "High exposure can cause confusion, vomiting, seizures, coma, or serotonin toxicity, especially with certain antidepressants. OTC does not mean harmless.",
+          },
+        ],
+        other: [
+          {
+            title: "Inhalants",
+            image: "../assets/drug-atlas/inhalants.png",
+            alt: "Sealed generic aerosol can, solvent tin, and small gas canister",
+            badges: ["Product-and-route category", "Solvents, aerosols, gases, nitrites", "Not one mechanism"],
+            text: "Inhalants are grouped because volatile chemicals are breathed in—not because they all share one pharmacological action. The category includes solvents, aerosols, gases, and nitrites with different effects.",
+            change: "Ordinary products become drug exposures through route and intent; product category alone does not predict the exact effect.",
+            risk: "Sudden cardiac death, suffocation, burns, brain and organ injury, falls, and fatal poisoning can occur, including with a single exposure.",
+          },
+          {
+            title: "OTC combination medicines",
+            image: "../assets/drug-atlas/dxm-otc.png",
+            alt: "Generic cough medicine bottle, dosing cup, and plain gelcaps",
+            badges: ["Legal access", "Multiple drug families", "Label literacy"],
+            text: "Over-the-counter is a legal-sales category, not a single pharmacological family. Pain relievers, antihistamines, decongestants, antidiarrheals, sleep aids, and cough medicines act differently.",
+            change: "Combination products place several active ingredients in one package, so users must read the Drug Facts label and avoid accidental duplication.",
+            risk: "Liver injury, gastrointestinal bleeding, cardiovascular effects, sedation, and dangerous interactions are possible when products are misused or combined.",
+          },
+          {
+            title: "Anabolic-androgenic steroids",
+            image: "../assets/drug-atlas/anabolic-steroids.png",
+            alt: "Sealed clinical vial, plain tablets, and a molecular model",
+            badges: ["Synthetic testosterone relatives", "Performance and appearance use", "Not intoxicating"],
+            text: "Anabolic-androgenic steroids are synthetic relatives of testosterone used medically for selected conditions and nonmedically to change muscle, performance, or appearance. They do not fit a stimulant-depressant model.",
+            change: "Different compounds, doses, and patterns of use alter anabolic and androgenic effects; appearance cannot verify a product.",
+            risk: "Cardiovascular, liver, endocrine, fertility, mood, and infection risks may occur. Abrupt hormonal changes can also affect wellbeing.",
+          },
+        ],
+      };
+      const paths = {};
+      document.querySelectorAll(".collection .path").forEach((path) => {
+        paths[path.closest(".collection").id] = path;
+      });
+      const detailImage = document.querySelector("#detailImage"),
+        detailTitle = document.querySelector("#detailTitle"),
+        detailBadges = document.querySelector("#detailBadges"),
+        detailText = document.querySelector("#detailText"),
+        detailChange = document.querySelector("#detailChange"),
+        detailRisk = document.querySelector("#detailRisk"),
+        feedback = document.querySelector("#feedback");
+      function renderPath(group) {
+        paths[group].innerHTML = items[group]
+          .map(
+            (x, i) =>
+              `<button class="tile" data-group="${group}" data-index="${i}" aria-pressed="${i === 0}"><img src="${x.image}" alt="${x.alt}"><span><strong>${i + 1}. ${x.title}</strong><small>Select to examine</small></span></button>`,
+          )
+          .join("");
+        paths[group]
+          .querySelectorAll("button")
+          .forEach((b) =>
+            b.addEventListener("click", () =>
+              showItem(b.dataset.group, Number(b.dataset.index)),
+            ),
+          );
+      }
+      function showItem(group, index) {
+        document
+          .querySelectorAll(".tile")
+          .forEach((b) =>
+            b.setAttribute(
+              "aria-pressed",
+              String(
+                b.dataset.group === group && Number(b.dataset.index) === index,
+              ),
+            ),
+          );
+        const x = items[group][index];
+        detailImage.src = x.image;
+        detailImage.alt = x.alt;
+        detailTitle.textContent = x.title;
+        detailBadges.innerHTML = x.badges
+          .map((b) => `<span class="badge">${b}</span>`)
+          .join("");
+        detailText.textContent = x.text;
+        detailChange.textContent = x.change;
+        detailRisk.textContent = x.risk;
+      }
+      function showGroup(group) {
+        document
+          .querySelectorAll("[role=tab]")
+          .forEach((b) =>
+            b.setAttribute("aria-selected", String(b.dataset.group === group)),
+          );
+        document
+          .querySelectorAll(".collection")
+          .forEach((p) => (p.hidden = p.id !== group));
+        showItem(group, 0);
+      }
+      document
+        .querySelectorAll("[role=tab]")
+        .forEach((b) =>
+          b.addEventListener("click", () => showGroup(b.dataset.group)),
+        );
+      Object.keys(items).forEach(renderPath);
+      showItem("cannabis", 0);
+      const interactions = {
+        "opioid-benzo": {
+          label: "Synergistic danger",
+          title: "Opioid + benzodiazepine",
+          equation: [
+            "Slowed breathing",
+            "+",
+            "Sedation",
+            "→",
+            "Greater overdose risk",
+          ],
+          text: "Both can depress the central nervous system. Together they can produce profound sedation and respiratory depression that is more dangerous than either exposure alone.",
+          takeaway:
+            "“Both are prescribed” does not make the combination safe. Patients should use them only as directed and make every prescriber and pharmacist aware of all medicines and substances.",
+        },
+        naloxone: {
+          label: "Antagonistic action",
+          title: "Opioid + naloxone",
+          equation: [
+            "Opioid at receptor",
+            "+",
+            "Naloxone",
+            "→",
+            "Opioid effect blocked",
+          ],
+          text: "Naloxone has a stronger attraction to opioid receptors and can displace or block an opioid, reversing life-threatening respiratory depression. This is a specific receptor interaction—not proof that any two “opposite” drugs cancel each other.",
+          takeaway:
+            "Call emergency services and follow current naloxone directions. Its effect may wear off before the opioid does, and additional care may be needed.",
+        },
+        "cocaine-alcohol": {
+          label: "Metabolic interaction",
+          title: "Cocaine + alcohol",
+          equation: ["Cocaine", "+", "Ethanol", "→", "Cocaethylene"],
+          text: "When cocaine and alcohol are present together, the liver can form the active metabolite cocaethylene. It can last longer than cocaine and the combination adds cardiovascular stress and risk rather than balancing a stimulant with a depressant.",
+          takeaway:
+            "The body may create a third active chemical. Feeling less intoxicated does not mean the combination is less toxic.",
+        },
+        "stimulant-depressant": {
+          label: "Masking—not cancellation",
+          title: "Stimulant + depressant",
+          equation: [
+            "Faster signals",
+            "+",
+            "Slower signals",
+            "≠",
+            "Safe balance",
+          ],
+          text: "Opposing subjective effects can mask warning signs. A stimulant can increase heart rate and blood pressure while a depressant slows breathing; both processes can continue even when the person feels “balanced.”",
+          takeaway:
+            "Subjective feeling and objective toxicity are not the same. Masking can delay help-seeking or lead to taking more.",
+        },
+      };
+      function showInteraction(key) {
+        document
+          .querySelectorAll(".mix-button")
+          .forEach((button) =>
+            button.setAttribute(
+              "aria-pressed",
+              String(button.dataset.mix === key),
+            ),
+          );
+        const interaction = interactions[key];
+        document.querySelector("#interactionLabel").textContent =
+          interaction.label;
+        document.querySelector("#interactionTitle").textContent =
+          interaction.title;
+        document.querySelector("#interactionEquation").innerHTML =
+          interaction.equation
+            .map((part, index) =>
+              index % 2 ? `<b>${part}</b>` : `<span>${part}</span>`,
+            )
+            .join("");
+        document.querySelector("#interactionText").textContent =
+          interaction.text;
+        document.querySelector("#interactionTakeaway").textContent =
+          interaction.takeaway;
+      }
+      document
+        .querySelectorAll(".mix-button")
+        .forEach((button) =>
+          button.addEventListener("click", () =>
+            showInteraction(button.dataset.mix),
+          ),
+        );
+      showInteraction("opioid-benzo");
+      const replies = {
+        natural:
+          "Not quite. Some opioids are natural, but semi-synthetic and fully synthetic opioids are included in the same broad family.",
+        semi: "Not quite. Heroin begins with morphine, but chemical modification makes heroin semi-synthetic.",
+        correct:
+          "Correct. “Opioid” is the broad family: morphine is a natural opiate, heroin is semi-synthetic, and fentanyl is fully synthetic.",
+      };
+      document
+        .querySelectorAll(".quiz button")
+        .forEach((b) =>
+          b.addEventListener(
+            "click",
+            () => (feedback.textContent = replies[b.dataset.answer]),
+          ),
+        );
+      function progress() {
+        const d = document.documentElement,
+          m = d.scrollHeight - d.clientHeight;
+        document.querySelector("#progress").style.width =
+          (m ? (100 * d.scrollTop) / m : 0) + "%";
+      }
+      addEventListener("scroll", progress, { passive: true });
+      progress();
+    </script>
+  <script src="../assets/course-nav.js"></script></body>
+</html>

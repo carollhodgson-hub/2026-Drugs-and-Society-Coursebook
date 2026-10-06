@@ -1,0 +1,336 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>SOC-245 Course Sections</title>
+    <style>
+      :root {
+        --ink: #14263d;
+        --navy: #173b57;
+        --teal: #087f78;
+        --amber: #f2a900;
+        --paper: #fff;
+        --line: #cdd9df;
+        --muted: #526272;
+      }
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+        background: #edf4f5;
+        color: var(--ink);
+        font:
+          17px/1.6 system-ui,
+          -apple-system,
+          "Segoe UI",
+          sans-serif;
+      }
+      header {
+        position: relative;
+        min-height: min(760px, 88vh);
+        display: grid;
+        align-items: end;
+        color: #fff;
+        padding: 3rem 1.2rem;
+        background:
+          linear-gradient(
+            90deg,
+            rgba(8, 28, 47, 0.95) 0%,
+            rgba(8, 50, 66, 0.78) 52%,
+            rgba(8, 70, 77, 0.35) 100%
+          ),
+          url("../assets/new-sections/coursebook-cover.webp") center/cover
+            no-repeat;
+      }
+      header div,
+      main {
+        max-width: 1050px;
+        margin: auto;
+        width: 100%;
+      }
+      header .cover-copy {
+        background: rgba(7, 28, 44, 0.72);
+        border-left: 8px solid var(--amber);
+        border-radius: 0 18px 18px 0;
+        padding: 1.4rem 1.6rem;
+        max-width: 760px;
+        margin: 0;
+      }
+      h1 {
+        font-size: clamp(2.2rem, 6vw, 4rem);
+        line-height: 1.05;
+        margin: 0.3rem 0;
+      }
+      .eyebrow {
+        color: #ffe19a;
+        font-weight: 800;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+      }
+      .byline {
+        font-size: 1.12rem;
+        font-weight: 750;
+        margin: 1rem 0 0;
+      }
+      .course-line {
+        margin: 0.25rem 0 0;
+        color: #e8fbfa;
+      }
+      main {
+        padding: 1.2rem;
+      }
+      .intro {
+        background: #fff;
+        border-radius: 18px;
+        padding: 1.4rem 1.6rem;
+        margin: 1rem 0;
+        box-shadow: 0 9px 25px rgba(23, 59, 87, 0.1);
+      }
+      .topics {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+        gap: 1rem;
+      }
+      .topic {
+        display: block;
+        background: #fff;
+        border-radius: 16px;
+        padding: 1.2rem;
+        text-decoration: none;
+        color: var(--ink);
+        border-top: 7px solid var(--teal);
+        box-shadow: 0 7px 20px rgba(23, 59, 87, 0.1);
+      }
+      .topic:hover,
+      .topic:focus {
+        transform: translateY(-3px);
+        outline: 3px solid var(--amber);
+      }
+      .topic strong {
+        display: block;
+        color: var(--navy);
+        font-size: 1.2rem;
+      }
+      .topic span {
+        display: inline-block;
+        margin-top: 0.7rem;
+        color: #075e8b;
+        font-weight: 800;
+      }
+      .planned {
+        border-top-color: #9ca9af;
+      }
+      .planned span {
+        color: var(--muted);
+      }
+      footer {
+        text-align: center;
+        color: var(--muted);
+        padding: 2rem;
+      }
+      .unit {
+        margin: 1.5rem 0 2.5rem;
+      }
+      .unit-heading {
+        display: flex;
+        align-items: baseline;
+        gap: 0.8rem;
+        margin: 0.5rem 0 1rem;
+      }
+      .unit-heading span {
+        background: var(--navy);
+        color: #fff;
+        border-radius: 999px;
+        padding: 0.25rem 0.75rem;
+        font-weight: 800;
+      }
+      .unit-heading h2 {
+        margin: 0;
+        color: var(--navy);
+      }
+    </style>
+    <link rel="stylesheet" href="../assets/references.css" />
+  </head>
+  <body>
+    <header>
+      <div class="cover-copy">
+        <div class="eyebrow">Open coursebook · SOC-245</div>
+        <h1>
+          <em
+            >Beyond the Substance:<br />Understanding Drugs in Culture &amp;
+            Society</em
+          >
+        </h1>
+        <p>
+          Explore drugs as biological substances, social meanings, historical
+          products, policies, and patterns of group behavior.
+        </p>
+        <p class="byline">Caroll B. Hodgson</p>
+        <p class="course-line">
+          Rowan-Cabarrus Community College · SOC-245 Drugs and Society
+        </p>
+      </div>
+    </header>
+    <main>
+      <div class="intro">
+        <strong>How to use these resources:</strong> Complete each section in
+        the order shown in your Canvas module. These pages contain the learning
+        content. Canvas remains the home for directions, assignments, tests,
+        availability, and due dates.
+      </div>
+      <section class="unit">
+        <div class="unit-heading">
+          <span>Unit One</span>
+          <h2>Sections 1–8</h2>
+        </div>
+        <div class="topics">
+          <a class="topic" href="../index.html"
+            ><strong>Section 1: What Is a Drug?</strong>Definitions,
+            disciplines, social construction, moral entrepreneurs, and
+            sociological perspectives.<span>Open Section 1</span></a
+          >
+          <a class="topic" href="history.html"
+            ><strong>Section 2: Drugs Across History</strong>Changing uses,
+            patent medicines, social acceptance, drug scares, racialization, and
+            regulation.<span>Open Section 2</span></a
+          >
+          <a class="topic" href="drug-laws.html"
+            ><strong>Section 3: Drug Laws and Social Control</strong>Past and
+            current federal policy, North Carolina law, enforcement, inequality,
+            and unintended consequences.<span>Open Section 3</span></a
+          >
+          <a class="topic" href="taxonomy-atlas.html"
+            ><strong
+              >Section 4: Pharmacological Taxonomy and Visual Drug Atlas</strong
+            >Explore reusable source-to-product pathways for cannabis and
+            opioids, then compare pharmacological, medical, and legal
+            classifications.<span>Open Section 4</span></a
+          >
+          <a class="topic" href="brain-body.html"
+            ><strong>Section 5: Drugs, the Brain, and the Body</strong>Begin
+            with the Faces of Meth project, then examine brain pathways, body
+            effects, set and setting, evidence, and stigma.<span
+              >Open Section 5</span
+            ></a
+          >
+          <a class="topic" href="subcultures.html"
+            ><strong
+              >Section 6: Subcultural Recruitment and Socialization</strong
+            >Selection, peer intimacy, shared characteristics, group learning,
+            norms, and identity.<span>Open Section 6</span></a
+          >
+          <a class="topic" href="theories.html"
+            ><strong>Section 7: Why Do People Use Drugs?</strong>Interactive
+            biological, psychological, behavioral, cognitive, and sociological
+            explanations of drug use and addiction.<span
+              >Open Section 7</span
+            ></a
+          >
+          <a class="topic" href="negative-health.html"
+            ><strong
+              >Section 8: Negative Health Consequences and Drug
+              Interactions</strong
+            >Acute and chronic effects, overdose, prenatal exposure, organ
+            systems, and risks from combining drugs.<span
+              >Open Section 8</span
+            ></a
+          >
+        </div>
+      </section>
+      <section class="unit">
+        <div class="unit-heading">
+          <span>Unit Two</span>
+          <h2>Sections 9–16</h2>
+        </div>
+        <div class="topics">
+          <a class="topic" href="drug-lifestyles.html"
+            ><strong
+              >Section 9: Drug-Using Lifestyles, Infectious Disease, and
+              Violence</strong
+            >Examine “Hurt,” the fentanyl fold, xylazine, and three policy
+            pathways showing how illegal markets and healthcare systems magnify
+            or reduce harm.<span>Open Section 9</span></a
+          >
+          <a class="topic" href="medical-benefits.html"
+            ><strong>Section 10: Institutional Correlates of Drug Use</strong
+            >Begin by questioning the “addictive personality,” then examine how
+            family, healthcare, the military, law enforcement, and sport shape
+            drug patterns and responses.<span>Open Section 10</span></a
+          >
+          <a class="topic" href="drugs-economy.html"
+            ><strong>Section 11: Drugs and the Economy</strong>Andrew Sadek,
+            lost human capital, illegal markets, employment, health-care costs,
+            productivity, and who pays.<span>Open Section 11</span></a
+          >
+          <a class="topic" href="drugs-crime.html"
+            ><strong>Section 12: Drugs and Crime</strong>Cody and Siobhan,
+            collateral consequences, strain and labeling, and competing models
+            of drug-related crime.<span>Open Section 12</span></a
+          >
+          <a class="topic" href="harm-reduction.html"
+            ><strong
+              >Section 13: Prohibition, Regulation, Decriminalization, and Harm
+              Reduction</strong
+            >Open with Sublime’s “Pawn Shop,” then examine policy models,
+            enforcement, healthcare, and social costs.<span
+              >Open Section 13 story</span
+            ></a
+          >
+          <a class="topic" href="treatment-recovery.html"
+            ><strong>Section 14: Drug Treatment and Recovery</strong>Begin with
+            Synanon’s movement from mutual-aid community to coercive control,
+            then examine treatment, reintegration, evidence, and
+            safeguards.<span>Open Section 14 story</span></a
+          >
+          <a class="topic" href="drug-education-testing.html"
+            ><strong>Section 15: Drug Education and Drug Testing</strong>Begin
+            with D.A.R.E. and the gateway debate, then examine prevention,
+            evidence, testing, privacy, and due process.<span
+              >Open Section 15 story</span
+            ></a
+          >
+          <a class="topic" href="future-policy.html"
+            ><strong
+              >Section 16: Harm Reduction and Drug Policy for the Future</strong
+            >Explore naloxone, syringe services, drug checking, treatment, North
+            Carolina programs, and regulation as a continuous research and
+            learning system.<span>Open Section 16</span></a
+          >
+          <a class="topic" href="moral-entrepreneur-project.html"
+            ><strong
+              >Appendix: From Moral Entrepreneur to Drug
+              Specialist</strong
+            >Build one evidence portfolio across all 16 sections, then compare
+            your opening assumptions with your final research paper and
+            presentation.<span>Open project guide</span></a
+          >
+          <a class="topic" href="appendix-apa.html"
+            ><strong>Appendix: Using APA Style</strong>Cite the new SOC-213 and
+            SOC-245 coursebooks, practice paraphrasing, connect citations to
+            references, and review common APA mistakes.<span
+              >Open APA appendix</span
+            ></a
+          >
+          <a class="topic" href="career-connections.html"
+            ><strong>Appendix: Career Connections</strong>See how every section
+            applies to human services, healthcare, research, education, policy,
+            public safety, and community careers.<span
+              >Open career charts</span
+            ></a
+          >
+          <a class="topic" href="accessibility-privacy.html"
+            ><strong>Accessibility, ADA Support, and Privacy</strong>Review
+            accessible-design commitments, alternatives for interactive content,
+            privacy protections, and how to report a barrier.<span
+              >Read the statement</span
+            ></a
+          >
+        </div>
+      </section>
+    </main>
+    <footer>SOC-245 · Beyond the Substance · Course learning resources</footer>
+    <script src="../assets/course-nav.js"></script>
+  </body>
+</html>

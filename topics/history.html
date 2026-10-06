@@ -1,0 +1,1185 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>SOC-245 Section 2 | Drugs Across History</title>
+    <style>
+      :root {
+        --ink: #1f2933;
+        --brown: #603b24;
+        --rust: #a54f2a;
+        --gold: #d8a63c;
+        --cream: #fff8e8;
+        --paper: #fff;
+        --line: #dacbb9;
+        --teal: #176d68;
+        --muted: #5f6670;
+      }
+      * {
+        box-sizing: border-box;
+      }
+      html {
+        scroll-behavior: smooth;
+      }
+      body {
+        margin: 0;
+        background: #f3ede3;
+        color: var(--ink);
+        font:
+          17px/1.67 Georgia,
+          serif;
+      }
+      button,
+      a {
+        font: inherit;
+      }
+      .skip {
+        position: absolute;
+        left: -9999px;
+      }
+      .skip:focus {
+        left: 1rem;
+        top: 1rem;
+        background: #fff;
+        padding: 0.7rem;
+        z-index: 10;
+      }
+      header {
+        background:
+          linear-gradient(rgba(39, 23, 14, 0.73), rgba(39, 23, 14, 0.73)),
+          radial-gradient(circle at 20% 20%, #b8793f, #321f16);
+        color: #fff;
+        padding: 2.5rem 1.2rem;
+      }
+      header > div,
+      main {
+        max-width: 1060px;
+        margin: auto;
+      }
+      .eyebrow {
+        font:
+          800 0.85rem/1.2 system-ui,
+          sans-serif;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: #ffe49b;
+      }
+      .eyebrow a {
+        color: #fff;
+      }
+      h1 {
+        font:
+          700 clamp(2.2rem, 6vw, 4rem)/1.05 Georgia,
+          serif;
+        margin: 0.35rem 0;
+      }
+      .lead {
+        font-size: 1.16rem;
+      }
+      .barwrap {
+        position: sticky;
+        top: 0;
+        background: #fff;
+        border-bottom: 1px solid var(--line);
+        z-index: 5;
+      }
+      .bar {
+        height: 7px;
+        background: linear-gradient(90deg, var(--gold), var(--rust));
+        width: 0;
+      }
+      .nav {
+        max-width: 1060px;
+        margin: auto;
+        display: flex;
+        overflow: auto;
+        padding: 0.5rem 1rem;
+        gap: 0.35rem;
+      }
+      .nav a {
+        white-space: nowrap;
+        color: var(--brown);
+        font:
+          750 0.92rem/1.2 system-ui,
+          sans-serif;
+        text-decoration: none;
+        padding: 0.4rem 0.65rem;
+        border-radius: 999px;
+      }
+      .nav a:hover,
+      .nav a:focus {
+        background: var(--cream);
+      }
+      main {
+        padding: 1.2rem;
+      }
+      section {
+        background: #fff;
+        border-radius: 17px;
+        padding: clamp(1.15rem, 3vw, 2rem);
+        margin: 1.15rem 0;
+        box-shadow: 0 8px 24px rgba(67, 41, 23, 0.1);
+        scroll-margin-top: 68px;
+      }
+      h2 {
+        color: var(--brown);
+        font-size: clamp(1.55rem, 4vw, 2.3rem);
+        line-height: 1.15;
+        margin: 0.1rem 0 0.7rem;
+      }
+      h3 {
+        color: var(--rust);
+      }
+      .callout {
+        background: var(--cream);
+        border-left: 7px solid var(--gold);
+        border-radius: 5px 12px 12px 5px;
+        padding: 1rem;
+      }
+      .timeline {
+        display: grid;
+        gap: 0.75rem;
+        margin-top: 1rem;
+      }
+      .era {
+        display: grid;
+        grid-template-columns: 130px 1fr;
+        border: 1px solid var(--line);
+        border-radius: 13px;
+        overflow: hidden;
+      }
+      .date {
+        background: var(--brown);
+        color: #fff;
+        padding: 1rem;
+        font-weight: 800;
+      }
+      .era div:last-child {
+        padding: 1rem;
+      }
+      .cabinet {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+        gap: 1rem;
+      }
+      .artifact {
+        border: 1px solid var(--line);
+        border-radius: 15px;
+        overflow: hidden;
+        background: #fff;
+      }
+      .artifact img {
+        width: 100%;
+        aspect-ratio: 1/1;
+        object-fit: cover;
+        display: block;
+      }
+      .artifact div {
+        padding: 1rem;
+      }
+      .artifact button {
+        border: 0;
+        background: var(--brown);
+        color: #fff;
+        border-radius: 9px;
+        padding: 0.6rem 0.8rem;
+        font-weight: 800;
+        cursor: pointer;
+      }
+      .artifact button:hover,
+      .artifact button:focus {
+        background: var(--rust);
+      }
+      .reveal {
+        display: none;
+        background: var(--cream);
+        margin-top: 0.75rem;
+        padding: 0.8rem;
+        border-radius: 9px;
+      }
+      .reveal.open {
+        display: block;
+      }
+      .lens {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+        gap: 0.75rem;
+      }
+      .lens article {
+        padding: 1rem;
+        border-top: 6px solid var(--teal);
+        background: #f2f8f7;
+        border-radius: 12px;
+      }
+      .myth {
+        border: 2px solid var(--rust);
+        background: #fffaf4;
+      }
+      .history-story {
+        border-top: 9px solid var(--gold);
+      }
+      .story-kicker {
+        display: inline-block;
+        background: #f4ead5;
+        color: var(--brown);
+        border-radius: 999px;
+        padding: 0.3rem 0.75rem;
+        font:
+          800 0.82rem/1.2 system-ui,
+          sans-serif;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+      }
+      .story-figure {
+        margin: 1rem 0;
+        border: 1px solid var(--line);
+        border-radius: 16px;
+        overflow: hidden;
+        background: #fff;
+      }
+      .story-figure img {
+        display: block;
+        width: 100%;
+        aspect-ratio: 16/9;
+        object-fit: cover;
+      }
+      .story-figure figcaption {
+        padding: 0.9rem 1rem;
+      }
+      .lens-grid,
+      .functions {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 1rem;
+      }
+      .lens-card,
+      .function {
+        border-top: 6px solid var(--teal);
+        background: #f2f8f7;
+        border-radius: 13px;
+        padding: 1rem;
+      }
+      .function strong {
+        display: block;
+        color: var(--brown);
+        margin-bottom: 0.35rem;
+      }
+      .care-note {
+        background: #f7f3ec;
+        border: 1px solid var(--line);
+        border-radius: 12px;
+        padding: 1rem;
+      }
+      .care-note a {
+        overflow-wrap: anywhere;
+      }
+      .history-case {
+        border-top: 9px solid var(--rust);
+      }
+      .case-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1rem;
+      }
+      .case-card {
+        background: #f7f3ec;
+        border: 1px solid var(--line);
+        border-radius: 13px;
+        padding: 1rem;
+      }
+      .case-card h3 {
+        margin-top: 0;
+      }
+      .pattern-list {
+        counter-reset: pattern;
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 0.75rem;
+        padding: 0;
+        list-style: none;
+      }
+      .pattern-list li {
+        counter-increment: pattern;
+        background: var(--cream);
+        border-radius: 12px;
+        padding: 1rem;
+      }
+      .pattern-list li::before {
+        content: counter(pattern);
+        display: inline-grid;
+        place-items: center;
+        width: 1.8rem;
+        height: 1.8rem;
+        margin-right: 0.45rem;
+        border-radius: 50%;
+        background: var(--rust);
+        color: #fff;
+        font:
+          800 0.9rem system-ui,
+          sans-serif;
+      }
+      .sources a {
+        color: #7b351a;
+      }
+      .next {
+        background: linear-gradient(120deg, #603b24, #8e4429);
+        color: #fff;
+      }
+      .next h2,
+      .next a {
+        color: #fff;
+      }
+      @media (max-width: 620px) {
+        .era,
+        .lens-grid,
+        .functions,
+        .case-grid,
+        .pattern-list {
+          grid-template-columns: 1fr;
+        }
+        .date {
+          padding: 0.6rem 1rem;
+        }
+      }
+      @media (prefers-reduced-motion: reduce) {
+        html {
+          scroll-behavior: auto;
+        }
+      }
+      @media print {
+        .barwrap,
+        .artifact button {
+          display: none;
+        }
+        body {
+          background: #fff;
+          font-size: 11pt;
+        }
+        section {
+          box-shadow: none;
+          border: 1px solid #bbb;
+        }
+        .reveal {
+          display: block;
+        }
+      }
+    </style>
+    <link rel="stylesheet" href="../assets/references.css" />
+  </head>
+  <body>
+    <a class="skip" href="#main">Skip to section content</a>
+    <header>
+      <div>
+        <div class="eyebrow">
+          SOC-245 · Unit One · <a href="./">All Sections</a>
+        </div>
+        <h1>Section 2: Drugs Across History</h1>
+        <p class="lead">
+          Human beings have long used psychoactive substances. What changes
+          across history is who uses them, why they use them, how products are
+          marketed, and when society responds with medicine, commerce, stigma,
+          or punishment.
+        </p>
+      </div>
+    </header>
+    <div class="barwrap">
+      <div class="bar" id="bar"></div>
+      <nav class="nav" aria-label="Section contents">
+        <a href="#legal-users">Opening story</a
+        ><a href="#early-heroin">Early heroin</a
+        ><a href="#group-fear">Group fear &amp; law</a
+        ><a href="#universal">Cultural universal</a
+        ><a href="#mkultra">MKUltra</a><a href="#timeline">Timeline</a
+        ><a href="#cabinet">Medicine cabinet</a
+        ><a href="#patterns">Patterns</a><a href="#sources">References</a>
+      </nav>
+    </div>
+    <main id="main">
+      <section id="legal-users" class="history-story">
+        <span class="story-kicker"
+          >Opening story · Legal drugs, gender, and social judgment</span
+        >
+        <h2>
+          <span class="section-number">2.1</span> Two legal drug stories:
+          Sherlock Holmes and “Mother’s Little Helper”
+        </h2>
+        <p>
+          Before the legal timeline, imagine two very different drug users. Both
+          obtain substances legally within their historical settings. One is a
+          celebrated male genius; the other is a woman trying to perform an
+          exhausting social role. The chemistry matters—but so do gender, class,
+          work, authority, and the meaning observers attach to the user.
+        </p>
+        <figure class="story-figure">
+          <img
+            src="../assets/history/sherlock-mother-little-helper.png"
+            alt="Split historical illustration showing Sherlock Holmes and Doctor Watson in a late-Victorian study beside a 1960s mother considering a prescribed yellow pill amid domestic work"
+          />
+          <figcaption>
+            <strong>The substance is only part of the story.</strong> Legal
+            access, gender, occupation, medical authority, and expected social
+            roles shape how observers interpret drug use.
+          </figcaption>
+        </figure>
+        <div class="lens-grid">
+          <article class="lens-card">
+            <h3>Sherlock Holmes: drugs, boredom, and genius</h3>
+            <p>
+              In Arthur Conan Doyle’s <em>The Sign of Four</em>, published in
+              1890, the fictional detective injects a seven-percent cocaine
+              solution when no difficult case is available to stimulate his
+              mind. Other stories also associate him with morphine. Cocaine and
+              morphine were legally available in late-Victorian Britain,
+              although Holmes’s physician-friend Watson clearly warns that the
+              habit threatens his health and intellect.
+            </p>
+            <p>
+              The habit is not portrayed as harmless, but it does not erase
+              Holmes’s identity. He remains the brilliant detective whose
+              extraordinary mind supposedly needs relief from stagnation. His
+              status, occupation, masculinity, and usefulness protect the
+              meaning of the behavior: audiences can interpret the drug use as a
+              dangerous eccentricity attached to genius rather than as proof
+              that his whole character is deviant.
+            </p>
+          </article>
+          <article class="lens-card">
+            <h3>Women at home: medicine, endurance, and blame</h3>
+            <p>
+              Nineteenth-century households could legally purchase opium
+              preparations such as laudanum for pain, sleeplessness, coughs, and
+              conditions physicians labeled “female complaints.” Around the turn
+              of the twentieth century, heroin also appeared in legal commercial
+              medicines. Decades later, physicians prescribed tranquilizers to
+              large numbers of women. The Rolling Stones’ 1966 song
+              <em>Mother’s Little Helper</em> turned the era’s “little yellow
+              pill” into a cultural symbol of the medicated housewife.
+            </p>
+            <p>
+              Medicine could make women’s drug use respectable enough to sustain
+              domestic labor—until dependence, distress, or overdose made the
+              woman appear weak, irresponsible, or morally deficient. That
+              judgment could hide the conditions surrounding use: unpaid and
+              undervalued caregiving, repetitive isolation, restricted
+              occupational choices, unequal pay, limited financial independence,
+              and medical systems in which physicians possessed far more
+              authority than patients.
+            </p>
+          </article>
+        </div>
+        <div class="callout">
+          <strong
+            >Legal status does not determine social judgment by itself.</strong
+          >
+          Holmes and the housewife demonstrate that a legally available
+          substance can be interpreted as medicine, vice, eccentricity, coping,
+          illness, or deviance depending on who uses it and whether the user
+          still performs the role society expects.
+        </div>
+        <h3>
+          Add intersectionality: the user is judged before the substance is
+          measured
+        </h3>
+        <p>
+          Gender never operates alone. Race, ethnicity, social class, age,
+          disability, sexuality, motherhood, pregnancy, occupation, and
+          neighborhood can combine to shape who receives a prescription, who is
+          believed, who is watched, who is offered treatment, and who is
+          punished. A wealthy white man’s use may be privatized or medicalized
+          while a poor woman, a mother, or a woman from a racially marginalized
+          community may encounter several stigmatized labels at once. The same
+          pattern can affect legal prescription use, unauthorized use, and
+          survival strategies developed under unequal conditions.
+        </p>
+        <div class="functions">
+          <div class="function">
+            <strong>Symbolic interactionism</strong>Holmes retains the master
+            status of “genius.” Women may acquire a master status such as “unfit
+            mother” or “addict” that overwhelms every other identity.
+          </div>
+          <div class="function">
+            <strong>Conflict theory</strong>Physicians, pharmaceutical firms,
+            lawmakers, employers, and families have not held equal power to
+            define acceptable use—or to decide whose distress should be
+            medicated instead of changing unequal conditions.
+          </div>
+          <div class="function">
+            <strong>Structural functionalism</strong>Medication may help a
+            person keep performing expected roles, but dependence and
+            unaddressed strain reveal latent dysfunctions within medicine, work,
+            and family life.
+          </div>
+          <div class="function">
+            <strong>Intersectionality</strong>Overlapping statuses change
+            exposure to stress, access to healthcare, credibility, surveillance,
+            stigma, child-custody risk, and the consequences attached to the
+            same behavior.
+          </div>
+        </div>
+        <p>
+          <strong>Carry this question into the timeline:</strong> When society
+          changes a drug law, is it responding only to pharmacological harm—or
+          also to a socially constructed image of the person believed to use
+          that drug?
+        </p>
+        <p class="care-note">
+          <strong>Evidence trail:</strong>
+          <a href="https://www.gutenberg.org/ebooks/2097"
+            >Arthur Conan Doyle’s <em>The Sign of the Four</em></a
+          >
+          ·
+          <a
+            href="https://newhistories.sites.sheffield.ac.uk/volumes/2022-23/volume-14-issue-4-maeve-ceri-owen"
+            >University of Sheffield history of Holmes’s cocaine use</a
+          >
+          ·
+          <a
+            href="https://www.cheminst.ca/magazine/article/opium-and-laudanum-historys-wonder-drugs/"
+            >history of opium and laudanum as medicines</a
+          >
+          ·
+          <a href="https://pubmed.ncbi.nlm.nih.gov/11862675/"
+            >history of heroin’s commercial introduction</a
+          >
+          ·
+          <a
+            href="https://sites.williams.edu/engl113-f18/2018/11/09/mothers-little-helper-how-second-wave-feminist-periodicals-defined-and-helped-women-cope-with-drug-addiction/"
+            >gender, tranquilizers, and “Mother’s Little Helper”</a
+          >
+          ·
+          <a
+            href="https://www.dovepress.com/gender-and-drug-use-discrimination-among-people-who-inject-drugs-an-in-peer-reviewed-fulltext-article-IJWH"
+            >research on intersecting gender and drug-use stigma</a
+          >
+        </p>
+      </section>
+
+      <section id="early-heroin" class="history-case">
+        <h2>
+          <span class="section-number">2.2</span> When Heroin Was a Respectable
+          Medicine
+        </h2>
+        <figure class="story-figure">
+          <img
+            src="../assets/history/early-pharmaceutical-medicines.png"
+            alt="Straight-on educational reconstruction of early pharmaceutical cartons labeled heroin, aspirin, Lycetol, Salophen, and Somatose"
+          />
+          <figcaption>
+            An educational reconstruction based on the uploaded historical
+            advertisement. The display shows how heroin could appear beside
+            ordinary commercial medicines rather than inside a separate category
+            of “street drugs.”
+          </figcaption>
+        </figure>
+        <p>
+          Diacetylmorphine was first synthesized in 1874 and commercially
+          introduced by Bayer in 1898 under the name <em>Heroin</em>. It was
+          promoted for coughs and as a supposedly safer, less-addictive
+          substitute for morphine. Physicians and consumers did not yet have
+          modern clinical trials, standardized risk communication, or a full
+          understanding of dependence.
+        </p>
+        <p>
+          Heroin did not solve the morphine problem. It reaches the brain
+          rapidly and is converted to morphine in the body; repeated use can
+          produce tolerance, physical dependence, and opioid use disorder.
+          Reports of dependence and nonmedical use undermined the early
+          marketing claims, and legal controls expanded during the twentieth
+          century.
+        </p>
+        <div class="callout">
+          <strong>Accuracy note:</strong> Available historical sources support
+          the cough-treatment and morphine-substitute claims. They do not
+          support saying heroin was rejected because it was too expensive. This
+          case is better understood as an example of incomplete evidence,
+          commercial authority, and unintended consequences.
+        </div>
+      </section>
+
+      <section id="group-fear" class="history-case">
+        <h2>
+          <span class="section-number">2.3</span> When the Feared User Defines
+          the Drug
+        </h2>
+        <p>
+          Twentieth-century drug repression did not develop from pharmacology
+          alone. Political leaders, newspapers, reformers, professional groups,
+          and enforcement agencies repeatedly connected a substance to a
+          population already treated as foreign, disorderly, or threatening.
+          Concern about drug effects and prejudice could coexist, but racialized
+          claims helped determine which drug became urgent, which user became
+          dangerous, and which institution received power.
+        </p>
+        <div class="case-grid">
+          <article class="case-card">
+            <h3>Smoking opium and Chinese immigrants</h3>
+            <p>
+              Local smoking-opium ordinances and the federal Smoking Opium
+              Exclusion Act of 1909 developed amid anti-Chinese exclusion. Opium
+              medicines used by white Americans remained culturally
+              distinguishable from the smoking practice associated with Chinese
+              communities.
+            </p>
+          </article>
+          <article class="case-card">
+            <h3>Cocaine and Black men</h3>
+            <p>
+              Southern cocaine panics circulated racist claims that cocaine made
+              Black men violent, sexually threatening, unusually strong,
+              resistant to bullets, or likely to challenge white authority. Such
+              myths supported control and more heavily armed policing rather
+              than an objective comparison of all cocaine use.
+            </p>
+          </article>
+          <article class="case-card">
+            <h3>Marijuana and Mexican immigrants</h3>
+            <p>
+              After the Mexican Revolution, the Spanish word
+              <em>marihuana</em> and the drug’s association with Mexican
+              migrants helped separate the feared intoxicant from familiar
+              medicinal cannabis. Later campaigns also tied marijuana to Black
+              jazz culture and youth rebellion.
+            </p>
+          </article>
+          <article class="case-card">
+            <h3>The comparison question</h3>
+            <p>
+              Alcohol, opiates, cocaine, cannabis, nicotine, and pharmaceuticals
+              all carry harms. A valid policy analysis compares dose,
+              prevalence, dependence, toxicity, violence, medical benefit,
+              market conditions, and policy consequences—not the social status
+              of the stereotyped user.
+            </p>
+          </article>
+        </div>
+        <h3>Eight recurring features of prohibitionist messages</h3>
+        <ol class="pattern-list">
+          <li>A feared or despised group is identified with a drug.</li>
+          <li>Many unrelated social problems are attributed to its use.</li>
+          <li>Prohibition is presented as necessary for social survival.</li>
+          <li>Any use is treated as though it were addiction.</li>
+          <li>
+            Children’s corruption becomes the most emotionally powerful claim.
+          </li>
+          <li>Users and sellers are reduced to predatory “fiends.”</li>
+          <li>
+            Policy is framed as total prohibition versus unrestricted access.
+          </li>
+          <li>
+            People questioning the message are portrayed as part of the threat.
+          </li>
+        </ol>
+        <div class="callout">
+          <strong>Use this as an evidence checklist:</strong> Which of these
+          features appears in a campaign? What objective evidence remains after
+          group stereotypes, false causal arrows, and either/or choices are
+          removed?
+        </div>
+      </section>
+
+      <section id="universal">
+        <h2>
+          <span class="section-number">2.4</span> Drug use as a cultural
+          universal
+        </h2>
+        <p>
+          Across recorded history, societies have used substances for nutrition,
+          healing, pain relief, stimulation, sleep, ritual, pleasure, endurance,
+          and social connection. Availability mattered. Communities often
+          learned to ferment plants, brew beverages, prepare leaves, extract
+          resins, or cultivate species found in their environments.
+        </p>
+        <div class="callout">
+          <strong
+            >A cultural universal does not mean identical behavior.</strong
+          >
+          Societies vary in the substances they recognize, the people allowed to
+          use them, the occasions considered appropriate, and the consequences
+          attached to use.
+        </div>
+        <p>
+          History also cautions us against judging the past only with present
+          knowledge. Earlier consumers often lacked accurate ingredient labels,
+          standardized doses, clinical trials, or modern warnings. Products
+          could appear respectable because physicians recommended them,
+          pharmacies sold them, or advertisements associated them with family
+          care.
+        </p>
+      </section>
+      <section id="mkultra">
+        <h2>
+          <span class="section-number">2.5</span> MKUltra: LSD, state power,
+          and research without consent
+        </h2>
+        <p>
+          <strong>Project MKUltra</strong> was a covert Central Intelligence
+          Agency program approved in 1953 during the Cold War. It supported a
+          wide range of research into behavioral modification, interrogation,
+          and substances that might alter perception or behavior. LSD became
+          its best-known drug, but the surviving record describes a broader
+          program involving chemicals, hypnosis, sensory techniques, and other
+          methods.
+        </p>
+        <figure class="story-figure">
+          <img
+            src="../assets/history/mkultra-secrecy-and-ethics.webp"
+            alt="Editorial reconstruction of a 1950s government laboratory with redacted files, an LSD molecular diagram, a participant obscured behind frosted glass, and records being destroyed"
+          />
+          <figcaption>
+            <strong>Secrecy changed the balance of power.</strong> MKUltra
+            joined scientific research to intelligence goals while keeping some
+            participants, researchers, and the public from knowing who directed
+            the work or how its risks were distributed. This is an original
+            educational illustration, not a photograph of an actual experiment.
+          </figcaption>
+        </figure>
+        <div class="callout">
+          <strong>The central ethical failure was not simply that LSD was
+          studied.</strong> Some people were exposed to drugs or experiments
+          without meaningful knowledge or consent. Secrecy, institutional
+          authority, and national-security claims prevented participants and
+          the public from evaluating the risks.
+        </div>
+        <div class="lens-grid" aria-label="Three sociological lessons from MKUltra">
+          <article class="lens-card">
+            <h3>What is documented</h3>
+            <p>
+              A 1977 Senate hearing documented CIA-sponsored behavioral and
+              drug research, including tests involving unwitting people. The
+              program operated through universities, hospitals, prisons,
+              foundations, and other organizations, sometimes concealing the
+              CIA's role from researchers and participants.
+            </p>
+          </article>
+          <article class="lens-card">
+            <h3>Why the record is incomplete</h3>
+            <p>
+              Many MKUltra files were destroyed in 1973. Later investigators
+              recovered financial records and other surviving documents, but
+              no responsible account can claim that every project, participant,
+              injury, or outcome is now known.
+            </p>
+          </article>
+          <article class="lens-card">
+            <h3>Why it matters now</h3>
+            <p>
+              MKUltra demonstrates why research ethics cannot depend only on
+              the intentions or authority of an institution. Modern human-
+              subjects protections emphasize respect for persons, beneficence,
+              justice, independent review, and legally effective informed
+              consent.
+            </p>
+          </article>
+        </div>
+        <h3>Documented history versus cultural mythology</h3>
+        <p>
+          MKUltra is not merely a conspiracy theory: the program and serious
+          ethical violations are established in government records. At the same
+          time, its name is now attached to many claims that surviving evidence
+          does not establish. Sociological inquiry requires students to hold
+          both ideas together—institutions can conceal real misconduct, and
+          extraordinary additional claims still require evidence.
+        </p>
+        <div class="callout">
+          <strong>Big Three connection:</strong> Functionalism asks how secrecy
+          and weak oversight allowed an institution charged with national
+          security to undermine public trust. Conflict theory examines who had
+          the power to define acceptable risk and whose bodies carried that
+          risk. Symbolic interactionism examines how the label “MKUltra” now
+          shifts between a documented historical program and a symbol used in
+          popular culture for much broader suspicions.
+        </div>
+        <p>
+          <strong>Primary-source checkpoint:</strong>
+          <a href="https://www.intelligence.senate.gov/1977/08/03/hearings-joint-hearing-subcommittee-health-and-scientific-research-committee-human-resources-project/"
+            >Read the U.S. Senate's 1977 MKUltra hearing record</a
+          >, then compare what it documents with one claim about MKUltra found
+          in popular media. What evidence would be needed to verify the
+          additional claim?
+        </p>
+      </section>
+      <section id="timeline">
+        <h2>
+          <span class="section-number">2.6</span> A selective historical
+          timeline
+        </h2>
+        <p>
+          This timeline highlights broad turning points rather than claiming a
+          single linear history for every society.
+        </p>
+        <div class="timeline">
+          <div class="era">
+            <div class="date">Ancient world</div>
+            <div>
+              <strong>Fermentation and plant medicines</strong><br />Alcoholic
+              beverages, opium poppy preparations, cannabis, coca, tobacco, and
+              other botanicals developed within distinct cultural, medical,
+              spiritual, and social traditions.
+            </div>
+          </div>
+          <div class="era">
+            <div class="date">Medieval period</div>
+            <div>
+              <strong>Distillation expands concentration</strong
+              ><br />Refinements in distillation allowed producers to
+              concentrate alcohol beyond the limits of ordinary fermentation.
+              Higher concentration changed portability, commerce, dose, and
+              risk.
+            </div>
+          </div>
+          <div class="era">
+            <div class="date">1600s–1700s</div>
+            <div>
+              <strong>Global exchange changes drug markets</strong
+              ><br />Colonialism and trade expanded the movement of coffee, tea,
+              tobacco, distilled spirits, opium, and other commodities.
+              Governments taxed some products while trying to suppress others.
+            </div>
+          </div>
+          <div class="era">
+            <div class="date">1800s</div>
+            <div>
+              <strong>Patent medicines and new alkaloids</strong
+              ><br />Commercial remedies frequently contained alcohol, opiates,
+              cocaine, cannabis, or other active ingredients. Isolation of
+              compounds such as morphine and cocaine increased medical
+              possibilities and introduced new risks.
+            </div>
+          </div>
+          <div class="era">
+            <div class="date">Early 1900s</div>
+            <div>
+              <strong>Labeling and federal control expand</strong><br />Public
+              concern about undisclosed ingredients, dependence, intoxication,
+              and misleading claims contributed to new food and drug regulation
+              and federal narcotics policy.
+            </div>
+          </div>
+          <div class="era">
+            <div class="date">1953–1970s</div>
+            <div>
+              <strong>MKUltra links drugs, secrecy, and state power</strong
+              ><br />CIA-sponsored research investigated LSD and other methods
+              of behavioral modification. Later investigations documented
+              experiments involving unwitting people and an incomplete record
+              after many files were destroyed in 1973.
+            </div>
+          </div>
+          <div class="era">
+            <div class="date">Late 1900s–today</div>
+            <div>
+              <strong>Public health and criminal justice compete</strong
+              ><br />Drug policy increasingly combines medicine, prevention,
+              treatment, harm reduction, regulation, taxation, and enforcement.
+              The balance remains politically contested and unequal across
+              substances and populations.
+            </div>
+          </div>
+        </div>
+      </section>
+      <section id="cabinet">
+        <h2>
+          <span class="section-number">2.7</span> The historical medicine
+          cabinet
+        </h2>
+        <p>
+          Select each artifact to compare its respected public image with what
+          students know today. These pictures are educational reconstructions,
+          not photographs of museum objects.
+        </p>
+        <div class="cabinet">
+          <article class="artifact">
+            <img
+              src="../assets/paregoric-reconstruction.png"
+              alt="Educational reconstruction of an amber Paregoric bottle with an aged paper label"
+            />
+            <div>
+              <h3>Paregoric</h3>
+              <p>
+                An opium tincture historically used for diarrhea, coughing, and
+                pain, including remedies given to children.
+              </p>
+              <button aria-expanded="false">Open the label story</button>
+              <div class="reveal">
+                <strong>Then:</strong> A familiar pharmacy preparation could
+                represent relief and responsible care.<br /><strong
+                  >Now:</strong
+                >
+                An opioid-containing preparation raises questions about dose,
+                respiratory depression, dependence, labeling, and child
+                safety.<br /><strong>Sociological question:</strong> How does
+                trust in medicine influence perceptions of risk?
+              </div>
+            </div>
+          </article>
+          <article class="artifact">
+            <img
+              src="../assets/mrs-winslow-reconstruction.png"
+              alt="Educational reconstruction of a Mrs. Winslow's Soothing Syrup bottle and carton"
+            />
+            <div>
+              <h3>Mrs. Winslow’s Soothing Syrup</h3>
+              <p>
+                A heavily marketed nineteenth-century teething remedy.
+                Historical formulations included morphine.
+              </p>
+              <button aria-expanded="false">Open the label story</button>
+              <div class="reveal">
+                <strong>Then:</strong> Advertising connected the product to
+                motherhood, calm children, and household care.<br /><strong
+                  >Now:</strong
+                >
+                Giving an opioid-containing remedy to an infant without modern
+                dosing safeguards would provoke urgent medical and legal
+                concern.<br /><strong>Sociological question:</strong> How did
+                marketing and limited regulation construct safety?
+              </div>
+            </div>
+          </article>
+          <article class="artifact">
+            <img
+              src="../assets/vin-mariani-reconstruction.png"
+              alt="Educational reconstruction of a dark Vin Mariani coca wine bottle with an ornate period label"
+            />
+            <div>
+              <h3>Vin Mariani</h3>
+              <p>
+                A nineteenth-century coca wine promoted as a tonic. Its public
+                image joined medicine, energy, celebrity endorsement, alcohol,
+                and coca.
+              </p>
+              <button aria-expanded="false">Open the label story</button>
+              <div class="reveal">
+                <strong>Then:</strong> Consumers could encounter coca and
+                alcohol together as a fashionable restorative product.<br /><strong
+                  >Now:</strong
+                >
+                We recognize important interaction risks and sharply different
+                controls on alcohol and cocaine.<br /><strong
+                  >Sociological question:</strong
+                >
+                How do prestige and respected endorsers normalize a psychoactive
+                product?
+              </div>
+            </div>
+          </article>
+        </div>
+        <div class="callout">
+          <strong>Visual evidence rule:</strong> Reconstructions help us imagine
+          the object. Authentic advertisements and museum records remain the
+          primary sources for claims about packaging, ingredients, marketing,
+          and use.
+        </div>
+      </section>
+      <section id="patterns">
+        <h2>
+          <span class="section-number">2.8</span> Recurring sociological
+          patterns
+        </h2>
+        <div class="lens">
+          <article>
+            <h3>Medicine can become deviance</h3>
+            <p>
+              A substance may move from accepted treatment to restricted drug as
+              evidence, professional standards, and law change.
+            </p>
+          </article>
+          <article>
+            <h3>Deviance can become medicine</h3>
+            <p>
+              A stigmatized substance or practice may later gain recognized
+              therapeutic uses without losing every controversy.
+            </p>
+          </article>
+          <article>
+            <h3>Products carry group meanings</h3>
+            <p>
+              Race, ethnicity, nationality, religion, gender, and class have
+              shaped which consumers appear respectable or threatening.
+            </p>
+          </article>
+          <article>
+            <h3>Markets influence definitions</h3>
+            <p>
+              Manufacturers, advertisers, pharmacies, physicians, and
+              governments can benefit from particular ways of defining a
+              product.
+            </p>
+          </article>
+          <article>
+            <h3>Knowledge changes risk</h3>
+            <p>
+              Ingredient disclosure, standardized dosing, clinical evidence, and
+              surveillance can reveal harms that consumers once could not
+              evaluate.
+            </p>
+          </article>
+          <article>
+            <h3>Regulation creates consequences</h3>
+            <p>
+              Policies can reduce harm while also producing illegal markets,
+              unequal enforcement, stigma, or barriers to treatment.
+            </p>
+          </article>
+        </div>
+      </section>
+      <section class="myth">
+        <h2>
+          <span class="section-number">2.9</span> Historical accuracy checkpoint
+        </h2>
+        <p>
+          Natural fermentation generally produces beverages measured in
+          <strong>percent alcohol by volume</strong>, not “percent proof.” In
+          the United States, proof equals twice the percentage of alcohol by
+          volume. Distillation increases concentration. Moonshine is not illegal
+          because it reaches a particular proof; illegality usually concerns
+          unlicensed production, taxation, distribution, or safety requirements.
+        </p>
+      </section>
+      <aside class="cite-this" aria-labelledby="cite-2">
+        <h2 id="cite-2">Cite This Section</h2>
+        <p>Use this APA 7 reference when you use material from this section:</p>
+        <p class="citation-copy">
+          Hodgson, C. (2026). <em>Drugs across history</em>. Beyond the
+          Substance: Understanding Drugs in Culture &amp; Society.
+          <a
+            href="https://soc245-what-is-a-drug.carollhodgson.chatgpt.site/topics/history.html"
+            >https://soc245-what-is-a-drug.carollhodgson.chatgpt.site/topics/history.html</a
+          >
+        </p>
+        <p>
+          <strong>In-text citation:</strong> (Hodgson, 2026). For a precise
+          location, include the numbered subsection—for example, (Hodgson, 2026,
+          Section 2.1).
+        </p>
+      </aside>
+      <section id="sources" class="sources">
+        <h2>References</h2>
+        <ul>
+          <li>
+            Drug Enforcement Administration Museum. (n.d.).
+            <em
+              ><a
+                href="https://museum.dea.gov/exhibits/online-exhibits/cannabis-coca-and-poppy-natures-addictive-plants"
+                >Cannabis, coca, and poppy: Nature’s addictive plants</a
+              ></em
+            >.
+          </li>
+          <li class="foundational-reference">
+            Faupel, C. E., Weaver, G. S., &amp; Corzine, J. (2014).
+            <em>The sociology of American drug use</em> (3rd ed.). Oxford
+            University Press.
+          </li>
+          <li>
+            Courtwright, D. T. (2001).
+            <em>Forces of habit: Drugs and the making of the modern world</em>.
+            Harvard University Press.
+          </li>
+          <li class="coursebook-reference">
+            Hodgson, C. (2026). <em>Drugs across history</em>. Beyond the
+            Substance: Understanding Drugs in Culture &amp; Society.
+            <a
+              href="https://soc245-what-is-a-drug.carollhodgson.chatgpt.site/topics/history.html"
+              >https://soc245-what-is-a-drug.carollhodgson.chatgpt.site/topics/history.html</a
+            >
+          </li>
+          <li>
+            Hodgson, C. (2026).
+            <em>SOC-245 lecture notes and PowerPoint slides</em> [Unpublished
+            course materials]. Rowan-Cabarrus Community College.
+          </li>
+          <li>
+            National Library of Medicine. (n.d.).
+            <em
+              ><a
+                href="https://www.nlm.nih.gov/exhibition/pickyourpoison/index.html"
+                >Pick your poison: Intoxicating pleasures &amp; medical
+                prescriptions</a
+              ></em
+            >.
+          </li>
+          <li>
+            Drug Enforcement Administration Museum. (n.d.).
+            <em
+              ><a
+                href="https://museum.dea.gov/museum-collection/collection-spotlight/artifact/heroin-bottle"
+                >Heroin bottle</a
+              ></em
+            >.
+          </li>
+          <li>
+            Musto, D. F. (1999).
+            <em>The American disease: Origins of narcotic control</em> (3rd
+            ed.). Oxford University Press.
+          </li>
+          <li>
+            National Commission for the Protection of Human Subjects of
+            Biomedical and Behavioral Research. (1979).
+            <em
+              ><a
+                href="https://www.hhs.gov/ohrp/regulations-and-policy/belmont-report/read-the-belmont-report/index.html"
+                >The Belmont report</a
+              ></em
+            >. U.S. Department of Health and Human Services.
+          </li>
+          <li>
+            Smithsonian Institution. (n.d.).
+            <em
+              ><a href="https://www.si.edu/openaccess"
+                >Smithsonian Open Access</a
+              ></em
+            >.
+          </li>
+          <li>
+            U.S. Senate, Select Committee on Intelligence, &amp; Subcommittee
+            on Health and Scientific Research of the Committee on Human
+            Resources. (1977, August 3).
+            <em
+              ><a
+                href="https://www.intelligence.senate.gov/1977/08/03/hearings-joint-hearing-subcommittee-health-and-scientific-research-committee-human-resources-project/"
+                >Project MKUltra, the CIA's program of research in behavioral
+                modification</a
+              ></em
+            > [Joint hearing, 95th Congress].
+          </li>
+        </ul>
+        <p>
+          <strong>Image disclosure:</strong> The four medicine-cabinet artifact
+          images and the MKUltra illustration on this page are AI-generated
+          educational reconstructions created for this course. They should not
+          be treated as photographs or primary-source evidence.
+        </p>
+        <p>
+          <strong>Reviewed:</strong> September 2026. Historical interpretations
+          and legal descriptions should be checked against the cited records.
+        </p>
+      </section>
+      <section class="next">
+        <h2>Continue the course</h2>
+        <p>
+          <a href="../index.html">Previous: Section 1, What Is a Drug?</a> ·
+          <a href="./">Return to all sections</a>
+        </p>
+      </section>
+    </main>
+    <script>
+      document.querySelectorAll(".artifact button").forEach((b) =>
+        b.addEventListener("click", () => {
+          const r = b.nextElementSibling,
+            o = r.classList.toggle("open");
+          b.setAttribute("aria-expanded", o);
+          b.textContent = o ? "Close the label story" : "Open the label story";
+        }),
+      );
+      function p() {
+        const d = document.documentElement,
+          m = d.scrollHeight - d.clientHeight;
+        document.querySelector("#bar").style.width =
+          (m ? (100 * d.scrollTop) / m : 0) + "%";
+      }
+      addEventListener("scroll", p, { passive: true });
+      p();
+    </script>
+  <script src="../assets/course-nav.js"></script></body>
+</html>
