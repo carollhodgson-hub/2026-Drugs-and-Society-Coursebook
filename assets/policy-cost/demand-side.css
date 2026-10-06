@@ -1,0 +1,35 @@
+.demand-chain {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0.6rem;
+  margin: 1rem 0;
+}
+
+.demand-chain div {
+  position: relative;
+  border-radius: 13px;
+  border-top: 6px solid var(--teal);
+  background: #edf7ef;
+  padding: 0.85rem;
+}
+
+.demand-chain div:not(:last-child)::after {
+  content: "→";
+  position: absolute;
+  right: -0.72rem;
+  top: 42%;
+  z-index: 2;
+  background: #fff;
+  color: var(--teal);
+  font-size: 1.4rem;
+  font-weight: 900;
+}
+
+@media (max-width: 800px) {
+  .demand-chain { grid-template-columns: 1fr 1fr; }
+}
+
+@media (max-width: 520px) {
+  .demand-chain { grid-template-columns: 1fr; }
+  .demand-chain div::after { display: none; }
+}
