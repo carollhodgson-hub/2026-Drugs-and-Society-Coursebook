@@ -1,0 +1,13 @@
+.andrew-portrait,.law-visual{margin:1rem auto 1.25rem;border:1px solid var(--line);border-radius:17px;overflow:hidden;background:#fff;max-width:820px}
+.andrew-portrait img,.law-visual img{display:block;width:100%;object-fit:cover}
+.andrew-portrait img{aspect-ratio:4/3}.law-visual img{aspect-ratio:16/9}
+.andrew-portrait figcaption,.law-visual figcaption{padding:.85rem 1rem;color:#425668}
+.safeguards,.work-costs{display:grid;grid-template-columns:repeat(4,1fr);gap:.75rem}
+.safeguards div,.work-costs div{border-top:6px solid var(--teal);background:#eef8f7;border-radius:13px;padding:.9rem}
+.safeguards div:nth-child(2),.work-costs div:nth-child(2){border-color:#d8a63c;background:#fff8df}
+.safeguards div:nth-child(3),.work-costs div:nth-child(3){border-color:#367aa4;background:#eef7fb}
+.safeguards div:nth-child(4),.work-costs div:nth-child(4){border-color:#c24e3d;background:#fff1ee}
+.evidence-chart{border:2px solid var(--line);border-radius:16px;padding:1rem;margin:1rem 0;background:#fff}
+.evidence-chart h3{margin-top:0}.bar-row{display:grid;grid-template-columns:minmax(155px,220px) 1fr 90px;gap:.7rem;align-items:center;margin:.8rem 0}.bar-track{background:#dfeaec;border-radius:999px;overflow:hidden;height:32px}.bar{height:100%;background:linear-gradient(90deg,var(--teal),#38a89f);border-radius:999px}.bar.mortality{background:linear-gradient(90deg,#b84136,var(--coral))}.bar-value{font-weight:900;color:var(--navy);text-align:right}.chart-note{color:#425668;font-size:.94rem}.work-response{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-top:1rem}.work-response>div{border-radius:15px;padding:1rem}.work-response .punitive{background:#fff1ee;border-left:7px solid var(--coral)}.work-response .supportive{background:#ecf8f0;border-left:7px solid #2f7d50}
+@media(max-width:800px){.safeguards,.work-costs{grid-template-columns:1fr 1fr}.bar-row{grid-template-columns:1fr}.bar-value{text-align:left}.work-response{grid-template-columns:1fr}}
+@media(max-width:520px){.safeguards,.work-costs{grid-template-columns:1fr}}
