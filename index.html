@@ -1,0 +1,2419 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="color-scheme" content="light" />
+    <title>SOC-245 Section 1 | What Is a Drug?</title>
+    <style>
+      :root {
+        --ink: #14263d;
+        --navy: #173b57;
+        --teal: #087f78;
+        --aqua: #dff6f3;
+        --amber: #f2a900;
+        --cream: #fffaf0;
+        --paper: #fff;
+        --muted: #526272;
+        --line: #cdd9df;
+        --good: #176b42;
+        --bad: #9c2f2f;
+        --shadow: 0 10px 28px rgba(23, 59, 87, 0.12);
+      }
+      * {
+        box-sizing: border-box;
+      }
+      html {
+        scroll-behavior: smooth;
+      }
+      body {
+        margin: 0;
+        background: #eef5f6;
+        color: var(--ink);
+        font:
+          17px/1.65 system-ui,
+          -apple-system,
+          "Segoe UI",
+          sans-serif;
+      }
+      button,
+      a {
+        font: inherit;
+      }
+      .skip {
+        position: absolute;
+        left: -9999px;
+      }
+      .skip:focus {
+        left: 1rem;
+        top: 1rem;
+        z-index: 20;
+        background: #fff;
+        padding: 0.7rem 1rem;
+        border: 3px solid var(--amber);
+      }
+      header {
+        background: linear-gradient(125deg, #112f49 0%, #087f78 100%);
+        color: #fff;
+        padding: 2.2rem 1.25rem 2.5rem;
+        overflow: hidden;
+        position: relative;
+      }
+      header:after {
+        content: "";
+        position: absolute;
+        width: 260px;
+        height: 260px;
+        border: 38px solid rgba(255, 255, 255, 0.08);
+        border-radius: 50%;
+        right: -60px;
+        top: -75px;
+      }
+      .eyebrow {
+        font-weight: 800;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: #ffe19a;
+        font-size: 0.85rem;
+      }
+      h1 {
+        font-size: clamp(2rem, 6vw, 4.2rem);
+        line-height: 1.04;
+        max-width: 850px;
+        margin: 0.35rem 0 0.8rem;
+      }
+      header p {
+        font-size: 1.15rem;
+        max-width: 720px;
+        margin: 0;
+      }
+      .meta {
+        display: flex;
+        gap: 0.7rem;
+        flex-wrap: wrap;
+        margin-top: 1.25rem;
+      }
+      .pill {
+        background: rgba(255, 255, 255, 0.14);
+        border: 1px solid rgba(255, 255, 255, 0.5);
+        border-radius: 999px;
+        padding: 0.35rem 0.75rem;
+        font-size: 0.9rem;
+      }
+      .progress-wrap {
+        position: sticky;
+        top: 0;
+        z-index: 10;
+        background: #fff;
+        border-bottom: 1px solid var(--line);
+      }
+      .progress {
+        height: 7px;
+        background: #dfeaec;
+      }
+      .bar {
+        height: 100%;
+        width: 0;
+        background: linear-gradient(90deg, var(--amber), var(--teal));
+        transition: width 0.15s;
+      }
+      .chapnav {
+        max-width: 1050px;
+        margin: auto;
+        display: flex;
+        gap: 0.35rem;
+        overflow: auto;
+        padding: 0.55rem 1rem;
+      }
+      .chapnav a {
+        white-space: nowrap;
+        color: var(--navy);
+        text-decoration: none;
+        font-weight: 750;
+        padding: 0.35rem 0.65rem;
+        border-radius: 999px;
+      }
+      .chapnav a:hover,
+      .chapnav a:focus {
+        background: var(--aqua);
+        outline: 2px solid transparent;
+      }
+      main {
+        max-width: 1050px;
+        margin: auto;
+        padding: 1.2rem;
+      }
+      .card,
+      section {
+        background: var(--paper);
+        border-radius: 18px;
+        box-shadow: var(--shadow);
+        margin: 1.2rem 0;
+        padding: clamp(1.15rem, 3vw, 2rem);
+        scroll-margin-top: 75px;
+      }
+      h2 {
+        font-size: clamp(1.55rem, 4vw, 2.35rem);
+        line-height: 1.15;
+        color: var(--navy);
+        margin: 0.1rem 0 0.7rem;
+      }
+      h3 {
+        color: var(--teal);
+        line-height: 1.25;
+      }
+      p {
+        max-width: 78ch;
+      }
+      .lead {
+        font-size: 1.15rem;
+      }
+      .callout {
+        border-left: 7px solid var(--amber);
+        background: var(--cream);
+        padding: 1rem 1.2rem;
+        border-radius: 4px 12px 12px 4px;
+      }
+      .objectives {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(215px, 1fr));
+        gap: 0.8rem;
+      }
+      .objective {
+        background: #f0f7f8;
+        border: 1px solid var(--line);
+        border-radius: 14px;
+        padding: 1rem;
+      }
+      .num {
+        display: inline-grid;
+        place-items: center;
+        width: 2rem;
+        height: 2rem;
+        border-radius: 50%;
+        background: var(--navy);
+        color: #fff;
+        font-weight: 800;
+        margin-right: 0.4rem;
+      }
+      .activity {
+        border: 2px solid var(--teal);
+        background: linear-gradient(180deg, #fff, #f3fbfa);
+      }
+      .activity-label {
+        display: inline-block;
+        background: var(--teal);
+        color: #fff;
+        border-radius: 999px;
+        padding: 0.25rem 0.7rem;
+        font-weight: 800;
+        font-size: 0.85rem;
+        text-transform: uppercase;
+        letter-spacing: 0.06em;
+      }
+      .items,
+      .choices,
+      .lenses {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+        gap: 0.75rem;
+        margin: 1rem 0;
+      }
+      .item,
+      .choice,
+      .lens {
+        border: 2px solid var(--line);
+        background: #fff;
+        color: var(--ink);
+        border-radius: 14px;
+        padding: 1rem;
+        text-align: left;
+        min-height: 82px;
+        cursor: pointer;
+        transition: 0.15s;
+      }
+      .item:hover,
+      .item:focus,
+      .choice:hover,
+      .choice:focus,
+      .lens:hover,
+      .lens:focus {
+        transform: translateY(-2px);
+        border-color: var(--teal);
+        box-shadow: 0 5px 15px rgba(8, 127, 120, 0.14);
+      }
+      .item.selected,
+      .choice.selected,
+      .lens.selected {
+        border-color: var(--teal);
+        background: var(--aqua);
+      }
+      .item strong,
+      .choice strong,
+      .lens strong {
+        display: block;
+        color: var(--navy);
+        font-size: 1.04rem;
+      }
+      .reveal {
+        background: #eaf4fb;
+        border-left: 6px solid #367aa4;
+        padding: 1rem;
+        border-radius: 5px 12px 12px 5px;
+        min-height: 72px;
+      }
+      .reveal:focus {
+        outline: 3px solid var(--amber);
+      }
+      .three {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 0.8rem;
+      }
+      .layer {
+        border-radius: 14px;
+        padding: 1rem;
+        border-top: 7px solid;
+      }
+      .layer:nth-child(1) {
+        background: #eaf4fb;
+        border-color: #367aa4;
+      }
+      .layer:nth-child(2) {
+        background: #edf8f2;
+        border-color: #398057;
+      }
+      .layer:nth-child(3) {
+        background: #fff4d8;
+        border-color: #d99000;
+      }
+      .definition {
+        font-size: 1.2rem;
+        background: var(--navy);
+        color: #fff;
+        border-radius: 16px;
+        padding: 1.25rem;
+      }
+      .definition mark {
+        background: #ffe19a;
+        color: #1d3140;
+        padding: 0 0.2rem;
+      }
+      .compare {
+        overflow: auto;
+      }
+      table {
+        border-collapse: collapse;
+        width: 100%;
+        min-width: 620px;
+      }
+      th,
+      td {
+        text-align: left;
+        vertical-align: top;
+        border: 1px solid var(--line);
+        padding: 0.75rem;
+      }
+      th {
+        background: var(--navy);
+        color: #fff;
+      }
+      tr:nth-child(even) {
+        background: #f3f8f9;
+      }
+      .concept-map {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(220px, 1fr));
+        gap: 0.8rem;
+        margin-top: 1rem;
+      }
+      .concept-core {
+        grid-column: 1/-1;
+        background: linear-gradient(125deg, var(--navy), var(--teal));
+        color: #fff;
+        border-radius: 16px;
+        padding: 1.1rem;
+        text-align: center;
+        font-size: 1.2rem;
+        font-weight: 850;
+      }
+      .concept-node {
+        border: 0;
+        border-left: 7px solid var(--amber);
+        background: #fff;
+        color: var(--ink);
+        border-radius: 12px;
+        padding: 1rem;
+        text-align: left;
+        box-shadow: 0 4px 15px rgba(23, 59, 87, 0.1);
+        cursor: pointer;
+      }
+      .concept-node:hover,
+      .concept-node:focus,
+      .concept-node.selected {
+        background: var(--cream);
+        transform: translateY(-2px);
+      }
+      .concept-node strong {
+        display: block;
+        color: var(--navy);
+        margin-bottom: 0.25rem;
+      }
+      .disciplines {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(215px, 1fr));
+        gap: 0.85rem;
+      }
+      .discipline {
+        border: 1px solid var(--line);
+        border-radius: 15px;
+        overflow: hidden;
+        background: #fff;
+      }
+      .discipline h3 {
+        margin: 0;
+        padding: 0.85rem 1rem;
+        background: #e8f4f4;
+        color: var(--navy);
+      }
+      .discipline p {
+        padding: 0 1rem;
+      }
+      .discipline .example {
+        margin: 0 1rem 1rem;
+        padding: 0.75rem;
+        background: var(--cream);
+        border-radius: 10px;
+        font-size: 0.94rem;
+      }
+      .bridge {
+        display: flex;
+        gap: 1rem;
+        align-items: flex-start;
+        background: #eff8f5;
+        border-radius: 14px;
+        padding: 1rem;
+      }
+      .bridge-icon {
+        font-size: 2rem;
+        line-height: 1;
+      }
+      .split-view {
+        display: grid;
+        grid-template-columns: 1fr auto 1fr;
+        gap: 1rem;
+        align-items: stretch;
+        margin: 1rem 0;
+      }
+      .split-panel {
+        border-radius: 16px;
+        padding: 1.15rem;
+      }
+      .split-panel:first-child {
+        background: #eaf4fb;
+        border-top: 7px solid #367aa4;
+      }
+      .split-panel:last-child {
+        background: #edf8f2;
+        border-top: 7px solid var(--teal);
+      }
+      .split-panel h3 {
+        margin-top: 0;
+      }
+      .plus {
+        display: grid;
+        place-items: center;
+        font-size: 2rem;
+        font-weight: 900;
+        color: var(--teal);
+      }
+      .claim-flow {
+        display: grid;
+        grid-template-columns: repeat(5, 1fr);
+        gap: 0.55rem;
+        margin: 1rem 0;
+      }
+      .claim-step {
+        position: relative;
+        border: 2px solid var(--line);
+        border-radius: 14px;
+        padding: 0.85rem;
+        background: #fff;
+        min-height: 135px;
+      }
+      .claim-step:not(:last-child):after {
+        content: "→";
+        position: absolute;
+        right: -0.72rem;
+        top: 42%;
+        z-index: 2;
+        color: var(--teal);
+        font-size: 1.4rem;
+        font-weight: 900;
+      }
+      .claim-step strong {
+        display: block;
+        color: var(--navy);
+        margin-bottom: 0.3rem;
+      }
+      .stakeholders {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(185px, 1fr));
+        gap: 0.65rem;
+      }
+      .stakeholder {
+        border: 1px solid var(--line);
+        border-radius: 12px;
+        padding: 0.85rem;
+        background: #f8fbfb;
+      }
+      .stakeholder strong {
+        display: block;
+        color: var(--teal);
+      }
+      .assignment-bridge {
+        border: 3px solid var(--amber);
+        background: var(--cream);
+        border-radius: 16px;
+        padding: 1.15rem;
+      }
+      .assignment-bridge ol {
+        padding-left: 1.35rem;
+      }
+      .warning {
+        background: #fff0f0;
+        border-left: 7px solid #a64141;
+        padding: 1rem;
+        border-radius: 5px 12px 12px 5px;
+      }
+      .check {
+        margin: 1rem 0;
+        padding: 1rem;
+        border: 1px solid var(--line);
+        border-radius: 14px;
+      }
+      .feedback {
+        font-weight: 750;
+        margin-top: 0.55rem;
+      }
+      .correct {
+        color: var(--good);
+      }
+      .incorrect {
+        color: var(--bad);
+      }
+      button.action {
+        border: 0;
+        border-radius: 10px;
+        background: var(--navy);
+        color: #fff;
+        font-weight: 800;
+        padding: 0.7rem 1rem;
+        cursor: pointer;
+      }
+      button.action:hover,
+      button.action:focus {
+        background: var(--teal);
+      }
+      details {
+        border: 1px solid var(--line);
+        border-radius: 12px;
+        margin: 0.65rem 0;
+        padding: 0.75rem 1rem;
+      }
+      summary {
+        cursor: pointer;
+        font-weight: 800;
+        color: var(--navy);
+      }
+      .source-list li {
+        margin: 0.55rem 0;
+      }
+      .source-list a {
+        color: #075e8b;
+      }
+      .next {
+        background: linear-gradient(125deg, #173b57, #087f78);
+        color: #fff;
+      }
+      .next h2 {
+        color: #fff;
+      }
+      .next a {
+        color: #ffe19a;
+      }
+      footer {
+        text-align: center;
+        padding: 2rem 1rem;
+        color: var(--muted);
+        font-size: 0.92rem;
+      }
+      .opening-story {
+        background: linear-gradient(145deg, #fffdf4, #edf7f5);
+        border: 1px solid #d8c68e;
+      }
+      .opening-story > p,
+      .opening-story > .callout {
+        max-width: none;
+      }
+      .story-kicker {
+        display: inline-block;
+        background: var(--navy);
+        color: #fff;
+        border-radius: 999px;
+        padding: 0.25rem 0.7rem;
+        font-size: 0.9rem;
+        font-weight: 850;
+      }
+      .opening-figure,
+      .gateway-figure {
+        margin: 1rem 0;
+        border: 1px solid var(--line);
+        border-radius: 16px;
+        overflow: hidden;
+        background: #fff;
+      }
+      .opening-figure img,
+      .gateway-figure img {
+        display: block;
+        width: 100%;
+        aspect-ratio: 16/9;
+        object-fit: cover;
+      }
+      .gateway-figure img {
+        aspect-ratio: auto;
+        object-fit: contain;
+      }
+      .opening-figure figcaption,
+      .gateway-figure figcaption {
+        padding: 0.85rem 1rem;
+        color: var(--muted);
+      }
+      .vocabulary-intro {
+        margin-top: 1.4rem;
+        padding-top: 1.25rem;
+        border-top: 2px solid #dce8e8;
+      }
+      .vocabulary-chart {
+        overflow-x: auto;
+        margin: 1rem 0;
+        border: 1px solid var(--line);
+        border-radius: 14px;
+      }
+      .vocabulary-chart table {
+        min-width: 780px;
+      }
+      .vocabulary-chart td:first-child {
+        width: 18%;
+        color: var(--navy);
+        font-weight: 850;
+      }
+      .vocabulary-chart td:nth-child(2) {
+        width: 46%;
+      }
+      .term-tag {
+        display: inline-block;
+        margin-top: 0.35rem;
+        padding: 0.15rem 0.45rem;
+        border-radius: 999px;
+        background: #dff3f0;
+        color: #075f59;
+        font-size: 0.76rem;
+        font-weight: 800;
+      }
+      .balance-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 0.8rem;
+      }
+      .balance-grid > div {
+        background: #fff;
+        border-radius: 13px;
+        padding: 1rem;
+        border-top: 6px solid var(--teal);
+      }
+      .balance-grid > div:last-child {
+        border-top-color: var(--gold);
+      }
+      .gateway-explorer {
+        display: grid;
+        grid-template-columns: minmax(250px, 0.72fr) minmax(0, 1.28fr);
+        gap: 1rem;
+        margin: 1rem 0;
+        border: 2px solid var(--line);
+        border-radius: 16px;
+        padding: 1rem;
+      }
+      .gateway-controls {
+        background: var(--aqua);
+        border-radius: 13px;
+        padding: 1rem;
+      }
+      .gateway-controls input {
+        width: 100%;
+        accent-color: var(--teal);
+      }
+      .age-band {
+        display: inline-block;
+        background: var(--amber);
+        border-radius: 999px;
+        padding: 0.2rem 0.65rem;
+        font-weight: 800;
+      }
+      .gateway-bars {
+        display: grid;
+        gap: 0.45rem;
+      }
+      .gateway-row {
+        display: grid;
+        grid-template-columns: 8rem 1fr 6.5rem;
+        gap: 0.5rem;
+        align-items: center;
+      }
+      .gateway-track {
+        height: 12px;
+        background: #dfeaec;
+        border-radius: 999px;
+        overflow: hidden;
+      }
+      .gateway-fill {
+        display: block;
+        height: 100%;
+        background: linear-gradient(90deg, #367aa4, var(--teal));
+        border-radius: 999px;
+      }
+      .gateway-status {
+        font-size: 0.82rem;
+        color: var(--muted);
+      }
+      .gateway-questions {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 0.75rem;
+      }
+      .gateway-questions article {
+        background: #f3f8f9;
+        border-left: 6px solid var(--amber);
+        border-radius: 8px 13px 13px 8px;
+        padding: 1rem;
+      }
+      @media (max-width: 850px) {
+        .claim-flow {
+          grid-template-columns: 1fr 1fr;
+        }
+        .claim-step:not(:last-child):after {
+          display: none;
+        }
+      }
+      @media (max-width: 720px) {
+        .three,
+        .concept-map,
+        .split-view,
+        .balance-grid {
+          grid-template-columns: 1fr;
+        }
+        .concept-core {
+          grid-column: auto;
+        }
+        .plus {
+          min-height: 2rem;
+        }
+        .chapnav {
+          padding: 0.45rem;
+        }
+        .card,
+        section {
+          border-radius: 14px;
+        }
+        .items,
+        .choices,
+        .lenses {
+          grid-template-columns: 1fr 1fr;
+        }
+      }
+      @media (max-width: 520px) {
+        .claim-flow {
+          grid-template-columns: 1fr;
+        }
+      }
+      @media (max-width: 850px) {
+        .gateway-explorer {
+          grid-template-columns: 1fr;
+        }
+      }
+      @media (max-width: 720px) {
+        .gateway-questions {
+          grid-template-columns: 1fr;
+        }
+      }
+      @media (max-width: 520px) {
+        .gateway-row {
+          grid-template-columns: 6.5rem 1fr;
+        }
+        .gateway-status {
+          grid-column: 2;
+        }
+      }
+      @media (max-width: 450px) {
+        .items,
+        .choices,
+        .lenses {
+          grid-template-columns: 1fr;
+        }
+      }
+      @media (prefers-reduced-motion: reduce) {
+        html {
+          scroll-behavior: auto;
+        }
+        * {
+          transition: none !important;
+        }
+      }
+      @media print {
+        .progress-wrap,
+        .activity button.action {
+          display: none;
+        }
+        body {
+          background: #fff;
+          font-size: 11pt;
+        }
+        header {
+          background: #fff;
+          color: #000;
+          padding: 1rem 0;
+        }
+        header .eyebrow {
+          color: #000;
+        }
+        .card,
+        section {
+          box-shadow: none;
+          border: 1px solid #bbb;
+          break-inside: avoid;
+        }
+        .activity {
+          border-color: #777;
+        }
+      }
+    </style>
+    <link rel="stylesheet" href="assets/references.css" />
+  </head>
+  <body>
+    <a class="skip" href="#main">Skip to chapter content</a>
+    <header>
+      <div class="eyebrow">
+        SOC-245 ·
+        <em
+          >Beyond the Substance: Understanding Drugs in Culture &amp;
+          Society</em
+        >
+        · <a href="topics/" style="color: #fff">All Sections</a>
+      </div>
+      <h1>Section 1: What Is a Drug?</h1>
+      <p>
+        A chemical can change the body. Society decides what that change
+        means—and what should happen next.
+      </p>
+      <div class="meta">
+        <span class="pill">Essential question: Who gets to define a drug?</span
+        ><span class="pill">Interactive chapter</span
+        ><span class="pill">Updated September 2026</span>
+      </div>
+    </header>
+    <div class="progress-wrap" aria-label="Reading progress">
+      <div class="bar" id="bar"></div>
+      <nav class="chapnav" aria-label="Chapter sections">
+        <a href="#reefer-story">Opening story</a><a href="#start">Start</a
+        ><a href="#define">Define</a><a href="#layers">Three layers</a
+        ><a href="#social-definition">Concept map</a
+        ><a href="#disciplines">Disciplines</a
+        ><a href="#construction">Social construction</a
+        ><a href="#gateway-research">Gateway research</a
+        ><a href="#moral-entrepreneurs">Moral entrepreneurs</a
+        ><a href="#language">Language</a><a href="#check">Check</a
+        ><a href="#sources">References</a>
+      </nav>
+    </div>
+    <main id="main">
+      <section id="reefer-story" class="opening-story">
+        <span class="story-kicker"
+          >Opening story · When fear becomes evidence</span
+        >
+        <h2>
+          <span class="section-number">1.1</span> <em>Reefer Madness</em> and
+          the Validity of the Message
+        </h2>
+        <figure class="opening-figure">
+          <img
+            src="assets/history/reefer-madness-original-poster.png"
+            alt="Original educational illustration in a sensational 1930s exploitation-poster style, with frightened young adults, marijuana smoke, and the words Reefer Madness: When Fear Becomes Evidence"
+          />
+          <figcaption>
+            This original course illustration reproduces the alarmist visual
+            language of the period without copying an existing film poster.
+          </figcaption>
+        </figure>
+        <p>
+          The 1936 film now known as <em>Reefer Madness</em> portrayed marijuana
+          as a rapid route to madness, violence, sexual danger, and death. Its
+          melodrama did not measure typical cannabis effects. It gave viewers a
+          frightening story whose emotional certainty could be mistaken for
+          scientific evidence.
+        </p>
+        <p>
+          The sociological study of drugs must therefore evaluate both the
+          <strong>content</strong> and the
+          <strong>validity of the message</strong>. Who created it? Which cases
+          were selected? What comparison group is missing? Does the evidence
+          establish prevalence or causation? Which population is shown as
+          threatening, and who gains authority if the message is accepted?
+        </p>
+        <div class="balance-grid">
+          <div>
+            <strong>The measurable question</strong><br />What effects occur, at
+            what dose and frequency, for which people, under which conditions,
+            and compared with which risks or benefits?
+          </div>
+          <div>
+            <strong>The constructed message</strong><br />Which images,
+            stereotypes, emotions, and group associations make one substance
+            seem uniquely dangerous and one policy seem inevitable?
+          </div>
+        </div>
+        <p>
+          Marijuana was increasingly linked in public discourse to Mexican
+          immigrants after the Mexican Revolution and later to Black jazz
+          musicians and urban nightlife. Cannabis has real effects and risks,
+          but racialized stories helped determine which effects received
+          attention and whose behavior was criminalized. Increased marijuana
+          visibility after national alcohol Prohibition also gave officials and
+          moral entrepreneurs a new substance around which to organize concern.
+        </p>
+        <div class="callout">
+          <strong>Carry this question through the course:</strong> If a claim
+          about a drug is vivid enough to change law but weak enough to fail an
+          evidence test, are we regulating the substance—or the group and fear
+          attached to it?
+        </div>
+      </section>
+      <section id="start">
+        <h2><span class="section-number">1.2</span> Begin with a puzzle</h2>
+        <p class="lead">
+          Coffee, nicotine, alcohol, cannabis, prescription pain medication, and
+          heroin can all affect the body. Yet Americans do not treat them as one
+          social category. Some are ordinary, some are medicine, some are
+          regulated by age, and some may bring severe criminal penalties.
+        </p>
+        <div class="callout">
+          <strong>Sociological clue:</strong> The chemical is real, but its
+          social meaning is created through culture, institutions, history,
+          power, and interaction.
+        </div>
+        <h3>By the end, you can…</h3>
+        <div class="objectives">
+          <div class="objective">
+            <span class="num">1</span>Distinguish chemical, legal, and social
+            definitions.
+          </div>
+          <div class="objective">
+            <span class="num">2</span>Explain why “drug” is a socially
+            constructed category.
+          </div>
+          <div class="objective">
+            <span class="num">3</span>Apply sociological perspectives to drug
+            classification.
+          </div>
+          <div class="objective">
+            <span class="num">4</span>Use accurate, person-first language.
+          </div>
+        </div>
+      </section>
+
+      <section class="activity" id="define">
+        <span class="activity-label">Explore</span>
+        <h2><span class="section-number">1.3</span> Is it a drug?</h2>
+        <p>
+          Select an item. Before reading the explanation, decide which
+          definition you are using: what it does, why it is used, how the law
+          classifies it, or how society sees it.
+        </p>
+        <div class="items" role="list">
+          <button class="item" data-key="coffee">
+            <strong>☕ Coffee</strong>Caffeine
+          </button>
+          <button class="item" data-key="nicotine">
+            <strong>Nicotine pouch</strong>Legal for adults
+          </button>
+          <button class="item" data-key="alcohol">
+            <strong>🍺 Alcohol</strong>Commonly accepted
+          </button>
+          <button class="item" data-key="medicine">
+            <strong>💊 Prescription opioid</strong>Medical use
+          </button>
+          <button class="item" data-key="cannabis">
+            <strong>🌿 Cannabis</strong>Conflicting classifications
+          </button>
+          <button class="item" data-key="sunscreen">
+            <strong>🧴 Sunscreen</strong>An unexpected example
+          </button>
+        </div>
+        <div class="reveal" id="itemReveal" tabindex="-1" aria-live="polite">
+          Choose an item to uncover why a simple yes-or-no answer can be
+          misleading.
+        </div>
+      </section>
+
+      <section id="layers">
+        <h2><span class="section-number">1.4</span> One word, three layers</h2>
+        <p>
+          No single definition answers every question. In this course, we will
+          keep three layers visible at the same time.
+        </p>
+        <div class="three">
+          <div class="layer">
+            <h3>1. Body and behavior</h3>
+            <p>
+              A broad scientific lens asks whether a substance changes
+              physiological or psychological functioning. A
+              <strong>psychoactive substance</strong> affects mental processes
+              such as mood, perception, cognition, alertness, or behavior.
+            </p>
+          </div>
+          <div class="layer">
+            <h3>2. Intended use and law</h3>
+            <p>
+              For FDA regulation, intended use matters: a product may be
+              considered a drug when it is intended to diagnose, cure, mitigate,
+              treat, or prevent disease, or to affect the body’s structure or
+              function.
+            </p>
+          </div>
+          <div class="layer">
+            <h3>3. Culture and society</h3>
+            <p>
+              People collectively attach meanings to substances. Norms,
+              medicine, markets, religion, politics, media, and law help
+              determine whether use is regarded as routine, therapeutic, risky,
+              deviant, or criminal.
+            </p>
+          </div>
+        </div>
+        <p class="definition">
+          <strong>Our working sociological definition:</strong> A drug is a
+          substance whose use can affect the body or behavior and whose
+          identity, acceptable uses, risks, and consequences are interpreted and
+          regulated within a particular <mark>social context</mark>.
+        </p>
+        <p>
+          This definition does not claim that biology is merely an opinion. It
+          reminds us that chemical effects and social meanings operate together.
+        </p>
+      </section>
+
+      <section class="activity" id="social-definition">
+        <span class="activity-label">Interactive concept map</span>
+        <h2>
+          <span class="section-number">1.5</span> The sociological definition of
+          a drug
+        </h2>
+        <p>
+          Your original slide makes five connected claims. Select each part of
+          the map to reveal why it matters.
+        </p>
+        <div class="concept-map">
+          <div class="concept-core">
+            A drug is both a material substance and a socially defined category.
+          </div>
+          <button class="concept-node" data-concept="beyond">
+            <strong>1. Look beyond one dose</strong>The social definition is not
+            determined only by the psychoactive effect produced by a particular
+            amount.
+          </button>
+          <button class="concept-node" data-concept="cns">
+            <strong>2. Recognize psychoactive effects</strong>Psychoactive
+            substances affect the central nervous system and can influence mood,
+            perception, cognition, alertness, or behavior.
+          </button>
+          <button class="concept-node" data-concept="harm">
+            <strong>3. Harm is not the only classifier</strong>Legal and social
+            categories do not consistently match comparative risk or harm.
+          </button>
+          <button class="concept-node" data-concept="construction">
+            <strong>4. Meanings are constructed</strong>Society identifies
+            particular substances and forms of use as normal, medical, deviant,
+            dangerous, or criminal.
+          </button>
+          <button class="concept-node" data-concept="change">
+            <strong>5. Definitions change</strong>Public attitudes,
+            institutions, knowledge, and power shift over time—so
+            classifications can shift too.
+          </button>
+        </div>
+        <div class="reveal" id="conceptReveal" tabindex="-1" aria-live="polite">
+          Select one of the five claims to explore it.
+        </div>
+        <div class="callout">
+          <strong>Important:</strong> “Socially constructed” does not mean
+          imaginary, harmless, or biologically unreal. It means that people and
+          institutions decide which effects matter, which uses are acceptable,
+          which labels apply, and which responses society will fund or enforce.
+        </div>
+      </section>
+
+      <section>
+        <h2>
+          <span class="section-number">1.6</span> More than a chemical substance
+        </h2>
+        <p class="lead">
+          How does the sociological approach differ from an approach centered on
+          the body? The difference is not that one is correct and the other is
+          wrong. They operate at different levels of explanation.
+        </p>
+        <div class="split-view">
+          <div class="split-panel">
+            <h3>Clinical pharmacology</h3>
+            <p>
+              Studies how drugs affect the structure and functioning of the
+              human body. It investigates mechanisms such as absorption,
+              distribution, metabolism, receptor activity, therapeutic action,
+              and toxicity.
+            </p>
+            <div class="example">
+              <strong>Studying cocaine:</strong> What biological and
+              pharmacological factors promote or slow cocaine’s absorption into
+              the bloodstream?
+            </div>
+          </div>
+          <div class="plus" aria-hidden="true">+</div>
+          <div class="split-panel">
+            <h3>Sociology and social science</h3>
+            <p>
+              Study drugs as more than chemical substances. They examine how
+              social environments, relationships, culture, institutions,
+              inequality, law, politics, markets, and shared meanings influence
+              drug use and society’s response.
+            </p>
+            <div class="example">
+              <strong>Studying cocaine:</strong> How do social networks,
+              employment, neighborhood conditions, cultural meanings, policy,
+              race, class, and access to treatment shape patterns and
+              consequences?
+            </div>
+          </div>
+        </div>
+        <div class="callout">
+          <strong>The complete picture requires both.</strong> Pharmacology can
+          help explain what enters the bloodstream. Sociology helps explain why
+          use follows social patterns, why risks and resources are unequal, and
+          why society responds differently to different substances and people.
+        </div>
+        <div class="vocabulary-intro">
+          <h3>Vocabulary bridge: substance, body, behavior, and context</h3>
+          <p>
+            These concepts describe different dimensions of drug experience.
+            They are not interchangeable, and they do not form an inevitable
+            ladder from use to addiction.
+          </p>
+          <figure class="opening-figure">
+            <img
+              src="assets/concepts/use-misuse-addiction.png"
+              alt="The same fictional adult shown using medication as directed, misusing it amid disrupted responsibilities, and experiencing addiction while receiving support and seeing a path toward treatment"
+            />
+            <figcaption>
+              Use, misuse, and addiction are distinguished by purpose, pattern,
+              control, risk, and consequences—not by a person's appearance or
+              moral worth. Treatment and recovery remain possible.
+            </figcaption>
+          </figure>
+          <div
+            class="vocabulary-chart"
+            role="region"
+            aria-label="Drug concepts, definitions, and examples"
+            tabindex="0"
+          >
+            <table>
+              <thead>
+                <tr>
+                  <th scope="col">Concept</th>
+                  <th scope="col">Working definition</th>
+                  <th scope="col">Example</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Drug use<br /><span class="term-tag">Behavior</span></td>
+                  <td>
+                    Taking or being exposed to a substance. Use alone does not
+                    establish harm, misuse, dependence, or disorder.
+                  </td>
+                  <td>
+                    An adult drinks coffee or takes pain medicine exactly as
+                    prescribed.
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    Drug abuse / misuse<br /><span class="term-tag"
+                      >Behavior + harm</span
+                    >
+                  </td>
+                  <td>
+                    Use in a way that increases risk, causes harm, or departs
+                    from medical directions. “Abuse” remains common in older
+                    sources; current clinical language generally favors
+                    <em>misuse</em> or a specific diagnosis.
+                  </td>
+                  <td>
+                    A person takes more prescription medicine than directed or
+                    mixes it with alcohol despite a warning.
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    Drug addiction / substance use disorder<br /><span
+                      class="term-tag"
+                      >Pattern</span
+                    >
+                  </td>
+                  <td>
+                    A persistent pattern involving impaired control and
+                    continued use despite significant problems. Diagnosis
+                    depends on multiple criteria and severity—not one episode.
+                  </td>
+                  <td>
+                    A person repeatedly tries to cut down but continues using as
+                    health, work, or relationships deteriorate.
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    Drug tolerance<br /><span class="term-tag"
+                      >Body adaptation</span
+                    >
+                  </td>
+                  <td>
+                    A reduced response after repeated exposure, so more may be
+                    needed to produce an effect previously reached with less.
+                  </td>
+                  <td>
+                    The same amount of alcohol produces less intoxication after
+                    frequent use.
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    Drug dependence<br /><span class="term-tag"
+                      >Body adaptation</span
+                    >
+                  </td>
+                  <td>
+                    Physical adaptation that can produce withdrawal when a drug
+                    is reduced or stopped. Dependence can occur during
+                    appropriate medical treatment and is not identical to
+                    addiction.
+                  </td>
+                  <td>
+                    A patient who abruptly stops a long-term prescribed opioid
+                    develops withdrawal symptoms without having used it
+                    compulsively.
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    Drug interaction<br /><span class="term-tag"
+                      >Combination</span
+                    >
+                  </td>
+                  <td>
+                    One substance changes another's action. An interaction may
+                    be intended and therapeutic, or unintended and dangerous.
+                  </td>
+                  <td>
+                    Naloxone can therapeutically counter opioid effects; alcohol
+                    plus a benzodiazepine can dangerously intensify sedation.
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    Therapeutic dose<br /><span class="term-tag">Dose</span>
+                  </td>
+                  <td>
+                    An amount intended to produce clinical benefit with an
+                    acceptable level of risk for a particular patient and
+                    condition.
+                  </td>
+                  <td>
+                    A clinician adjusts buprenorphine to suppress withdrawal and
+                    craving without excessive sedation.
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    Effective dose<br /><span class="term-tag">Dose</span>
+                  </td>
+                  <td>
+                    An amount that produces a specified measurable effect. In
+                    research, ED50 commonly means an effect occurs in 50% of the
+                    studied population—not that it is every person's correct
+                    dose.
+                  </td>
+                  <td>
+                    Researchers measure the dose at which a defined level of
+                    pain relief occurs.
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    Lethal dose<br /><span class="term-tag"
+                      >Dose + toxicity</span
+                    >
+                  </td>
+                  <td>
+                    An amount capable of causing death. LD50 is a population
+                    estimate used in toxicology, not a predictable boundary
+                    between safe and fatal exposure for an individual.
+                  </td>
+                  <td>
+                    Opioid overdose risk can rise sharply when opioids are
+                    combined with other respiratory depressants.
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    Route of administration<br /><span class="term-tag"
+                      >Delivery</span
+                    >
+                  </td>
+                  <td>
+                    How a substance enters the body—such as swallowing,
+                    inhaling, injecting, or absorption through skin—which
+                    influences onset, intensity, duration, and risk.
+                  </td>
+                  <td>
+                    An injected drug generally reaches the bloodstream faster
+                    than the same drug swallowed in a tablet.
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    Polydrug use<br /><span class="term-tag">Combination</span>
+                  </td>
+                  <td>
+                    Using more than one substance at the same time or close
+                    enough together that their effects overlap, intentionally or
+                    unintentionally.
+                  </td>
+                  <td>
+                    Alcohol and opioids both depress breathing; caffeine may
+                    mask sleepiness from alcohol without reducing impairment.
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="callout">
+            <strong>Do not diagnose from one sign.</strong> Tolerance and
+            dependence may occur without addiction, while addiction can be
+            present even when dramatic withdrawal is absent. Researchers must
+            examine the whole pattern, person, substance, and setting.
+          </div>
+        </div>
+      </section>
+
+      <section id="disciplines">
+        <h2>
+          <span class="section-number">1.7</span> Many disciplines, different
+          questions
+        </h2>
+        <p class="lead">
+          Drugs are chemical substances, commodities, medicines, cultural
+          objects, political issues, historical forces, and features of human
+          behavior. Each discipline illuminates part of the picture. Sociology
+          connects those parts by examining patterned social behavior, groups,
+          institutions, culture, and inequality.
+        </p>
+        <div class="disciplines">
+          <article class="discipline">
+            <h3>🧪 Clinical pharmacology</h3>
+            <p>
+              Examines what a substance does in the body: absorption,
+              distribution, metabolism, receptors, dose, interactions,
+              therapeutic effects, and toxicity.
+            </p>
+            <p class="example">
+              <strong>Cocaine question:</strong> How do route and dose affect
+              absorption, duration, and cardiovascular risk?
+            </p>
+          </article>
+          <article class="discipline">
+            <h3>🧠 Psychology</h3>
+            <p>
+              Often emphasizes individual cognition, emotion, learning,
+              motivation, personality, decision-making, and the relationship
+              between brain and behavior.
+            </p>
+            <p class="example">
+              <strong>Cocaine question:</strong> How do reinforcement, craving,
+              stress, or co-occurring mental-health conditions influence
+              repeated use?
+            </p>
+          </article>
+          <article class="discipline">
+            <h3>🏺 Anthropology</h3>
+            <p>
+              Examines substances within culture and everyday life, including
+              rituals, healing traditions, shared knowledge, symbols, and
+              adaptation to the environment.
+            </p>
+            <p class="example">
+              <strong>Coca-leaf question:</strong> What meanings and social
+              functions does traditional coca chewing have in Andean
+              communities?
+            </p>
+          </article>
+          <article class="discipline">
+            <h3>📜 History</h3>
+            <p>
+              Shows that drug use is not new and that the same substance may be
+              medicine, consumer product, vice, or crime in different periods.
+            </p>
+            <p class="example">
+              <strong>Historical question:</strong> What changed when a
+              once-accepted ingredient or remedy became restricted?
+            </p>
+          </article>
+          <article class="discipline">
+            <h3>🏛️ Political science</h3>
+            <p>
+              Studies government, policy, political conflict, public authority,
+              and the use of power. It can examine regulation, international
+              relations, enforcement, and competing policy agendas.
+            </p>
+            <p class="example">
+              <strong>Cocaine question:</strong> How have trafficking
+              organizations, state authority, elections, and international
+              policy influenced one another?
+            </p>
+          </article>
+          <article class="discipline">
+            <h3>📈 Economics</h3>
+            <p>
+              Examines production, distribution, incentives, prices, labor,
+              public spending, productivity, legal and illegal markets, and who
+              bears costs.
+            </p>
+            <p class="example">
+              <strong>Market question:</strong> How do prohibition, scarcity,
+              demand, and enforcement reshape price, purity, profit, and risk?
+            </p>
+          </article>
+          <article class="discipline">
+            <h3>👥 Sociology</h3>
+            <p>
+              Studies how drug-related behavior is patterned through groups,
+              networks, culture, institutions, socialization, inequality,
+              labels, and social control.
+            </p>
+            <p class="example">
+              <strong>Sociological question:</strong> Why do rates, meanings,
+              consequences, and official responses vary across groups and
+              settings?
+            </p>
+          </article>
+        </div>
+        <div class="bridge">
+          <div class="bridge-icon" aria-hidden="true">🔗</div>
+          <div>
+            <strong>Sociology does not replace the other disciplines.</strong>
+            It asks what becomes invisible when we study only molecules or only
+            individuals. A full explanation connects pharmacology and psychology
+            with relationships, communities, institutions, history, culture,
+            policy, and power.
+          </div>
+        </div>
+      </section>
+
+      <section class="activity">
+        <span class="activity-label">Match the question</span>
+        <h2>
+          <span class="section-number">1.8</span> Who would be most likely to
+          ask?
+        </h2>
+        <p id="disciplineQuestion">
+          <strong>Question:</strong> How did a substance move from an accepted
+          medicine to a prohibited drug?
+        </p>
+        <div class="choices" id="disciplineChoices">
+          <button class="choice" data-discipline="history">
+            <strong>Historian</strong>Change over time
+          </button>
+          <button class="choice" data-discipline="psychology">
+            <strong>Psychologist</strong>Individual behavior
+          </button>
+          <button class="choice" data-discipline="politics">
+            <strong>Political scientist</strong>Government and power
+          </button>
+          <button class="choice" data-discipline="sociology">
+            <strong>Sociologist</strong>Groups and institutions
+          </button>
+        </div>
+        <div
+          class="reveal"
+          id="disciplineReveal"
+          tabindex="-1"
+          aria-live="polite"
+        >
+          Choose the best starting discipline. More than one discipline may
+          eventually contribute to a complete explanation.
+        </div>
+        <button class="action" id="nextDiscipline" type="button">
+          Try another question
+        </button>
+      </section>
+
+      <section class="activity" id="construction">
+        <span class="activity-label">Reality lens</span>
+        <h2>
+          <span class="section-number">1.9</span> Change the context; change the
+          meaning
+        </h2>
+        <p>
+          Choose a lens to examine the same hypothetical substance: a compound
+          that reduces pain and can also produce euphoria and dependence.
+        </p>
+        <div class="lenses">
+          <button class="lens" data-lens="medicine">
+            <strong>Medicine</strong>Who may prescribe it?
+          </button>
+          <button class="lens" data-lens="law">
+            <strong>Law</strong>Who may possess it?
+          </button>
+          <button class="lens" data-lens="market">
+            <strong>Economy</strong>Who profits?
+          </button>
+          <button class="lens" data-lens="culture">
+            <strong>Culture</strong>Which use seems normal?
+          </button>
+          <button class="lens" data-lens="interaction">
+            <strong>Interaction</strong>What label follows the person?
+          </button>
+          <button class="lens" data-lens="power">
+            <strong>Power</strong>Whose definition wins?
+          </button>
+        </div>
+        <div class="reveal" id="lensReveal" tabindex="-1" aria-live="polite">
+          Select a lens. The chemical properties remain, but the questions—and
+          often the consequences—change.
+        </div>
+        <details>
+          <summary>Key concept: social construction</summary>
+          <p>
+            <strong>Social construction</strong> is the process through which
+            people and institutions create, negotiate, and reinforce shared
+            meanings. Calling drug classifications socially constructed does not
+            mean that substances or harms are imaginary. It means
+            classifications and responses are shaped through social processes.
+          </p>
+        </details>
+        <details>
+          <summary>Key concept: moral entrepreneur</summary>
+          <p>
+            A <strong>moral entrepreneur</strong> is a person or group that
+            works to define a condition or behavior as a problem and campaigns
+            for rules or enforcement. Their concern may identify genuine harm,
+            but sociologists also examine their evidence, interests, influence,
+            and proposed response.
+          </p>
+        </details>
+      </section>
+
+      <section id="gateway-research">
+        <h2>
+          <span class="section-number">1.10</span> Gateway Theory as a Research
+          Lesson
+        </h2>
+        <p>
+          In 1975, sociologist Denise Kandel used longitudinal data from New
+          York high-school students to identify a recurring sequence: beer or
+          wine; cigarettes or hard liquor; marijuana; and then possible use of
+          other illicit drugs. Gateway theory is valuable here not because it
+          predicts every person, but because it demonstrates why researchers
+          study
+          <strong
+            >timing, sequence, initiation, escalation, maintenance, and
+            discontinuation</strong
+          >.
+        </p>
+        <figure class="gateway-figure">
+          <img
+            src="assets/drug-education/gateway-progression.svg"
+            alt="Gateway research diagram showing Kandel's 1975 stages, inhalants outside the main sequence, and several possible exits rather than one inevitable endpoint"
+          />
+          <figcaption>
+            Ordering is a population-level pattern. It does not prove that one
+            substance chemically causes the next or that an individual will
+            complete the sequence.
+          </figcaption>
+        </figure>
+        <p>
+          <strong>Instructor research note:</strong> In an unpublished thesis,
+          Caroll Hodgson used regression analysis with data from 2000 to ask
+          whether evidence consistent with the established sequence could still
+          be detected. The analysis found an ordering of beer, cigarettes,
+          liquor, marijuana, and possible later experimentation with substances
+          including cocaine, methamphetamine, and LSD; inhalants did not fit one
+          age-graded step. Because the thesis was not published or peer
+          reviewed, this coursebook treats it as an instructor replication
+          exercise—not the origin of the theory or definitive evidence.
+        </p>
+        <div class="gateway-explorer" data-gateway-explorer>
+          <div class="gateway-controls">
+            <h3>Explore an age window</h3>
+            <label for="gateway-age"
+              >Approximate age:
+              <output id="gateway-age-output" for="gateway-age"
+                >14</output
+              ></label
+            ><input
+              id="gateway-age"
+              type="range"
+              min="10"
+              max="20"
+              value="14"
+              step="1"
+            />
+            <p>
+              This model shows when research-informed education topics may
+              become more relevant. It does not display prevalence or predict a
+              student.
+            </p>
+          </div>
+          <div aria-live="polite">
+            <p class="age-band" id="gateway-band">Early adolescence</p>
+            <h3 id="gateway-focus">
+              Nicotine, alcohol strength, and changing peer routines
+            </h3>
+            <div class="gateway-bars" id="gateway-bars"></div>
+            <p id="gateway-lesson"></p>
+          </div>
+        </div>
+        <div class="gateway-questions">
+          <article>
+            <h3>Initiation</h3>
+            <p>
+              Why did one substance appear first? Consider family access,
+              celebration, advertising, price, peers, perceived risk, and
+              measurement.
+            </p>
+          </article>
+          <article>
+            <h3>Escalation</h3>
+            <p>
+              What changes between stages? Frequency, desired effects, stress,
+              opportunity, peers, and illicit-market access may matter.
+            </p>
+          </article>
+          <article>
+            <h3>Maintenance</h3>
+            <p>
+              Reinforcement, withdrawal avoidance, identity, trauma, mental
+              health, routine, and limited alternatives may sustain use.
+            </p>
+          </article>
+          <article>
+            <h3>Discontinuation</h3>
+            <p>
+              Roles, relationships, education, treatment, harm reduction,
+              meaningful work, and changing peer networks can interrupt
+              progression.
+            </p>
+          </article>
+        </div>
+        <div class="balance-grid">
+          <div>
+            <strong>Sequence</strong><br />A recurring order can identify when
+            exposures or transitions tend to occur.
+          </div>
+          <div>
+            <strong>Common causes</strong><br />Shared risks can make several
+            kinds of use more likely without one drug causing the next.
+          </div>
+          <div>
+            <strong>Social pathway</strong><br />Each stage may change peers,
+            settings, norms, access, and expectations.
+          </div>
+          <div>
+            <strong>Research limit</strong><br />Most early users do not
+            complete every stage. “Harder drug” is a cultural label, not a
+            precise pharmacological category.
+          </div>
+        </div>
+        <div class="callout">
+          <strong>Why patterns matter:</strong> Good research can identify where
+          prevention, education, treatment, and harm reduction may help. Good
+          interpretation also prevents an association from being turned into a
+          deterministic story or unsupported causal claim.
+        </div>
+      </section>
+
+      <section id="moral-entrepreneurs">
+        <h2>
+          <span class="section-number">1.11</span> Moral entrepreneurs: defining
+          the threat
+        </h2>
+        <p class="lead">
+          A <strong>moral entrepreneur</strong> is a person, organization, or
+          institution that works to persuade others that a condition or behavior
+          threatens important values and that society should respond. Moral
+          entrepreneurs do more than identify a problem: they help define what
+          the problem <em>is</em>, who or what causes it, who is harmed, and
+          which solution appears necessary.
+        </p>
+        <div class="callout">
+          <strong>They are not automatically dishonest or harmful.</strong>
+          Moral entrepreneurs may draw attention to serious, neglected dangers.
+          Sociology asks us to evaluate how their claims are constructed, whose
+          evidence is included, whose voices are missing, and what consequences
+          follow.
+        </div>
+
+        <h3>Anatomy of a drug-related campaign</h3>
+        <div class="claim-flow" aria-label="Five-stage claims-making process">
+          <div class="claim-step">
+            <strong>1. Name the condition</strong>Select a substance, behavior,
+            trend, or population and identify it as a matter of concern.
+          </div>
+          <div class="claim-step">
+            <strong>2. Frame the threat</strong>Explain what is happening, why
+            it matters, who is at risk, and what values appear endangered.
+          </div>
+          <div class="claim-step">
+            <strong>3. Establish authority</strong>Use research, lived
+            experience, professional expertise, statistics, stories, or
+            institutional status to gain credibility.
+          </div>
+          <div class="claim-step">
+            <strong>4. Mobilize attention</strong>Use media, testimony,
+            campaigns, organizations, or political action to build public
+            concern.
+          </div>
+          <div class="claim-step">
+            <strong>5. Demand a response</strong>Advocate education, treatment,
+            regulation, enforcement, funding, harm reduction, or another policy.
+          </div>
+        </div>
+
+        <h3>Objective condition and subjective concern</h3>
+        <div class="split-view">
+          <div class="split-panel">
+            <h3>Objective condition</h3>
+            <p>
+              Evidence that can be examined, such as prevalence, toxicology,
+              overdose deaths, impaired driving, treatment need, health effects,
+              family consequences, or economic costs.
+            </p>
+            <p>
+              <strong>Ask:</strong> What happened, how often, to whom, compared
+              with what, and according to which evidence?
+            </p>
+          </div>
+          <div class="plus" aria-hidden="true">+</div>
+          <div class="split-panel">
+            <h3>Subjective concern</h3>
+            <p>
+              The meanings, emotions, values, symbols, and judgments people
+              attach to the condition—including fear, sympathy, blame, urgency,
+              or outrage.
+            </p>
+            <p>
+              <strong>Ask:</strong> Why is this condition receiving attention
+              now, and how is the public being encouraged to interpret it?
+            </p>
+          </div>
+        </div>
+        <p>
+          A social problem contains both dimensions. Evidence of harm does not
+          automatically determine how society understands the problem or which
+          response it chooses.
+        </p>
+
+        <h3>Who may compete to define a drug problem?</h3>
+        <div class="stakeholders">
+          <div class="stakeholder">
+            <strong>News and entertainment media</strong>Select stories, images,
+            sources, and language that can increase or reduce public concern.
+          </div>
+          <div class="stakeholder">
+            <strong>Politicians and advocacy groups</strong>Connect drug issues
+            to campaigns, values, legislation, budgets, or group interests.
+          </div>
+          <div class="stakeholder">
+            <strong>Law enforcement</strong>Contribute expertise about illegal
+            markets and public safety while advocating particular resources or
+            enforcement approaches.
+          </div>
+          <div class="stakeholder">
+            <strong>Health and treatment professionals</strong>Frame the issue
+            through prevention, diagnosis, treatment, recovery, public health,
+            and access to care.
+          </div>
+          <div class="stakeholder">
+            <strong>Researchers</strong>Define measurements, evaluate evidence,
+            challenge assumptions, and identify what remains uncertain.
+          </div>
+          <div class="stakeholder">
+            <strong>Industries</strong>May shape definitions through marketing,
+            lobbying, product claims, risk communication, and commercial
+            interests.
+          </div>
+          <div class="stakeholder">
+            <strong>People directly affected</strong>Bring lived experience that
+            may support, complicate, or challenge official definitions of the
+            problem.
+          </div>
+        </div>
+
+        <h3>Definitional ownership, drug scares, and moral panic</h3>
+        <p>
+          <strong>Definitional ownership</strong> occurs when a person or
+          institution becomes widely accepted as the legitimate authority on
+          what the problem means and how it should be handled. Different
+          institutions may compete for this authority because definitions
+          influence public attention, policy, professional jurisdiction, and
+          funding.
+        </p>
+        <p>
+          A <strong>drug scare</strong> is a period of heightened concern about
+          a substance or pattern of use. A <strong>moral panic</strong> may
+          develop when claims portray a person, group, or behavior as a major
+          threat to society and public reaction becomes disproportionate,
+          simplified, or detached from the best available evidence.
+        </p>
+        <div class="warning">
+          <strong>Watch the reasoning:</strong> “Some claims were exaggerated”
+          does not mean “there was no harm.” Likewise, evidence of real harm
+          does not prove that every frightening claim, stereotype, punishment,
+          or proposed policy is justified.
+        </div>
+
+        <h3>Richmond Pearson Hobson: a second moral entrepreneur</h3>
+        <p>
+          In his 1914 speech <em>The Truth About Alcohol</em>, former naval
+          officer and congressman Richmond Pearson Hobson presented abstinence
+          as a scientific and moral necessity. Alcohol’s harms were real, but
+          Hobson used sweeping biological claims and openly racist images of
+          Black and Indigenous people to portray alcohol as an existential
+          threat. His campaign demonstrates how genuine harm, selective
+          evidence, moral certainty, and group prejudice can operate in the same
+          message.
+        </p>
+        <div class="balance-grid">
+          <div>
+            <strong>Manifest goal</strong><br />Reduce drinking, illness, family
+            hardship, injury, violence, and lost work.
+          </div>
+          <div>
+            <strong>Latent dysfunctions of Prohibition</strong><br />Illegal
+            production, uncertain potency, organized crime, corruption,
+            enforcement expense, lost tax revenue, and weakened respect for law.
+          </div>
+        </div>
+        <p>
+          <strong>The lesson is not that alcohol was harmless.</strong> It is
+          that a policy may reduce some harms while creating others that society
+          eventually judges more costly.
+          <a href="https://prohibition.osu.edu/"
+            >Ohio State University’s Temperance and Prohibition collection</a
+          >
+          and
+          <a
+            href="https://books.google.com/books/about/The_Truth_about_Alcohol.html?id=-9jkgwmfEo0C"
+            >Hobson’s speech</a
+          >
+          provide historical starting points.
+        </p>
+
+        <div class="assignment-bridge">
+          <h3>Your first assignment: your moral-entrepreneur starting point</h3>
+          <p>
+            This is Part One of
+            <em>From Moral Entrepreneur to Drug Specialist</em>. Choose a drug
+            and prepare a brief statement and first presentation about what you
+            currently believe its dangers are and which public response you
+            initially support. This is a preserved baseline—not your final
+            conclusion. Clearly label assumptions as initial beliefs and do not
+            invent evidence.
+          </p>
+          <ol>
+            <li>
+              <strong>Name the concern:</strong> What drug interests you, and
+              what do you presently believe is its greatest danger?
+            </li>
+            <li>
+              <strong>Identify the audience:</strong> Who do you believe is at
+              risk, and whom would you try to persuade?
+            </li>
+            <li>
+              <strong>Trace the message:</strong> Did your impressions come from
+              family, peers, school, news, entertainment, social media, personal
+              observation, or another source?
+            </li>
+            <li>
+              <strong>Choose an initial response:</strong> What should society
+              do, and why does that response currently seem reasonable?
+            </li>
+            <li>
+              <strong>Name your uncertainty:</strong> What evidence could
+              complicate or change your position?
+            </li>
+            <li>
+              <strong>Save the original:</strong> Do not rewrite this baseline
+              later. Your final presentation will show what research confirmed,
+              challenged, or changed.
+            </li>
+          </ol>
+          <p>
+            <a href="topics/moral-entrepreneur-project.html"
+              ><strong>Open the complete semester project guide.</strong></a
+            >
+            Canvas will provide submission dates, grading criteria, and
+            presentation logistics.
+          </p>
+        </div>
+      </section>
+
+      <section>
+        <h2>
+          <span class="section-number">1.12</span> The sociological imagination
+          changes the question
+        </h2>
+        <div class="compare">
+          <table>
+            <thead>
+              <tr>
+                <th>If we ask only…</th>
+                <th>Sociology also asks…</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>What did the substance do to this person?</td>
+                <td>
+                  How did access, stress, peers, work, family, neighborhood, and
+                  policy shape the situation?
+                </td>
+              </tr>
+              <tr>
+                <td>Why didn’t the person simply stop?</td>
+                <td>
+                  What biological, psychological, relational, and structural
+                  forces make change difficult or possible?
+                </td>
+              </tr>
+              <tr>
+                <td>Is the substance legal?</td>
+                <td>
+                  How and why did its legal classification develop, and who
+                  experiences enforcement?
+                </td>
+              </tr>
+              <tr>
+                <td>Is the drug dangerous?</td>
+                <td>
+                  Compared with what, at which dose and route, in which setting,
+                  and according to whose evidence?
+                </td>
+              </tr>
+              <tr>
+                <td>Who is responsible?</td>
+                <td>
+                  How are responsibility and resources distributed among
+                  individuals, industries, communities, and governments?
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="activity">
+        <span class="activity-label">Theory detective</span>
+        <h2>
+          <span class="section-number">1.13</span> Three ways to see the same
+          issue
+        </h2>
+        <p>
+          Choose a perspective to analyze why one psychoactive substance is sold
+          openly while another is criminalized.
+        </p>
+        <div class="choices" id="theoryChoices">
+          <button class="choice" data-theory="function">
+            <strong>Functionalism</strong>Order and consequences
+          </button>
+          <button class="choice" data-theory="conflict">
+            <strong>Conflict theory</strong>Power and inequality
+          </button>
+          <button class="choice" data-theory="symbolic">
+            <strong>Symbolic interactionism</strong>Meaning and labels
+          </button>
+        </div>
+        <div class="reveal" id="theoryReveal" tabindex="-1" aria-live="polite">
+          Select a perspective to reveal the questions it would emphasize.
+        </div>
+      </section>
+
+      <section id="language">
+        <h2><span class="section-number">1.14</span> Words do social work</h2>
+        <p>
+          Language can describe a health condition—or turn a person into a
+          label. NIDA recommends person-first and medically accurate language
+          because stigmatizing terms can influence judgment, punishment,
+          willingness to seek treatment, and hope for recovery.
+        </p>
+        <div class="compare">
+          <table>
+            <thead>
+              <tr>
+                <th>Prefer</th>
+                <th>Avoid as a label</th>
+                <th>Why</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Person with a substance use disorder</td>
+                <td>Addict, junkie, drug abuser</td>
+                <td>The person is not reduced to a condition.</td>
+              </tr>
+              <tr>
+                <td>Substance use or prescription medication misuse</td>
+                <td>Drug abuse</td>
+                <td>The wording is more precise and less punitive.</td>
+              </tr>
+              <tr>
+                <td>Tested positive or negative</td>
+                <td>Dirty or clean test</td>
+                <td>Clinical results are not moral identities.</td>
+              </tr>
+              <tr>
+                <td>Person in recovery</td>
+                <td>Former or reformed addict</td>
+                <td>
+                  Recovery is described without a permanent stigmatizing label.
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="activity" id="check">
+        <span class="activity-label">Check your understanding</span>
+        <h2>
+          <span class="section-number">1.15</span> Can you separate chemistry
+          from classification?
+        </h2>
+        <div class="check" data-answer="b">
+          <p>
+            <strong>1.</strong> Which statement best reflects the sociological
+            approach?
+          </p>
+          <button class="action" data-option="a">
+            A. Chemical effects are only opinions.
+          </button>
+          <button class="action" data-option="b">
+            B. Chemical effects are real, while meanings and responses are
+            socially shaped.
+          </button>
+          <div class="feedback" aria-live="polite"></div>
+        </div>
+        <div class="check" data-answer="c">
+          <p>
+            <strong>2.</strong> A substance is accepted as medicine when
+            prescribed but condemned when used outside medicine. What does this
+            best demonstrate?
+          </p>
+          <button class="action" data-option="a">
+            A. The substance has no biological effects.
+          </button>
+          <button class="action" data-option="b">
+            B. Every form of use has equal risk.
+          </button>
+          <button class="action" data-option="c">
+            C. Context and institutions shape social classification.
+          </button>
+          <div class="feedback" aria-live="polite"></div>
+        </div>
+        <div class="check" data-answer="a">
+          <p>
+            <strong>3.</strong> Which wording follows person-first guidance?
+          </p>
+          <button class="action" data-option="a">
+            A. A person with an opioid use disorder
+          </button>
+          <button class="action" data-option="b">B. An opioid abuser</button>
+          <button class="action" data-option="c">C. A junkie</button>
+          <div class="feedback" aria-live="polite"></div>
+        </div>
+        <div class="check" data-answer="c">
+          <p>
+            <strong>4.</strong> Which discipline would most directly examine how
+            drug policy distributes power and punishment among groups?
+          </p>
+          <button class="action" data-option="a">
+            A. Clinical pharmacology
+          </button>
+          <button class="action" data-option="b">B. Chemistry</button>
+          <button class="action" data-option="c">C. Sociology</button>
+          <div class="feedback" aria-live="polite"></div>
+        </div>
+      </section>
+
+      <section class="next">
+        <h2>
+          <span class="section-number">1.16</span> Carry this idea forward
+        </h2>
+        <p>
+          A drug is never only a molecule in this course. We will study the
+          interaction of
+          <strong>substance + person + setting + society</strong>.
+          <a href="topics/history.html">Section 2: Drugs Across History</a>
+          examines how meanings and policies changed across time. A later
+          section will follow substances through the brain and body.
+        </p>
+      </section>
+
+      <aside class="cite-this" aria-labelledby="cite-1">
+        <h2 id="cite-1">Cite This Section</h2>
+        <p>Use this APA 7 reference when you use material from this section:</p>
+        <p class="citation-copy">
+          Hodgson, C. (2026). <em>What is a drug?</em> Beyond the Substance:
+          Understanding Drugs in Culture &amp; Society.
+          <a href="https://soc245-what-is-a-drug.carollhodgson.chatgpt.site/"
+            >https://soc245-what-is-a-drug.carollhodgson.chatgpt.site/</a
+          >
+        </p>
+        <p>
+          <strong>In-text citation:</strong> (Hodgson, 2026). For a precise
+          location, include the numbered subsection—for example, (Hodgson, 2026,
+          Section 1.1).
+        </p>
+      </aside>
+      <section id="sources">
+        <h2>References</h2>
+        <p>
+          <strong>Content reviewed:</strong> September 2026. This chapter is
+          educational and does not provide medical or legal advice. Laws and
+          official classifications can change.
+        </p>
+        <ul class="source-list">
+          <li>
+            Drug Enforcement Administration. (n.d.).
+            <em>Drug scheduling</em>.
+            <a href="https://www.dea.gov/drug-information/drug-scheduling"
+              >https://www.dea.gov/drug-information/drug-scheduling</a
+            >
+          </li>
+          <li class="foundational-reference">
+            Faupel, C. E., Weaver, G. S., &amp; Corzine, J. (2014).
+            <em>The sociology of American drug use</em> (3rd ed.). Oxford
+            University Press.
+          </li>
+          <li>
+            Gasnier, L. J. (Director). (1936).
+            <em>Tell your children</em> [Film]. Motion Picture Ventures.
+          </li>
+          <li>
+            Foundational lecture topics adapted and substantially rewritten from
+            Caroll Hodgson’s SOC-245 lecture notes.
+          </li>
+          <li class="coursebook-reference">
+            Hodgson, C. (2026). <em>What is a drug?</em> Beyond the Substance:
+            Understanding Drugs in Culture &amp; Society.
+            <a href="https://soc245-what-is-a-drug.carollhodgson.chatgpt.site/"
+              >https://soc245-what-is-a-drug.carollhodgson.chatgpt.site/</a
+            >
+          </li>
+          <li>
+            Kandel, D. B. (1975). Stages in adolescent involvement in drug use.
+            <em>Science, 190</em>(4217), 912–914.
+            <a href="https://doi.org/10.1126/science.1188374"
+              >https://doi.org/10.1126/science.1188374</a
+            >
+          </li>
+          <li>
+            Musto, D. F. (1999).
+            <em>The American disease: Origins of narcotic control</em> (3rd
+            ed.). Oxford University Press.
+          </li>
+          <li>
+            National Institute on Drug Abuse. (2020, July).
+            <em>Drug misuse and addiction</em>.
+            <a
+              href="https://nida.nih.gov/publications/drugs-brains-behavior-science-addiction/drug-misuse-addiction"
+              >https://nida.nih.gov/publications/drugs-brains-behavior-science-addiction/drug-misuse-addiction</a
+            >
+          </li>
+          <li>
+            National Institute on Drug Abuse. (2021, November 29).
+            <em>Words matter: Preferred language for talking about addiction</em
+            >.
+            <a
+              href="https://nida.nih.gov/research-topics/addiction-science/words-matter-preferred-language-talking-about-addiction"
+              >https://nida.nih.gov/research-topics/addiction-science/words-matter-preferred-language-talking-about-addiction</a
+            >
+          </li>
+          <li>
+            U.S. Food and Drug Administration. (2017, April 5).
+            <em>Definition of a drug</em>.
+            <a
+              href="https://www.fda.gov/drugs/fda-drug-info-rounds-video/definition-drug-april-2017"
+              >https://www.fda.gov/drugs/fda-drug-info-rounds-video/definition-drug-april-2017</a
+            >
+          </li>
+        </ul>
+      </section>
+    </main>
+    <footer>
+      SOC-245 · Beyond the Substance · Section 1 ·
+      <a href="topics/">View all sections</a> · Use the Canvas module for
+      assignments and due dates.
+    </footer>
+    <script>
+      const itemText = {
+        coffee:
+          "Caffeine is psychoactive because it can change alertness and other mental processes. Its ordinary place in daily routines shows that “drug” and “socially condemned substance” are not synonyms.",
+        nicotine:
+          "Nicotine is psychoactive and dependence-producing. Legal adult access does not remove its pharmacological effects; law and commerce shape where, how, and by whom it may be used.",
+        alcohol:
+          "Alcohol is a psychoactive central nervous system depressant. Its widespread cultural acceptance illustrates why legality and familiarity are not reliable measures of biological risk.",
+        medicine:
+          "An opioid medication can be legally prescribed for pain and can also produce tolerance, physical dependence, or an opioid use disorder. Medical status changes the authorized context, not the molecule’s capacity to affect the body.",
+        cannabis:
+          "Cannabis demonstrates overlapping definitions. Its effects, medical uses, public attitudes, state laws, and federal legal status do not fit into one simple label. Always identify the jurisdiction and date when describing its law.",
+        sunscreen:
+          "Under federal regulation, intended use matters. A sunscreen product is regulated as a drug because it is intended to help prevent disease and affect the body—even though people do not ordinarily call it a “drug” in conversation.",
+      };
+      const lensText = {
+        medicine:
+          "Medicine asks about evidence, diagnosis, dosage, prescribing authority, therapeutic benefit, side effects, and access to care.",
+        law: "Law asks who may manufacture, prescribe, sell, possess, or use the substance—and what penalties or protections apply in a particular jurisdiction.",
+        market:
+          "An economic lens asks who produces and distributes the substance, who earns revenue, who bears social costs, and whose access is limited by price.",
+        culture:
+          "Culture supplies norms and symbols. The same behavior may be celebrated, tolerated, medicalized, stigmatized, or condemned across groups and historical periods.",
+        interaction:
+          "In everyday encounters, labels such as patient, customer, user, offender, or person in recovery influence identity and how others respond.",
+        power:
+          "A conflict lens asks which groups have authority to define risk, shape law, profit from a substance, obtain treatment, and avoid punishment.",
+      };
+      const theoryText = {
+        function:
+          "Functionalism examines how rules and institutions attempt to promote health, stability, and predictable behavior. It also looks for dysfunctions and unintended consequences, such as illegal markets created by prohibition.",
+        conflict:
+          "Conflict theory asks how wealth, political influence, race, class, and institutional power shape which substances are marketed, criminalized, or medicalized—and how benefits and punishments are distributed.",
+        symbolic:
+          "Symbolic interactionism examines meanings learned through interaction: how people interpret a substance, learn expected effects, manage identities, and respond to labels such as “patient” or “deviant.”",
+      };
+      const conceptText = {
+        beyond:
+          "Dose and route help predict effects, but they cannot explain why coffee is served at meetings, alcohol is licensed and taxed, some medications require prescriptions, or possession of another substance brings punishment.",
+        cns: "Psychoactive is a functional description, not a moral verdict. Caffeine, nicotine, alcohol, many medications, cannabis, and controlled substances can all influence mental processes.",
+        harm: "Societies regulate many harmful products differently. Classification can also reflect medical authority, custom, commercial interests, political campaigns, racialization, public fear, and available evidence.",
+        construction:
+          "Through laws, medical practice, news, advertising, family life, peer groups, and daily interaction, people learn what counts as responsible use, misuse, treatment, deviance, or crime.",
+        change:
+          "Alcohol prohibition and changing cannabis policies make the pattern visible: the chemistry may be relatively stable while law, public meaning, acceptable use, and enforcement change.",
+      };
+      function activate(selector, output, data) {
+        document.querySelectorAll(selector).forEach((btn) =>
+          btn.addEventListener("click", () => {
+            document
+              .querySelectorAll(selector)
+              .forEach((b) => b.classList.remove("selected"));
+            btn.classList.add("selected");
+            const out = document.querySelector(output);
+            out.textContent =
+              data[btn.dataset.key || btn.dataset.lens || btn.dataset.theory];
+            out.focus();
+          }),
+        );
+      }
+      activate(".item", "#itemReveal", itemText);
+      activate(".lens", "#lensReveal", lensText);
+      activate("#theoryChoices .choice", "#theoryReveal", theoryText);
+      document.querySelectorAll(".concept-node").forEach((btn) =>
+        btn.addEventListener("click", () => {
+          document
+            .querySelectorAll(".concept-node")
+            .forEach((b) => b.classList.remove("selected"));
+          btn.classList.add("selected");
+          const out = document.querySelector("#conceptReveal");
+          out.textContent = conceptText[btn.dataset.concept];
+          out.focus();
+        }),
+      );
+      const disciplineRounds = [
+        {
+          q: "How did a substance move from an accepted medicine to a prohibited drug?",
+          a: "history",
+          why: "History is the best starting point because the question asks about change over time.",
+        },
+        {
+          q: "How do reinforcement and expectations affect a person’s repeated use?",
+          a: "psychology",
+          why: "Psychology is the best starting point because the question centers on learning, cognition, and individual behavior.",
+        },
+        {
+          q: "How do government agencies compete to define and control a drug problem?",
+          a: "politics",
+          why: "Political science is the best starting point because the question centers on government authority and policy power.",
+        },
+        {
+          q: "Why is one group’s substance use medicalized while another group’s use is criminalized?",
+          a: "sociology",
+          why: "Sociology is the best starting point because the question compares institutions, groups, labels, and inequality.",
+        },
+      ];
+      let round = 0;
+      function showRound() {
+        const r = disciplineRounds[round];
+        document.querySelector("#disciplineQuestion").innerHTML =
+          "<strong>Question:</strong> " + r.q;
+        document.querySelector("#disciplineReveal").textContent =
+          "Choose the best starting discipline. More than one discipline may eventually contribute to a complete explanation.";
+        document
+          .querySelectorAll("#disciplineChoices .choice")
+          .forEach((b) => b.classList.remove("selected"));
+      }
+      document.querySelectorAll("#disciplineChoices .choice").forEach((btn) =>
+        btn.addEventListener("click", () => {
+          const r = disciplineRounds[round];
+          document
+            .querySelectorAll("#disciplineChoices .choice")
+            .forEach((b) => b.classList.remove("selected"));
+          btn.classList.add("selected");
+          const out = document.querySelector("#disciplineReveal");
+          out.textContent =
+            (btn.dataset.discipline === r.a ? "Correct. " : "Look again. ") +
+            r.why;
+          out.focus();
+        }),
+      );
+      document
+        .querySelector("#nextDiscipline")
+        .addEventListener("click", () => {
+          round = (round + 1) % disciplineRounds.length;
+          showRound();
+        });
+      document.querySelectorAll(".check").forEach((box) =>
+        box.querySelectorAll("[data-option]").forEach((btn) =>
+          btn.addEventListener("click", () => {
+            const ok = btn.dataset.option === box.dataset.answer;
+            const f = box.querySelector(".feedback");
+            f.textContent = ok
+              ? "Correct. " +
+                (box.dataset.answer === "b"
+                  ? "Sociology connects material effects with socially created meanings and responses."
+                  : box.dataset.answer === "c"
+                    ? "Institutions and context can change the meaning and consequences attached to the same substance."
+                    : "Person-first wording describes the condition without defining the person by it.")
+              : "Try again. Look for the response that recognizes both evidence and social context.";
+            f.className = "feedback " + (ok ? "correct" : "incorrect");
+          }),
+        ),
+      );
+      const gateway = document.querySelector("[data-gateway-explorer]");
+      if (gateway) {
+        const input = document.getElementById("gateway-age"),
+          ageOut = document.getElementById("gateway-age-output"),
+          band = document.getElementById("gateway-band"),
+          focus = document.getElementById("gateway-focus"),
+          bars = document.getElementById("gateway-bars"),
+          lesson = document.getElementById("gateway-lesson");
+        const topics = [
+          "Beer / wine",
+          "Cigarettes",
+          "Hard liquor",
+          "Marijuana",
+          "Other illicit drugs",
+          "Inhalants",
+        ];
+        const windows = {
+          early: {
+            band: "Late childhood / transition",
+            focus:
+              "Medication safety, alcohol basics, nicotine, and trusted-adult help",
+            values: [3, 2, 1, 1, 0, 2],
+            lesson:
+              "Teach concrete safety, coping, media literacy, and help-seeking. Inhalant prevention belongs across ages because common household products can be misused.",
+          },
+          middle: {
+            band: "Early adolescence",
+            focus: "Nicotine, alcohol strength, and changing peer routines",
+            values: [4, 4, 3, 2, 1, 2],
+            lesson:
+              "Study access, perceived norms, peer settings, mental health, and refusal or exit skills before exposure increases.",
+          },
+          late: {
+            band: "Middle adolescence",
+            focus:
+              "Alcohol, marijuana, mixing, and emerging illicit-market access",
+            values: [4, 4, 4, 4, 2, 2],
+            lesson:
+              "Add potency, consent, driving, counterfeit products, confidential help, and accurate distinctions among substances.",
+          },
+          older: {
+            band: "Late adolescence / young adulthood",
+            focus:
+              "Higher-risk patterns, polysubstance use, overdose response, and treatment",
+            values: [4, 4, 4, 5, 4, 2],
+            lesson:
+              "Combine prevention with harm reduction, treatment access, mixing risks, and routes back to school and work.",
+          },
+        };
+        const labels = [
+          "Not emphasized",
+          "Introduce",
+          "Repeat yearly",
+          "Growing relevance",
+          "High relevance",
+          "Priority topic",
+        ];
+        function renderGateway() {
+          const age = Number(input.value);
+          ageOut.value = age;
+          const d =
+            age <= 11
+              ? windows.early
+              : age <= 14
+                ? windows.middle
+                : age <= 17
+                  ? windows.late
+                  : windows.older;
+          band.textContent = d.band;
+          focus.textContent = d.focus;
+          lesson.textContent = d.lesson;
+          bars.innerHTML = topics
+            .map(
+              (name, i) =>
+                `<div class="gateway-row"><b>${name}</b><span class="gateway-track"><span class="gateway-fill" style="width:${d.values[i] * 20}%"></span></span><span class="gateway-status">${labels[d.values[i]]}</span></div>`,
+            )
+            .join("");
+        }
+        input.addEventListener("input", renderGateway);
+        renderGateway();
+      }
+      function progress() {
+        const h = document.documentElement;
+        const max = h.scrollHeight - h.clientHeight;
+        document.getElementById("bar").style.width =
+          (max ? (100 * h.scrollTop) / max : 0) + "%";
+      }
+      addEventListener("scroll", progress, { passive: true });
+      progress();
+    </script>
+    <script src="assets/course-nav.js"></script>
+  </body>
+</html>
