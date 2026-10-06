@@ -1,0 +1,12 @@
+/* Shared course-book numbering and APA-style reference presentation. */
+.section-number{color:var(--teal,#087f78);font-variant-numeric:tabular-nums;font-weight:900;white-space:nowrap}
+#sources,.sources,.cite-this{width:100%;padding-left:clamp(1.5rem,4vw,2.6rem)!important;padding-right:clamp(1.5rem,4vw,2.6rem)!important}
+section[id="sources"] ul,.sources ul,.references{list-style:none;padding-left:0;margin-left:0}
+section[id="sources"] li,.sources li,.references li{margin:.7rem 0;padding-left:2rem;text-indent:-2rem;overflow-wrap:anywhere}
+section[id="sources"] li a,.sources li a,.references li a{text-decoration-thickness:.08em;text-underline-offset:.15em}
+.source-list{list-style:none;padding-left:0}.source-list li{margin:.7rem 0;padding-left:2rem;text-indent:-2rem;overflow-wrap:anywhere}
+.cite-this{background:#f2fbfa;border:2px solid var(--teal,#087f78);border-left-width:9px;border-radius:16px;padding:1.15rem 1.35rem;margin:1.25rem 0;box-shadow:0 6px 18px rgba(23,59,87,.08)}
+.cite-this h2{margin-top:0;color:var(--navy,#173b57)}
+.cite-this .citation-copy{padding-left:2rem;text-indent:-2rem;overflow-wrap:anywhere}
+.foundational-reference,.coursebook-reference{font-weight:500}
+@media(max-width:600px){#sources,.sources,.cite-this{padding-left:1.25rem!important;padding-right:1.25rem!important}section[id="sources"] li,.sources li,.references li,.cite-this .citation-copy{padding-left:1.25rem;text-indent:-1.25rem}}

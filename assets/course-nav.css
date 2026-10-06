@@ -1,0 +1,210 @@
+.course-toc-toggle {
+  position: fixed;
+  left: 1rem;
+  bottom: 1rem;
+  z-index: 1001;
+  border: 0;
+  border-radius: 999px;
+  background: #173b57;
+  color: #fff;
+  padding: 0.8rem 1rem;
+  font:
+    800 1rem/1 system-ui,
+    sans-serif;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+  cursor: pointer;
+}
+.course-toc {
+  position: fixed;
+  inset: 0 auto 0 0;
+  z-index: 1000;
+  width: 272px;
+  overflow: auto;
+  background: #102f48;
+  color: #fff;
+  padding: 1rem 0.8rem 2rem;
+  box-shadow: 5px 0 22px rgba(8, 28, 44, 0.22);
+}
+.course-toc__title {
+  display: block;
+  color: #ffe19a;
+  font-size: 0.78rem;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin: 0.25rem 0.55rem 0.8rem;
+}
+.course-toc__home {
+  display: block;
+  margin: 0 0.35rem 0.9rem;
+  padding: 0.75rem;
+  border: 1px solid rgba(255, 255, 255, 0.28);
+  border-radius: 12px;
+  color: #fff;
+  text-decoration: none;
+  font-weight: 850;
+}
+.course-toc__unit {
+  margin: 1rem 0.55rem 0.35rem;
+  color: #aee7df;
+  font-size: 0.76rem;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+.course-toc ol {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.course-toc li {
+  margin: 0.15rem 0;
+}
+.course-toc a {
+  display: block;
+  border-radius: 10px;
+  color: #eef8fb;
+  text-decoration: none;
+  padding: 0.48rem 0.6rem;
+  font-size: 0.88rem;
+  line-height: 1.25;
+}
+.course-toc a:hover,
+.course-toc a:focus {
+  background: #245574;
+  outline: 2px solid #f2a900;
+  outline-offset: 1px;
+}
+.course-toc a[aria-current="page"] {
+  background: #087f78;
+  color: #fff;
+  font-weight: 900;
+  border-left: 5px solid #f2a900;
+}
+.course-toc__close {
+  display: none;
+}
+@media (min-width: 1180px) {
+  body.has-course-toc {
+    padding-left: 272px;
+  }
+  .course-toc-toggle {
+    display: none;
+  }
+  .course-toc {
+    transform: none !important;
+  }
+  .course-toc__close {
+    display: none;
+  }
+}
+@media (max-width: 1179px) {
+  .course-toc {
+    transform: translateX(-110%);
+    transition: transform 0.22s ease;
+  }
+  .course-toc[data-open="true"] {
+    transform: translateX(0);
+  }
+  .course-toc__close {
+    display: block;
+    width: 100%;
+    margin: 0 0 0.75rem;
+    border: 0;
+    border-radius: 10px;
+    background: #fff;
+    color: #173b57;
+    padding: 0.65rem;
+    font-weight: 900;
+    cursor: pointer;
+  }
+  body.toc-open {
+    overflow: hidden;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .course-toc {
+    transition: none;
+  }
+}
+.career-connection {
+  display: block;
+  max-width: 1080px;
+  margin: 1.25rem auto;
+  padding: 1.25rem 1.4rem;
+  border: 2px solid #087f78;
+  border-left: 9px solid #f2a900;
+  border-radius: 16px;
+  background: linear-gradient(135deg, #f2fbfa, #eef5fb);
+  color: #17283b;
+  box-shadow: 0 7px 20px rgba(23, 59, 87, 0.09);
+}
+.career-connection__tag {
+  display: inline-block;
+  border-radius: 999px;
+  background: #173b57;
+  color: #fff;
+  padding: 0.25rem 0.7rem;
+  font:
+    850 0.82rem/1.4 system-ui,
+    sans-serif;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+.career-connection h2 {
+  margin: 0.55rem 0 0.35rem;
+  color: #173b57;
+  font-size: clamp(1.35rem, 3vw, 1.8rem);
+}
+.career-connection p {
+  margin: 0.45rem 0;
+}
+.career-connection__hst {
+  padding: 0.65rem 0.8rem;
+  border-radius: 10px;
+  background: #fff8df;
+}
+.career-connection > a {
+  display: inline-block;
+  margin-top: 0.35rem;
+  color: #075e8b;
+  font-weight: 850;
+}
+.project-builder {
+  display: block;
+  max-width: 1080px;
+  margin: 1.25rem auto;
+  padding: 1.25rem 1.4rem;
+  border: 2px solid #72539b;
+  border-left: 9px solid #f2a900;
+  border-radius: 16px;
+  background: linear-gradient(135deg, #f8f3ff, #eef5fb);
+  color: #17283b;
+  box-shadow: 0 7px 20px rgba(23, 59, 87, 0.09);
+}
+.project-builder__tag {
+  display: inline-block;
+  border-radius: 999px;
+  background: #5b3f7f;
+  color: #fff;
+  padding: 0.25rem 0.7rem;
+  font:
+    850 0.82rem/1.4 system-ui,
+    sans-serif;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+.project-builder h2 {
+  margin: 0.55rem 0 0.35rem;
+  color: #3e2a59;
+  font-size: clamp(1.35rem, 3vw, 1.8rem);
+}
+.project-builder p {
+  margin: 0.45rem 0;
+}
+.project-builder > a {
+  display: inline-block;
+  margin-top: 0.35rem;
+  color: #075e8b;
+  font-weight: 850;
+}
